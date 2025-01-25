@@ -8,18 +8,6 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e4a0746a1ec2e913",
-            "type": "leaf",
-            "state": {
-              "type": "image",
-              "state": {
-                "file": "Robot Wire Map.png"
-              },
-              "icon": "lucide-image",
-              "title": "Robot Wire Map"
-            }
-          },
-          {
             "id": "7de2a99a12a5684f",
             "type": "leaf",
             "state": {
@@ -33,8 +21,7 @@
               "title": "Limelight Web URL & IP"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -177,9 +164,17 @@
   },
   "active": "7de2a99a12a5684f",
   "lastOpenFiles": [
-    "Robot Wire Map.png",
-    "Limelight Web URL & IP.md",
+    "Pipeline_Name 3.vpr",
+    "Pipeline_Name 2.vpr",
+    "Pipeline_Name 1.vpr",
     "Robot Wire Map.canvas",
+    "Robot Wire Map.png",
+    "Pipeline_Name.vpr",
+    "Untitled.canvas",
+    "Untitled.md",
+    "Untitled 1.md",
+    "Untitled",
+    "Limelight Web URL & IP.md",
     "Welcome.md"
   ]
 }
