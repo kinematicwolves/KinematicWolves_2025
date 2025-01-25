@@ -1,0 +1,174 @@
+{
+  "main": {
+    "id": "bdd4a1519fdb6256",
+    "type": "split",
+    "children": [
+      {
+        "id": "d9ff5f31c5030fbf",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "58c07654e48923f8",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "notes/Robot Map.canvas",
+                "viewState": {
+                  "x": 370,
+                  "y": 570,
+                  "zoom": -1.2465510522929124
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Robot Map"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "dded1e9987a8f8da",
+    "type": "split",
+    "children": [
+      {
+        "id": "cb0875b2ed8fddc1",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "22638f5170cd7be6",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "6ff90866d5ec7a07",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "9d660e918bd26182",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "e7eec21e6d0d9a35",
+    "type": "split",
+    "children": [
+      {
+        "id": "e68cdcde3b2213f3",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "959a681c8fa30068",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "notes/Robot Wire Map.canvas",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Robot Wire Map"
+            }
+          },
+          {
+            "id": "bc138537204b470d",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "notes/Robot Wire Map.canvas",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Robot Wire Map"
+            }
+          },
+          {
+            "id": "bac6724dfaea6dd1",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "abbfb89b7f94510e",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "notes/Robot Wire Map.canvas"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Robot Wire Map"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "58c07654e48923f8",
+  "lastOpenFiles": [
+    "notes/Robot Wire Map.canvas",
+    "notes/Robot Wire Map.png",
+    "notes/Robot Map.canvas"
+  ]
+}

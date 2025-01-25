@@ -1,0 +1,19 @@
+{
+	"nodes":[
+		{"id":"6624eac4348ed98f","type":"group","x":220,"y":-260,"width":1400,"height":1660,"label":"ROBOT DESIGN"},
+		{"id":"bb35cc06e48c3509","type":"group","x":-880,"y":-40,"width":840,"height":580,"label":"Robot Concept"},
+		{"id":"f53ae08ea630200f","type":"text","text":"# Climbing Subsystem\n## Student Leads\n- Katia\n## Requirements\n- Align in 3 seconds\n- Lift robot in 1.5 seconds\n## Design\n- 2 pin climber concept\n- Use the bumper to stop the cage and align\n- use the bar of the climber to align the cage\n## Open Questions\n- Dimensions\n- Materiel\n- Placement\n- Motors\n- Gearing\n- How does it move\n","x":260,"y":-220,"width":440,"height":720},
+		{"id":"7f7b084fb1eb3cb0","type":"text","text":"# Elevator Subsystem\n## Student Leads\n- Tanya\n- Mia\n## Requirements:\n- How fast to lift?\n- How Much weight to lift?\n## Design\n2 stage elevator kit from west coast products\n\n## Open Questions\n- What modifications to fit our chassis\n- what motors?\n- What Gearing\n- Any parts to order\n## Current Phase: CAD\n## Next Steps\n- Order Parts\n- Manufacture Custom parts","x":700,"y":-220,"width":440,"height":820,"color":"3"},
+		{"id":"b189b5591c7ecaf7","type":"text","text":"# Drive Subsystem\n## Student Leads\n- Gael\n- Katia\n## Requirements\n- 28\" x 28\"\n## Design\n- MK4n\n- L2 gearing\n## Open Questions\n- Do any rails need CNC Holes?\n- Belly pan?\n## Current Phase: Built\n## Next Steps\n- Wring\n- Belly Pan","x":260,"y":500,"width":440,"height":780,"color":"4"},
+		{"id":"f368f27acc1c4188","type":"text","text":"# Funnel Subsystem\n## Student Leads\n- Joel\n- Julian\n## Requirements\n- Control Corral in 1 s\n## Design\n- Cranberry alarm, WCP, Rusthounds inspired\n## Open Questions\n- Material\n- Geometry\n## Current Phase: Prototyping\n# Next Steps\n- ?","x":700,"y":600,"width":440,"height":720,"color":"3"},
+		{"id":"b0ffa04671992fc3","type":"text","text":"# Yes\n- Place corral on lv 1 - 4 [[Elevator]]\n- Collect algae from the coral station\n- Climb deep [[2 pin climber]]\n- Placing algae in processor\n- Remove algae from the reef\n- Pick up algae from ground","x":-840,"y":-1,"width":380,"height":261,"color":"4"},
+		{"id":"5ad5e84c9c41aa6b","type":"text","text":"# Maybe\n","x":-840,"y":260,"width":380,"height":81,"color":"2"},
+		{"id":"bdceecc3a157d943","type":"text","text":"# No\n- Robot scoring in net\n- picking corral from ground\n- climbing shallow","x":-840,"y":341,"width":380,"height":159,"color":"1"},
+		{"id":"24ebf5cc7c6ea988","type":"text","text":"# Robot Requirements\n- 28x28 chassis\n- 42\" starting height\n- 20 Game pieces\n\t- 3 auto (min)\n\t- 17 telop\n\t- Timings\n\t\t- Acquire Coral: 1 Seconds\n\t\t- Drive: 2 seconds\n\t\t- Place: 2 seconds\n- Deep Climb Timings\n\t- Align: 3 seconds\n\t- Lift: 1.5 seconds","x":-460,"y":-1,"width":383,"height":501},
+		{"id":"55f951ce5a727b3e","type":"text","text":"# Wrist Subsystem\n## Student Leads\n- Gael\n- Marcelo\n## Requirements\n- Score Corral in 2 seconds\n## Design\n- WCP Concept\n## Open Questions\n- Motors\n- Gearing\n- Sensors\n- Do we need any parts / material\n# Current Phase: Test Build\n# Next Steps\n- Final build?","x":1140,"y":-220,"width":440,"height":780,"color":"3"},
+		{"id":"1dc0c4c33aa77f1b","type":"text","text":"# Ground Intake Subsystem\n## Student Leads\n- Max\n- ?\n## Requirements\n- Acquire algae from ground in ? seconds\n\n# Design\n- Deployable roller\n## Open Questions\n- Motor and gearing?\n- Wheels?\n- Material\n- Placement? (lots of space under the funnel)\n- Geometry?\n## Current Phase: Prototyping\n## Next Steps\n- CAD","x":1140,"y":560,"width":440,"height":800}
+	],
+	"edges":[
+		{"id":"16f462c18434efc3","fromNode":"bb35cc06e48c3509","fromSide":"right","toNode":"6624eac4348ed98f","toSide":"left"}
+	]
+}
