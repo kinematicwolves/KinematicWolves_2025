@@ -1,6 +1,6 @@
 //LimelightHelpers v1.7 (May 9, 2024) (REQUIRES 2024.6)
 
-package frc.robot;
+package frc.robot.generated;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -26,7 +26,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 
-public class LimeLightHelpers {
+public class LimelightHelpers {
 
     public static class LimelightTarget_Retro {
 
@@ -956,9 +956,6 @@ public class LimeLightHelpers {
     public static boolean getTV(String limelightName) {
         return 1.0 == getLimelightNTDouble(limelightName, "tv");
     }
-
-    /////
-    /////
 
     public static void setPipelineIndex(String limelightName, int pipelineIndex) {
         setLimelightNTDouble(limelightName, "pipeline", pipelineIndex);
