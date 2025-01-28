@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 5.3
+        "x": 5.8,
+        "y": 3.9
       },
       "prevControl": {
-        "x": 3.4999999999999996,
-        "y": 6.166025403784439
+        "x": 6.799999999999999,
+        "y": 3.9
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchJ"
+      "linkedName": "BranchF"
     }
   ],
   "rotationTargets": [],
@@ -42,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Left Sides",

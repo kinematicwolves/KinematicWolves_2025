@@ -3,29 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.3,
-        "y": 7.5
+        "x": 1.4,
+        "y": 7.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.3,
-        "y": 7.5
+        "x": 2.042787609686539,
+        "y": 6.433955556881022
       },
       "isLocked": false,
-      "linkedName": "LeftWall"
+      "linkedName": "LeftStation"
     },
     {
       "anchor": {
-        "x": 4.0,
-        "y": 5.3
+        "x": 5.8,
+        "y": 5.902533783783784
       },
       "prevControl": {
-        "x": 3.4999999999999996,
-        "y": 6.166025403784439
+        "x": 5.365202702702702,
+        "y": 6.604138513513512
+      },
+      "nextControl": {
+        "x": 6.3267667025836385,
+        "y": 5.052523877342005
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.8,
+        "y": 4.2
+      },
+      "prevControl": {
+        "x": 6.8,
+        "y": 4.2
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchJ"
+      "linkedName": "BranchG"
     }
   ],
   "rotationTargets": [],
@@ -42,13 +58,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -59.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": "Left Sides",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": -50.0
   },
   "useDefaultConstraints": true
 }
