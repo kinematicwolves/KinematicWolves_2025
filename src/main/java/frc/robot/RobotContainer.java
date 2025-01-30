@@ -17,9 +17,11 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.Constants.VisionProfile;
+import frc.robot.commands.AutoAlignTx;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 
 public class RobotContainer {
@@ -42,6 +44,7 @@ public class RobotContainer {
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
 
     private final Vision vision = new Vision();
+    private final Swerve swerve = new Swerve();
 
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -76,6 +79,8 @@ public class RobotContainer {
         joystick.pov(180).whileTrue(drivetrain.applyRequest(() ->
             forwardStraight.withVelocityX(-0.5).withVelocityY(0))
         );
+
+        joystick.rightBumper().whileTrue(new AutoAlignTx(swerve, vision, VisionProfile.frontLimelight, VisionProfile.leftReefSetPointNegativeTolerance_Tx, VisionProfile.leftReefSetPointPositiveTolerance_Tx));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.

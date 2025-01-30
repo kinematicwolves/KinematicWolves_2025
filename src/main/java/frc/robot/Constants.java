@@ -45,4 +45,13 @@ public class Constants {
         public static double stationSetPointNegativeTolerance_Tx = stationSetPoint_Tx - 1;
         public static double stationSetPointPositiveTolerance_Tx = stationSetPoint_Tx + 1;
     }
+
+    public static class SwerveProfile {
+        /* Swerve PID gains */
+        public static final double kP = 0.1;
+        public static final double kI = 0;
+        public static final double kD = 0;
+
+        public static final double defaultSwerveVelocity = 0.2;
+    }
 }
