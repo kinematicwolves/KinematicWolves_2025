@@ -8,8 +8,8 @@ package frc.robot;
 public class Constants {
     public class VisionProfile {
         /* Limelight names */
-        public static String frontLimelight = "Front Limelight"; //TODO: Configure limelight name to match constant
-        public static String rearLimelight = "Rear Limelight"; //TODO: Configure limelight name to match contrant
+        public static String frontLimelight = "limelight-front"; //TODO: Configure limelight name to match constant
+        public static String rearLimelight = "limelight-rear"; //TODO: Configure limelight name to match contrant
 
         /* Calibrated limelight pipelines */
         public static int reefPipeline_Test = 0;

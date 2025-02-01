@@ -17,7 +17,7 @@ public class Vision extends SubsystemBase {
   /* Creates a new Vision. */
   public Vision() {
     setFrontLimelightPipeline(VisionProfile.reefPipeline_Test);
-    setRearLimelightPipeline(VisionProfile.stationTestPipeline_Test);
+    //setRearLimelightPipeline(VisionProfile.stationTestPipeline_Test);
   }
 
   /**
@@ -44,7 +44,7 @@ public class Vision extends SubsystemBase {
    * @param limelight String, limelight
    * @return double, limelight Tx unit value
    */
-  private double getTx(String limelight) {
+  public double getTx(String limelight) {
     return LimelightHelpers.getTX(limelight);
   }
 
