@@ -11,25 +11,30 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Vision;
 
-public class AutoAlignTx extends Command {
+public class AutoAlign extends Command {
   private Vision vision;
   private CommandSwerveDrivetrain drivetrain;
   private String limelight;
   private double negativeTolerance;
   private double positiveTolerance;
-  private SwerveRequest.RobotCentric robotCentric;
+  private SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.Velocity); 
   
-  /** Creates a new AutoAlign. */
-  public AutoAlignTx(CommandSwerveDrivetrain drivetrain, Vision vision, String limelight, double negativeTolerance, double positiveTolerance, SwerveRequest.RobotCentric robotCentric) {
+  /**
+   * Auto Aligns robot to commanded target.
+   * 
+   * @param drivetrain Subsystem, CommandSwerve Drivetrain subsystem
+   * @param vision Subsystem, Vision Subsystem
+   * @param limelight String, limelight name (VisionProfile constants)
+   * @param negativeTolerance double, target negative tolerance (VisionProfile constants)
+   * @param positiveTolerance double, target positive tolerance (VisionProfile constants)
+   */
+  public AutoAlign(CommandSwerveDrivetrain drivetrain, Vision vision, String limelight, double negativeTolerance, double positiveTolerance) {
     this.vision = vision;
     this.drivetrain = drivetrain;
-    this.robotCentric = robotCentric;
     this.limelight = limelight;
     this.negativeTolerance = negativeTolerance;
     this.positiveTolerance = positiveTolerance;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(vision);
-    // addRequirements(drivetrain);
   }
 
   // Called when the command is initially scheduled.
@@ -39,26 +44,21 @@ public class AutoAlignTx extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() { 
-    // double driveSpeed = vision.getTx(limelight)/20;
-    // if (vision.xOvershot(limelight, positiveTolerance)) {
-    //   driveSpeed = -0.2;
-    // }
-    // else if (vision.xUnderShot(limelight, negativeTolerance)) {
-    //   driveSpeed = 0.2;
-    // }
-    // else {
-    //   driveSpeed = 0;
-    // }
-    drivetrain.applyRequest(() -> robotCentric.withRotationalRate(0.5));
-    // System.out.println(driveSpeed);
-    System.out.println("test");
+    if (vision.xOvershot(limelight, positiveTolerance)) {
+      drivetrain.applyRequest(() -> robotCentric.withVelocityX(-0.3));
+    }
+    else if (vision.xUnderShot(limelight, negativeTolerance)) {
+      drivetrain.applyRequest(() -> robotCentric.withVelocityX(0.3));
+    }
+    else {
+      drivetrain.applyRequest(() -> robotCentric.withVelocityX(0));
+    }
   }
   
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drivetrain.applyRequest(() -> robotCentric.withRotationalRate(0));
-    System.out.println("Interupted");
+    drivetrain.applyRequest(() -> robotCentric.withVelocityX(0));
   }
 
   // Returns true when the command should end.
