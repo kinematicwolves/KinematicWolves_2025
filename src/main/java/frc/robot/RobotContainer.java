@@ -14,7 +14,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants.VisionProfile;
-import frc.robot.commands.AutoAlign;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Vision;
@@ -35,6 +34,8 @@ public class RobotContainer {
     private final CommandXboxController joystick = new CommandXboxController(0);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    private SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.Velocity);
 
     private final Vision vision = new Vision();
 
@@ -58,8 +59,8 @@ public class RobotContainer {
             )
         );
 
-        // Reel auto align
-        joystick.rightBumper().whileTrue(new AutoAlign(drivetrain, vision, VisionProfile.frontLimelight, VisionProfile.leftReefSetPointNegativeTolerance_Tx, VisionProfile.leftReefSetPointPositiveTolerance_Tx)); 
+        // Reef auto align
+        joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> robotCentric.withRotationalRate(vision.getRotation2d(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test))));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
 
