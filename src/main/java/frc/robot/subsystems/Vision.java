@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.generated.LimelightHelpers;
@@ -85,14 +86,16 @@ public class Vision extends SubsystemBase {
   public double getRotation2d(String limelight, int pipeline) {
     setLimelightPipeline(limelight, pipeline);
     if (getAllianceColor() == DriverStation.Alliance.Blue) {
-      return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelight).pose.getRotation().getDegrees();
+      return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelight).pose.getRotation().getRadians()/1.2;
     }
     else {
-      return LimelightHelpers.getBotPoseEstimate_wpiRed(limelight).pose.getRotation().getDegrees();
+      return LimelightHelpers.getBotPoseEstimate_wpiRed(limelight).pose.getRotation().getRadians()/1.2;
     }
   }
 
   @Override
   // This method will be called once per scheduler run
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putNumber("Front Limelight Rad", getTranslationY(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+  }
 }

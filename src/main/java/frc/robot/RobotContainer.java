@@ -60,7 +60,7 @@ public class RobotContainer {
         );
 
         // Reef auto align
-        joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> robotCentric.withRotationalRate(vision.getRotation2d(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test))));
+        joystick.rightBumper().whileTrue(drivetrain.applyRequest(() -> robotCentric.withVelocityY(vision.getTranslationY(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test))));
 
         joystick.a().whileTrue(drivetrain.applyRequest(() -> brake));
 
