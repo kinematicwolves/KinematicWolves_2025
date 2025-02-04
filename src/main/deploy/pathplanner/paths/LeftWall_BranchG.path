@@ -17,11 +17,11 @@
     {
       "anchor": {
         "x": 5.8,
-        "y": 4.2
+        "y": 3.8747431506849312
       },
       "prevControl": {
         "x": 6.8,
-        "y": 4.2
+        "y": 3.8747431506849312
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
     "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Left Sides",
+  "folder": "LeftWall to Branch",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

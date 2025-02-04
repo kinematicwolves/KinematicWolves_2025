@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.6,
-        "y": 1.9
+        "x": 3.096179441571211,
+        "y": 2.027357194903612
       },
       "isLocked": false,
       "linkedName": "BranchC"
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 54.659893078442344
+    "rotation": 55.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Branch to RightStation",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 57.474113813778864

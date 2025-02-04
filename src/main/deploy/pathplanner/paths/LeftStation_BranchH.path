@@ -16,16 +16,32 @@
     },
     {
       "anchor": {
-        "x": 5.3,
-        "y": 5.1
+        "x": 5.905094178082192,
+        "y": 4.160231164383561
       },
       "prevControl": {
-        "x": 5.8,
-        "y": 5.966025403784438
+        "x": 5.447015510631097,
+        "y": 4.360640581393415
+      },
+      "nextControl": {
+        "x": 6.3631728455332865,
+        "y": 3.9598217473737076
+      },
+      "isLocked": false,
+      "linkedName": "BranchH"
+    },
+    {
+      "anchor": {
+        "x": 5.875042808219178,
+        "y": 4.130179794520548
+      },
+      "prevControl": {
+        "x": 6.8812505224849705,
+        "y": 4.130179794520548
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchH"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -42,10 +58,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": 180.0
   },
   "reversed": false,
-  "folder": "Left Sides",
+  "folder": "LeftStation to Branch",
   "idealStartingState": {
     "velocity": 0,
     "rotation": -50.0

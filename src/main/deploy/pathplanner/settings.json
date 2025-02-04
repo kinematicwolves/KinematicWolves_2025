@@ -3,8 +3,12 @@
   "robotLength": 0.9,
   "holonomicMode": true,
   "pathFolders": [
-    "Left Sides",
-    "Right Sides"
+    "Branch to LeftStation",
+    "LeftWall to Branch",
+    "LeftStation to Branch",
+    "Branch to RightStation",
+    "RightWall to Branch",
+    "RightStation to Branch"
   ],
   "autoFolders": [],
   "defaultMaxVel": 3.0,

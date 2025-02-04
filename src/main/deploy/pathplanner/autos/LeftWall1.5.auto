@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftWall_BranchJ"
+            "pathName": "LeftWall_BranchK"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BranchJ_LeftStation"
+            "pathName": "BranchK_LeftStation"
           }
         }
       ]
