@@ -13,15 +13,15 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "notes/Robot Map.canvas",
+                "file": "notes/Robot Wire Map.canvas",
                 "viewState": {
-                  "x": 370,
-                  "y": 570,
-                  "zoom": -1.2465510522929124
+                  "x": 140.5,
+                  "y": 143,
+                  "zoom": -1.5357152039001458
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Robot Map"
+              "title": "Robot Wire Map"
             }
           }
         ]
@@ -80,7 +80,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "e7eec21e6d0d9a35",
@@ -167,8 +168,19 @@
   },
   "active": "58c07654e48923f8",
   "lastOpenFiles": [
+    "vendordeps/PlayingWithFusion-2025.01.04.json",
+    "vendordeps/Phoenix6-frc2025-latest.json",
+    "vendordeps/PathplannerLib-2025.2.1.json",
+    "build/jni/release/libCTRE_SimProTalonFXS.so",
+    "build/jni/release/libPlayingWithFusionDriver.so",
+    "build/classes/java/main/frc/robot/RobotContainer.class",
+    "build/classes/java/main/frc/robot/Robot.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers$PoseEstimate.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers$RawDetection.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers$RawFiducial.class",
+    "notes/Robot Map.canvas",
     "notes/Robot Wire Map.canvas",
-    "notes/Robot Wire Map.png",
-    "notes/Robot Map.canvas"
+    "notes/Robot Wire Map.png"
   ]
 }
