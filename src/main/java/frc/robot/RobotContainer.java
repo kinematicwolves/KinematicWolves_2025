@@ -19,6 +19,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Gripper;
+import frc.robot.commands.RunRoller;
+import frc.robot.commands.acquireCoral;
+    
 
 public class RobotContainer {
     /* Swerve */
@@ -46,8 +50,16 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     /* Subsystems */
+    
+   private final Gripper gripperSubsystem = new Gripper();
 
     /* Commands */
+    private final acquireCoral intakeCoral = new acquireCoral(gripperSubsystem, 1);
+    private final RunRoller intakeAlgae = new RunRoller(gripperSubsystem, 0.5);
+    private final RunRoller outtakeAlgae = new RunRoller(gripperSubsystem, -0.5);
+    private final RunRoller outtakeCoral = new RunRoller(gripperSubsystem, -1);
+
+       
 
     public RobotContainer() {
         autoChooser = AutoBuilder.buildAutoChooser("Test");
@@ -76,7 +88,13 @@ public class RobotContainer {
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         /* Operator controls */
-        
+        opController.rightBumper().onTrue(intakeCoral);
+        opController.leftBumper().whileTrue(intakeAlgae);
+        opController.x().whileTrue(intakeAlgae);
+        opController.y().whileTrue(outtakeAlgae);
+
+        // controller.button.case(command)
+
         /* Technition controls */
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
