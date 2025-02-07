@@ -13,6 +13,6 @@ public class Constants {
 
         /* Calibrated limelight pipelines */
         public static int reefPipeline_Test = 0;
-        public static int stationTestPipeline_Test = 0;
+        public static int stationTestPipeline_Test = 1;
     }
 }

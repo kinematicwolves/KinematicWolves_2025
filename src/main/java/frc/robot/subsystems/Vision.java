@@ -14,23 +14,9 @@ public class Vision extends SubsystemBase {
   
   /* Creates a new Vision. */
   public Vision() {
-    getAllianceColor();
+    DriverStation.getAlliance().get();
     setLimelightPipeline(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test);
     setLimelightPipeline(VisionProfile.rearLimelight, VisionProfile.stationTestPipeline_Test);
-  }
-
-  /**
-   * Gets driver station assigned color.
-   * 
-   * @return DriverStation.Alliance, blue or red.
-   */
-  private DriverStation.Alliance getAllianceColor() {
-    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-      return DriverStation.Alliance.Blue;
-    }
-    else {
-      return DriverStation.Alliance.Red;
-    }
   }
 
   /**
@@ -42,60 +28,56 @@ public class Vision extends SubsystemBase {
     LimelightHelpers.setPipelineIndex(limelight, pipeline);
   }
   
-  /**
-  * Returns the 2d translation from the limelight position estimation object.
-  *
-  * @param limelight String, limelight name
-  * @param pipeline int, limelight pipeline
-  * @return Translation2d
-  */
-  public double getTranslationX(String limelight, int pipeline) {
+  public double getTx(String limelight, int pipeline) {
     setLimelightPipeline(limelight, pipeline);
-    if (getAllianceColor() == DriverStation.Alliance.Blue) {
-      return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelight).pose.getTranslation().getX();
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+      return LimelightHelpers.getTX(limelight);
     }
     else {
-      return LimelightHelpers.getBotPoseEstimate_wpiRed(limelight).pose.getTranslation().getX();
+      return -LimelightHelpers.getTX(limelight);
     }
   }
 
-  /**
-  * Returns the 2d translation from the limelight position estimation object.
-  *
-  * @param limelight String, limelight name
-  * @param pipeline int, limelight pipeline
-  * @return Translation2d
-  */
-  public double getTranslationY(String limelight, int pipeline) {
+
+  public double getTy(String limelight, int pipeline) {
     setLimelightPipeline(limelight, pipeline);
-    if (getAllianceColor() == DriverStation.Alliance.Blue) {
-      return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelight).pose.getTranslation().getY();
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+      return LimelightHelpers.getTY(limelight);
     }
     else {
-      return LimelightHelpers.getBotPoseEstimate_wpiRed(limelight).pose.getTranslation().getY();
+      return -LimelightHelpers.getTY(limelight);
     }
   }
 
-  /**
-  * Returns the 2d translation from the limelight position estimation object.
-  *
-  * @param limelight String, limelight name
-  * @param pipeline int, limelight pipeline
-  * @return Translation2d
-  */
-  public double getRotation2d(String limelight, int pipeline) {
+
+  public double getTa(String limelight, int pipeline) {
     setLimelightPipeline(limelight, pipeline);
-    if (getAllianceColor() == DriverStation.Alliance.Blue) {
-      return LimelightHelpers.getBotPoseEstimate_wpiBlue(limelight).pose.getRotation().getRadians()/1.2;
+    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
+      return LimelightHelpers.getTA(limelight);
     }
     else {
-      return LimelightHelpers.getBotPoseEstimate_wpiRed(limelight).pose.getRotation().getRadians()/1.2;
+      return -LimelightHelpers.getTA(limelight);
     }
+  }
+
+  public boolean isTxAligned(String limelight, int pipeline) {
+    double Tx = getTx(limelight, pipeline);
+
+    return (Tx >= -1) && (Tx <= 1);
   }
 
   @Override
   // This method will be called once per scheduler run
   public void periodic() {
-    SmartDashboard.putNumber("Front Limelight Rad", getTranslationY(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+    SmartDashboard.putNumber("Reef Tx", getTx(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+    SmartDashboard.putNumber("Reef Ty", getTy(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+    SmartDashboard.putNumber("Reef Ta", getTa(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+
+    SmartDashboard.putNumber("Station Tx", getTx(VisionProfile.rearLimelight, VisionProfile.stationTestPipeline_Test));
+    SmartDashboard.putNumber("Station Ty", getTy(VisionProfile.rearLimelight, VisionProfile.stationTestPipeline_Test));
+    SmartDashboard.putNumber("Station Ta", getTa(VisionProfile.rearLimelight, VisionProfile.stationTestPipeline_Test));
+
+    SmartDashboard.putBoolean("Tx Aligned", isTxAligned(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test));
+
   }
 }
