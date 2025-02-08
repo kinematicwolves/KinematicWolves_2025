@@ -3,45 +3,45 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.6,
-        "y": 2.9
+        "x": 7.3,
+        "y": 6.2
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1000000000000005,
-        "y": 2.0339745962155615
-      },
-      "isLocked": false,
-      "linkedName": "BranchC"
-    },
-    {
-      "anchor": {
-        "x": 2.2388270547945206,
-        "y": 4.460744863013699
-      },
-      "prevControl": {
-        "x": 2.2388270547945206,
-        "y": 3.613863805256554
-      },
-      "nextControl": {
-        "x": 2.2388270547945206,
-        "y": 5.288074382668406
+        "x": 6.300000000000008,
+        "y": 6.2
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 1.4,
-        "y": 7.2
+        "x": 6.462668918913977,
+        "y": 4.430152027022085
       },
       "prevControl": {
-        "x": 2.042787609686539,
-        "y": 6.433955556881022
+        "x": 6.558175416630788,
+        "y": 4.9717962911788
+      },
+      "nextControl": {
+        "x": 6.30464907723707,
+        "y": 3.5339769717809757
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.0,
+        "y": 2.8
+      },
+      "prevControl": {
+        "x": 5.499999999999999,
+        "y": 1.9339745962155606
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftStation"
+      "linkedName": "BranchE"
     }
   ],
   "rotationTargets": [],
@@ -49,22 +49,22 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxVelocity": 1.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -50.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "Branch to LeftStation",
+  "folder": "CenterLeft to Branch",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 57.474113813778864
+    "rotation": 180.0
   },
   "useDefaultConstraints": true
 }

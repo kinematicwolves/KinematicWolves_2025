@@ -1,0 +1,37 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftWall_BranchI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchI_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_Algae5"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Algae5_LeftProcesser"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
