@@ -60,7 +60,7 @@ public class RobotContainer {
 
         // Reef auto align
         joystick.rightBumper().whileTrue(drivetrain.applyRequest(
-            () -> robotCentric.withVelocityX(
+            () -> robotCentric.withVelocityY(
                 vision.getTx(VisionProfile.frontLimelight, 
                 VisionProfile.reefPipeline_Test)
                 /20))); //TODO: double check max gain

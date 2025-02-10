@@ -31,10 +31,10 @@ public class Vision extends SubsystemBase {
   public double getTx(String limelight, int pipeline) {
     setLimelightPipeline(limelight, pipeline);
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-      return LimelightHelpers.getTX(limelight);
+      return -LimelightHelpers.getTX(limelight);
     }
     else {
-      return -LimelightHelpers.getTX(limelight);
+      return LimelightHelpers.getTX(limelight);
     }
   }
 
@@ -63,7 +63,7 @@ public class Vision extends SubsystemBase {
   public boolean isTxAligned(String limelight, int pipeline) {
     double Tx = getTx(limelight, pipeline);
 
-    return (Tx >= -1) && (Tx <= 1);
+    return (Tx <= -1) && (Tx >= 1);
   }
 
   @Override
