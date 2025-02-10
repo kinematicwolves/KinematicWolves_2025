@@ -14,8 +14,10 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
 
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -46,6 +48,9 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     /* Subsystems */
+    
+    /* Robot states */
+    private boolean coralMode = true;
 
     /* Commands */
 
@@ -76,8 +81,40 @@ public class RobotContainer {
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         /* Operator controls */
+        // untested
+        opController.back().onChange(
+            new InstantCommand(
+                () -> {
+                    coralMode = !coralMode;
+                    System.out.println("Coral Mode Toggled: " + coralMode);
+                }
+            )
+        );
+
+        // untested
+        Trigger coralModeTrigger = new Trigger(() -> coralMode);
+
+        // untested
+        opController.a().onTrue(
+            new InstantCommand(() -> System.out.println("A Pressed - Default Action"))
+        );
+
+        // untested
+        coralModeTrigger.and(opController.a()).onTrue(
+                new InstantCommand(() -> System.out.println("A Pressed - Coral Mode Action"))
+        );
+
+        // untested
+        opController.b().onTrue(
+            new InstantCommand(() -> System.out.println("B Pressed - Default Action"))
+        );
+
+        // untested
+        coralModeTrigger.and(opController.b()).onTrue(
+                new InstantCommand(() -> System.out.println("B Pressed - Coral Mode Action"))
+        );
         
-        /* Technition controls */
+        /* Technician controls */
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
         // techController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
