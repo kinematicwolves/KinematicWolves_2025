@@ -50,7 +50,8 @@ public class RobotContainer {
     /* Subsystems */
     
     /* Robot states */
-    private boolean coralMode = true;
+    public boolean coralMode = true;
+    public int scoringLevel = 0;
 
     /* Commands */
 
@@ -81,8 +82,7 @@ public class RobotContainer {
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         /* Operator controls */
-        // untested
-        opController.back().onChange(
+        opController.back().onTrue(
             new InstantCommand(
                 () -> {
                     coralMode = !coralMode;
@@ -91,29 +91,51 @@ public class RobotContainer {
             )
         );
 
-        // untested
-        Trigger coralModeTrigger = new Trigger(() -> coralMode);
+        opController.leftBumper().onTrue(
+            new InstantCommand(
+                () -> {
+                    scoringLevel -= 1;
+                    if (scoringLevel < 1) 
+                        scoringLevel = 1;
+                    System.out.println("Scoring level now set to: " + scoringLevel);
+                }
+            )
+        );
 
-        // untested
+        opController.rightBumper().onTrue(
+            new InstantCommand(
+                () -> {
+                    scoringLevel += 1;
+                    if (scoringLevel > 4)
+                        scoringLevel = 4;
+                    System.out.println("Scoring level now set to: " + scoringLevel);
+                }
+            )
+        );
+
+        Trigger coralModeTrigger = new Trigger(() -> coralMode);
+        Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
+        Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
+        Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
+        Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
+
+        // examples of how to use these triggers
         opController.a().onTrue(
             new InstantCommand(() -> System.out.println("A Pressed - Default Action"))
         );
 
-        // untested
         coralModeTrigger.and(opController.a()).onTrue(
-                new InstantCommand(() -> System.out.println("A Pressed - Coral Mode Action"))
+            new InstantCommand(() -> System.out.println("A Pressed - Coral Mode Action"))
         );
 
-        // untested
         opController.b().onTrue(
             new InstantCommand(() -> System.out.println("B Pressed - Default Action"))
         );
 
-        // untested
         coralModeTrigger.and(opController.b()).onTrue(
-                new InstantCommand(() -> System.out.println("B Pressed - Coral Mode Action"))
+            new InstantCommand(() -> System.out.println("B Pressed - Coral Mode Action"))
         );
-        
+
         /* Technician controls */
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.
