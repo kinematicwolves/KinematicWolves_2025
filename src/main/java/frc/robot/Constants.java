@@ -13,6 +13,16 @@ public class Constants {
 
         /* Calibrated limelight pipelines */
         public static int reefPipeline_Test = 0;
-        public static int stationTestPipeline_Test = 1;
+        public static int stationTestPipeline_Test = 0;
+
+        /* Proportional limits for front limelight */
+        public static int frontProportionalTx = 20;
+        public static int frontProportionalTy = 20;
+        public static int frontProportionalTa = 20;
+
+        /* Proportional limits for rear limelight */
+        public static int rearProportionalTx = 20;
+        public static int rearProportionalTy = 20;
+        public static int rearProportionalTa = 20;
     }
 }
