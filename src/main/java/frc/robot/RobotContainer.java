@@ -18,9 +18,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.Commands.IntakeCoral;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Funnel;
 
 public class RobotContainer {
     /* Swerve */
@@ -38,11 +39,13 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
+
+    public final Funnel funnelSubsystem = new Funnel();
     
     /* Controllers */
     private final CommandXboxController driveController = new CommandXboxController(0);
     private final CommandXboxController opController = new CommandXboxController(1);
-    private final CommandXboxController techController = new CommandXboxController(2);
+    //private final CommandXboxController techController = new CommandXboxController(2);
     
     /* Path follower */
     private final SendableChooser<Command> autoChooser;
@@ -76,6 +79,8 @@ public class RobotContainer {
         );
 
         driveController.a().whileTrue(drivetrain.applyRequest(() -> brake));
+
+        driveController.b().whileTrue(new IntakeCoral(funnelSubsystem));
         
         // reset the field-centric heading on left bumper press
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
