@@ -16,10 +16,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
+import frc.robot.commands.SetElevatorPosition;
+import frc.robot.commands.SetElevatorSpeed;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Elevator;
 
 public class RobotContainer {
     /* Swerve */
@@ -44,7 +49,7 @@ public class RobotContainer {
     private final CommandXboxController techController = new CommandXboxController(2);
     
     /* Path follower */
-    private final SendableChooser<Command> autoChooser;
+    // private final SendableChooser<Command> autoChooser;
 
     /* Subsystems */
     
@@ -54,9 +59,22 @@ public class RobotContainer {
 
     /* Commands */
 
+    /**Subsystems */
+    private final Elevator elevatorSubsystem = new Elevator();
+
+    /**Commands */
+    // private final SetElevatorPosition elevatorCoralLv4 = new SetElevatorPosition(elevatorSubsystem, 285.5);
+    // private final SetElevatorPosition elevatorCoralLv3 = new SetElevatorPosition(elevatorSubsystem, 70);
+    private final SetElevatorPosition elevatorCoralLv2 = new SetElevatorPosition(elevatorSubsystem, 142.5);
+    private final SetElevatorPosition elevatorCoralLv1 = new SetElevatorPosition(elevatorSubsystem, 71.25);
+    private final SetElevatorPosition elevatorHome     = new SetElevatorPosition(elevatorSubsystem, 0);
+    
+
+
+
     public RobotContainer() {
-        autoChooser = AutoBuilder.buildAutoChooser("Test");
-        SmartDashboard.putData("Auto Mode", autoChooser);
+        // autoChooser = AutoBuilder.buildAutoChooser("Test");
+        // SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
     }
@@ -143,12 +161,26 @@ public class RobotContainer {
         // techController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
         // techController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
+        // // reset the field-centric heading on left bumper press
+        // driverController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+
+        // drivetrain.registerTelemetry(logger::telemeterize);
+
+        // /**Operater Controls */
+        opController.y().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
+        opController.x().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
+        opController.povDown().onTrue(elevatorCoralLv1);
+        opController.povLeft().onTrue(elevatorCoralLv2);
+        // opController.povUp().onTrue(elevatorCoralLv3);
+        // opController.povRight().onTrue(elevatorCoralLv4);
+        opController.a().onTrue(elevatorHome);
         /* Other */
         drivetrain.registerTelemetry(logger::telemeterize);
     }
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return autoChooser.getSelected();
+        // return autoChooser.getSelected();
+        return new InstantCommand();
     }
 }
