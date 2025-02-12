@@ -20,6 +20,7 @@ public class Robot extends TimedRobot {
 
   public Robot() {
     m_robotContainer = new RobotContainer();
+    System.out.println("Elevator Testing");
   }
 
   @Override
@@ -34,11 +35,11 @@ public class Robot extends TimedRobot {
      * This example is sufficient to show that vision integration is possible, though exact implementation
      * of how to use vision should be tuned per-robot and to the team's specification.
      */
-    if (kUseLimelight) {
-      var driveState = m_robotContainer.drivetrain.getState();
-      double headingDeg = driveState.Pose.getRotation().getDegrees();
-      double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
-    }
+    // if (kUseLimelight) {
+    //   var driveState = m_robotContainer.drivetrain.getState();
+    //   double headingDeg = driveState.Pose.getRotation().getDegrees();
+    //   double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
+    // }
   }
 
   @Override

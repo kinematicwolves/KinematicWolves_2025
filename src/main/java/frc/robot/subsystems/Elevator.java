@@ -49,7 +49,7 @@ public class Elevator extends SubsystemBase {
 
         /**Inversion Factors */
         liftConfigA.inverted(false);
-        liftConfigB.inverted(false);
+        liftConfigB.inverted(true);
 
         /**Current Limits */
         liftConfigA.smartCurrentLimit(40);
@@ -57,9 +57,15 @@ public class Elevator extends SubsystemBase {
 
         /**Software Limits */
         softLimitConfig.apply(liftConfigA.softLimit);
-        liftConfigA.softLimit.forwardSoftLimit(10);
         softLimitConfig.apply(liftConfigB.softLimit);
-        liftConfigB.softLimit.forwardSoftLimit(10);
+        liftConfigA.softLimit.reverseSoftLimitEnabled(true);
+        liftConfigB.softLimit.reverseSoftLimitEnabled(true);
+        liftConfigA.softLimit.forwardSoftLimitEnabled(true);
+        liftConfigB.softLimit.forwardSoftLimitEnabled(true);
+        liftConfigA.softLimit.reverseSoftLimit(0);
+        liftConfigB.softLimit.reverseSoftLimit(0);
+        liftConfigA.softLimit.forwardSoftLimit(300);
+        liftConfigB.softLimit.forwardSoftLimit(300);
 
         /** Netural Modes */
         liftConfigA.idleMode(IdleMode.kBrake);
@@ -69,13 +75,13 @@ public class Elevator extends SubsystemBase {
         liftEncoderB.setPosition(0);
         LiftEncoderA.setPosition(0);
 
+        //**PIDS */
+        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.125, 0, 0);
+        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.125, 0, 0);
+
         /**Burning Configs */
         m_LiftA.configure(liftConfigA, null, PersistMode.kPersistParameters);
         m_LiftB.configure(liftConfigB, null, PersistMode.kPersistParameters);
-
-        //**PIDS */
-        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(1, 0, 0);
-        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(1, 0, 0);
     }
         
     /**
@@ -96,6 +102,11 @@ public class Elevator extends SubsystemBase {
         lifControllerB.setReference(setpoint, ControlType.kPosition);
     }
 
+    public void setElevatorSpeed(double speed){
+        m_LiftA.set(speed);
+        m_LiftB.set(speed);
+    }
+
     /**
      * Tells us if it between the upper and lower position 
      * @return true if between upper and lower limit, else
@@ -105,10 +116,10 @@ public class Elevator extends SubsystemBase {
         double UpperLimit = setpoint + 100;
 
         if ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)) {
-        return true;
+            return true;
         }
         else {
-        return false;
+            return false;
         }
     }
 
