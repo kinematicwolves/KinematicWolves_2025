@@ -4,25 +4,13 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
-
-import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.ctre.phoenix6.swerve.SwerveRequest;
-
-import com.pathplanner.lib.auto.AutoBuilder;
-
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
-import frc.robot.generated.TunerConstants;
-import frc.robot.subsystems.CommandSwerveDrivetrain;
-import frc.robot.subsystems.Gripper;
 import frc.robot.commands.RunRoller;
 import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.acquireCoral;
+import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Wrist;
     
 
 public class RobotContainer {
@@ -53,6 +41,7 @@ public class RobotContainer {
     /* Subsystems */
     
    private final Gripper gripperSubsystem = new Gripper();
+   private final Wrist wristSubsystem = new Wrist();
 
     /* Commands */
     private final acquireCoral intakeCoral = new acquireCoral(gripperSubsystem, 1);
@@ -60,8 +49,8 @@ public class RobotContainer {
     private final RunRoller outTakeAlgae = new RunRoller(gripperSubsystem, -0.5);
     private final RunRoller outTakeCoral = new RunRoller(gripperSubsystem, -1);
 
-    private final SetWristPosition wristHome = new SetWristPosition(gripperSubsystem, 0);
-    private final SetWristPosition wristScoreAlgae = new SetWristPosition(gripperSubsystem, 20);
+    private final SetWristPosition wristHome = new SetWristPosition(wristSubsystem, 0);
+    private final SetWristPosition wristScoreAlgae = new SetWristPosition(wristSubsystem, 20);
 
        
 

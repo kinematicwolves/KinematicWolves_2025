@@ -5,25 +5,25 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Wrist;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
 public class SetWristPosition extends Command {
-  private Gripper gripper;
+  private Wrist wrist;
   private double setPoint;
 
   /** Creates a new SetWristPosition. */
-  public SetWristPosition(Gripper gripper, double setPoint) {
+  public SetWristPosition(Wrist wrist, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
-    this.gripper = gripper;
+    this.wrist = wrist;
     this.setPoint = setPoint;
-    addRequirements(gripper);
+    addRequirements(wrist);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    gripper.setWristPos(setPoint);
+    wrist.setWristPos(setPoint);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -37,6 +37,6 @@ public class SetWristPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return gripper.wristAtPos();
+    return wrist.wristAtPos();
   }
 }
