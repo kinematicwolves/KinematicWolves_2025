@@ -4,11 +4,12 @@
 
 package frc.robot;
 
-import static edu.wpi.first.units.Units.*;
+import static edu.wpi.first.units.Units.MetersPerSecond;
+import static edu.wpi.first.units.Units.RadiansPerSecond;
+import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -17,10 +18,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Direction;
-
+import frc.robot.RobotStates.SetDisabledState;
+import frc.robot.RobotStates.SetTeleOpState;
+import frc.robot.RobotStates.SetTestState;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
+import frc.robot.subsystems.Lighting;
 
 public class RobotContainer {
     /* Swerve */
@@ -48,6 +51,7 @@ public class RobotContainer {
     private final SendableChooser<Command> autoChooser;
 
     /* Subsystems */
+    private final Lighting lightingSubsystem = new Lighting();
     
     /* Robot states */
     private boolean coralMode = true;
@@ -129,5 +133,19 @@ public class RobotContainer {
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
         return autoChooser.getSelected();
+    }
+    // Command to reset robot to initial teleop light show/state
+    public Command getTeleOpInitCommand() {
+        return new SetTeleOpState(lightingSubsystem);     
+    }
+
+    // Command to reset robot to initial testOp light show/state
+    public Command getTestOpInitCommand() {
+        return new SetTestState(lightingSubsystem);
+    }
+
+    // Command to reset robot to initial disable light show/state
+    public Command getDisabledCommandInitCommand() {
+        return new SetDisabledState(lightingSubsystem);
     }
 }

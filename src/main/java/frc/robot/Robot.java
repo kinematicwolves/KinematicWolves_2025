@@ -13,6 +13,9 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
+  private Command m_disabledCommandInitialization;
+  private Command m_teleOpCommandInitialization;
+  private Command m_testOpCommandInitialization;
 
   private final RobotContainer m_robotContainer;
 
@@ -48,7 +51,17 @@ public class Robot extends TimedRobot {
   }
 
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+    if (m_teleOpCommandInitialization != null){
+      m_teleOpCommandInitialization.cancel();
+      m_teleOpCommandInitialization = null;
+    }
+    
+    m_disabledCommandInitialization = m_robotContainer.getDisabledCommandInitCommand();
+    if (m_disabledCommandInitialization != null){
+      m_disabledCommandInitialization.schedule();
+    }
+  }
 
   @Override
   public void disabledPeriodic() {}
@@ -76,6 +89,23 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+    // This makes sure that the autonomous stops running when
+    // teleOp starts running. If you want the autonomous to
+    // continue until interrupted by another command, remove
+    // this line or comment it out.
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+    
+    if (m_disabledCommandInitialization != null){
+      m_disabledCommandInitialization.cancel();
+      m_disabledCommandInitialization = null;
+    }
+
+    m_testOpCommandInitialization = m_robotContainer.getTeleOpInitCommand();
+    if (m_testOpCommandInitialization != null){
+      m_testOpCommandInitialization.schedule();
+    }
   }
 
   @Override
@@ -87,6 +117,19 @@ public class Robot extends TimedRobot {
   @Override
   public void testInit() {
     CommandScheduler.getInstance().cancelAll();
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
+    
+    if (m_disabledCommandInitialization != null){
+      m_disabledCommandInitialization.cancel();
+      m_disabledCommandInitialization = null;
+    }
+
+    m_teleOpCommandInitialization = m_robotContainer.getTestOpInitCommand();
+    if (m_teleOpCommandInitialization != null){
+      m_teleOpCommandInitialization.schedule();
+    }
   }
 
   @Override
