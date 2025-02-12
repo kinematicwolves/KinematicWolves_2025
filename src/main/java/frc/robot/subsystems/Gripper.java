@@ -9,6 +9,7 @@ import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.playingwithfusion.TimeOfFlight;
+import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.spark.SparkMax;
@@ -16,6 +17,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.ClosedLoopConfig.FeedbackSensor;
 import com.revrobotics.spark.SparkAbsoluteEncoder;
+import com.revrobotics.spark.SparkClosedLoopController;
 
 import edu.wpi.first.networktables.NetworkTableInstance.NetworkMode;
 import edu.wpi.first.wpilibj.drive.RobotDriveBase.MotorType;
@@ -25,9 +27,10 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class Gripper extends SubsystemBase {
     // declaring all the things in the subsystem
     // wrist portion
-    private SparkMax m_wrist = new SparkMax(55, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
+    private SparkMax m_wrist = new SparkMax(60, com.revrobotics.spark.SparkLowLevel.MotorType.kBrushless);
     private SparkMaxConfig wristConfig = new SparkMaxConfig();
     private SparkAbsoluteEncoder wristAbsoluteEncoder = m_wrist.getAbsoluteEncoder();
+    private SparkClosedLoopController wristController = m_wrist.getClosedLoopController();
 
     // roller portion
     private TalonFX m_gripper = new TalonFX(56);
@@ -46,14 +49,14 @@ public class Gripper extends SubsystemBase {
         m_wrist.configure(wristConfig, com.revrobotics.spark.SparkBase.ResetMode.kResetSafeParameters,null);
         wristConfig.smartCurrentLimit(40);
         wristConfig.inverted(false); // we may need to change this one later
-        wristConfig.idleMode(IdleMode.kBrake);
-        wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(1, 0, 0);
+        wristConfig.idleMode(IdleMode.kCoast);
+        wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.01, 0, 0);
         m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
 
         // roller motor
         m_gripper.getConfigurator().apply(new TalonFXConfiguration());
         gripperConfig.CurrentLimits.SupplyCurrentLimit = 10;
-        gripperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive; //TODO: Untested
+        gripperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         gripperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
         m_gripper.getConfigurator().refresh(gripperConfig);
     }
@@ -84,8 +87,25 @@ public class Gripper extends SubsystemBase {
      * 
      * @return double, through bore position
      */
-    private double getWristAbsolutePos() {
-        return wristAbsoluteEncoder.getPosition();
+    private double getWristPos() {
+        return m_wrist.getEncoder().getPosition();
+    }
+
+    public void setWristPos(double commandedPos) {
+        wristSetPoint = commandedPos;
+        wristController.setReference(commandedPos, ControlType.kPosition);
+    }
+
+    public boolean wristAtPos() {
+        double lowerLimit = wristSetPoint - 5;
+        double upperLimit = wristSetPoint + 5;
+
+        if ((getWristPos() >= lowerLimit) && (getWristPos() <= upperLimit)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
 
@@ -93,7 +113,7 @@ public class Gripper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         // smart dashboard
-        SmartDashboard.putNumber("Wrist Pos", getWristAbsolutePos());
+        SmartDashboard.putNumber("Wrist Pos", getWristPos());
         // wrist position
         SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
     }
