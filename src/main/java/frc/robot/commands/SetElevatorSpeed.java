@@ -12,7 +12,11 @@ public class SetElevatorSpeed extends Command {
   Elevator elevatorSubsystem;
   double speed;
 
-  /** Creates a new SetElevatorSpeed. */
+  /**
+   * Sets motor output to elevator. Stops motors when returned a false value.
+   * @param elevatorSub subsystem, elevator subsystem
+   * @param speed double, percentage output
+   */
   public SetElevatorSpeed(Elevator elevatorSub, double speed) {
     this.elevatorSubsystem = elevatorSub;
     this.speed = speed;
