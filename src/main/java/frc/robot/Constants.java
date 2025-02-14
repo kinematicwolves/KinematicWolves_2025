@@ -28,4 +28,16 @@ public class Constants {
         /* Encoder Error */
         public static final double encoderSetPointError = 25; // TODO: Config to precise positioning
     }
+
+    public class GripperProfile {
+        /* CAN Id */
+        public static final int motorId = 56;
+        public static final int tofId = 57;
+
+        /* Motor Current Limit */
+        public static final double currentLimit = 10;
+
+        /* Sensor Range Values */
+        public static final double tofCoralRange = 75;
+    }
 }

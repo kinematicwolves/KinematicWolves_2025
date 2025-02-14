@@ -15,6 +15,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.robot.commands.RunRoller;
+import frc.robot.commands.SetWristPosition;
+import frc.robot.commands.AcquireCoral;
+import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Wrist;
+    
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.generated.TunerConstants;
@@ -39,29 +45,40 @@ public class RobotContainer {
     
     /* Choosers */
     // private final SendableChooser<Command> autoChooser;
-
-    /* Subsystems */
-    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     
     /* Robot states */
     public boolean coralMode = true;
     public int scoringLevel = 0;
 
     /**Subsystems */
+    public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final Elevator elevatorSubsystem = new Elevator();
+    private final Gripper gripperSubsystem = new Gripper();
+    private final Wrist wristSubsystem = new Wrist();
 
-    /**Commands */
+    /* Commands */
+    // Swerve
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
-    // private final SetElevatorPosition elevatorCoralLv4 = new SetElevatorPosition(elevatorSubsystem, 285.5);
-    // private final SetElevatorPosition elevatorCoralLv3 = new SetElevatorPosition(elevatorSubsystem, 70);
+    // Elevator
+    private final SetElevatorPosition elevatorCoralLv4 = new SetElevatorPosition(elevatorSubsystem, 285.5);
+    private final SetElevatorPosition elevatorCoralLv3 = new SetElevatorPosition(elevatorSubsystem, 70);
     private final SetElevatorPosition elevatorCoralLv2 = new SetElevatorPosition(elevatorSubsystem, 142.5);
     private final SetElevatorPosition elevatorCoralLv1 = new SetElevatorPosition(elevatorSubsystem, 71.25);
     private final SetElevatorPosition elevatorHome     = new SetElevatorPosition(elevatorSubsystem, 0);
     
+    // Gripper
+    private final AcquireCoral intakeCoral = new AcquireCoral(gripperSubsystem, 1);
+    private final RunRoller intakeAlgae = new RunRoller(gripperSubsystem, 0.5);
+    private final RunRoller outTakeAlgae = new RunRoller(gripperSubsystem, -0.5);
+    private final RunRoller outTakeCoral = new RunRoller(gripperSubsystem, -1);
 
+    // Wrist
+    private final SetWristPosition wristHome = new SetWristPosition(wristSubsystem, 0);
+    private final SetWristPosition wristScoreAlgae = new SetWristPosition(wristSubsystem, 20);
 
+       
 
     public RobotContainer() {
         // autoChooser = AutoBuilder.buildAutoChooser("Test");
@@ -71,7 +88,7 @@ public class RobotContainer {
     }
 
     private void configureBindings() {
-        /* Driver controls */
+    /* Driver controls */
         // Note that X is defined as forward according to WPILib convention, and Y is defined as to the left according to WPILib convention.
         drivetrain.setDefaultCommand(
             // Drivetrain will execute this command periodically
@@ -84,7 +101,7 @@ public class RobotContainer {
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())); //  LB = Reset field-centric heading
         // drivetrain.registerTelemetry(logger::telemeterize);
 
-        /* Operator controls */
+    /* Operator controls */
         opController.back().onTrue(
             new InstantCommand(
                 () -> {
@@ -93,7 +110,6 @@ public class RobotContainer {
                 }
             )
         );
-
         opController.leftBumper().onTrue(
             new InstantCommand(
                 () -> {
@@ -143,6 +159,9 @@ public class RobotContainer {
         // opController.povUp().onTrue(elevatorCoralLv3);
         // opController.povRight().onTrue(elevatorCoralLv4);
         opController.a().onTrue(elevatorHome);
+
+        opController.x().onTrue(wristHome);
+        opController.y().onTrue(wristScoreAlgae);
 
         /* Technician controls */
         // techController.povUp().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
