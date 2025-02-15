@@ -11,7 +11,7 @@ public class Constants {
     public class ElevatorProfile {
         /* CAN Id's */
         public static final int liftA_Id = 50;
-        public static final int liftB_Id = 52;
+        public static final int liftB_Id = 51;
 
         /* Motor Current Limit */
         public static final int currentLimit = 40;

@@ -30,7 +30,7 @@ public class Wrist extends SubsystemBase {
     wristConfig.smartCurrentLimit(40);
     wristConfig.inverted(false); // we may need to change this one later
     wristConfig.idleMode(IdleMode.kCoast);
-    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.01, 0, 0);
+    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.021, 0, 0);
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }
 
@@ -53,8 +53,8 @@ public class Wrist extends SubsystemBase {
   }
 
   public boolean wristAtPos() {
-    double lowerLimit = setPoint - 5;
-    double upperLimit = setPoint + 5;
+    double lowerLimit = setPoint - 3;
+    double upperLimit = setPoint + 3;
 
     if ((getWristPos() >= lowerLimit) && (getWristPos() <= upperLimit)) {
       return true;

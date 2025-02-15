@@ -15,17 +15,18 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.commands.RunRoller;
-import frc.robot.commands.SetWristPosition;
-import frc.robot.commands.AcquireCoral;
-import frc.robot.subsystems.Gripper;
-import frc.robot.subsystems.Wrist;
-    
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.commands.AcquireCoral;
+import frc.robot.commands.IntakeAlgae;
+import frc.robot.commands.RunRoller;
 import frc.robot.commands.SetElevatorPosition;
+import frc.robot.commands.SetElevatorSpeed;
+import frc.robot.commands.SetWristPosition;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Wrist;
 
 public class RobotContainer {
     /* Swerve Speeds */
@@ -48,7 +49,7 @@ public class RobotContainer {
     
     /* Robot states */
     public boolean coralMode = true;
-    public int scoringLevel = 0;
+    public int scoringLevel = 1;
 
     /**Subsystems */
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
@@ -62,23 +63,33 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     // Elevator
-    private final SetElevatorPosition elevatorCoralLv4 = new SetElevatorPosition(elevatorSubsystem, 285.5);
-    private final SetElevatorPosition elevatorCoralLv3 = new SetElevatorPosition(elevatorSubsystem, 70);
-    private final SetElevatorPosition elevatorCoralLv2 = new SetElevatorPosition(elevatorSubsystem, 142.5);
-    private final SetElevatorPosition elevatorCoralLv1 = new SetElevatorPosition(elevatorSubsystem, 71.25);
-    private final SetElevatorPosition elevatorHome     = new SetElevatorPosition(elevatorSubsystem, 0);
-    
-    // Gripper
-    private final AcquireCoral intakeCoral = new AcquireCoral(gripperSubsystem, 1);
-    private final RunRoller intakeAlgae = new RunRoller(gripperSubsystem, 0.5);
-    private final RunRoller outTakeAlgae = new RunRoller(gripperSubsystem, -0.5);
-    private final RunRoller outTakeCoral = new RunRoller(gripperSubsystem, -1);
+    private final SetElevatorPosition elevatorCoralLv4    = new SetElevatorPosition(elevatorSubsystem, 289.5);
+    private final SetElevatorPosition elevatorCoralLv3    = new SetElevatorPosition(elevatorSubsystem, 161.8);
+    private final SetElevatorPosition elevatorCoralLv2    = new SetElevatorPosition(elevatorSubsystem, 50.5);
+    private final SetElevatorPosition elevatorCoralLv1    = new SetElevatorPosition(elevatorSubsystem, 71.25);
+    private final SetElevatorPosition elevatorHome        = new SetElevatorPosition(elevatorSubsystem, 0);
+    private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
+    private final SetElevatorPosition elevatorAlgaeLvl1   = new SetElevatorPosition(elevatorSubsystem, -81.5);
+    private final SetElevatorPosition elevatorAlgaeLvl2   = new SetElevatorPosition(elevatorSubsystem, -18.5);
+    private final SetElevatorPosition elevatorScoreAlgae  = new SetElevatorPosition(elevatorSubsystem, -91.5);
 
     // Wrist
-    private final SetWristPosition wristHome = new SetWristPosition(wristSubsystem, 0);
-    private final SetWristPosition wristScoreAlgae = new SetWristPosition(wristSubsystem, 20);
-
-       
+    private final SetWristPosition wristHome            = new SetWristPosition(wristSubsystem, 0);
+    private final SetWristPosition wristCoralAquiredPos = new SetWristPosition(wristSubsystem, 0);
+    private final SetWristPosition wristCoralLvl1       = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl2       = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl3       = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl4       = new SetWristPosition(wristSubsystem, 10);
+    private final SetWristPosition wristAlgaeLvl1       = new SetWristPosition(wristSubsystem, 49);
+    private final SetWristPosition wristAlgaeLvl2       = new SetWristPosition(wristSubsystem, 30);
+    private final SetWristPosition wristScoreAlgae      = new SetWristPosition(wristSubsystem, 60);
+    
+    // Gripper
+    private final RunRoller intakeCoral      = new RunRoller(gripperSubsystem, 0.3);
+    private final RunRoller intakeAlgae      = new RunRoller(gripperSubsystem, 0.3);
+    private final RunRoller outTakeAlgae     = new RunRoller(gripperSubsystem, -0.5);
+    private final RunRoller outTakeCoralFast = new RunRoller(gripperSubsystem, -0.7);
+    private final RunRoller outTakeCoral     = new RunRoller(gripperSubsystem, -0.1);
 
     public RobotContainer() {
         // autoChooser = AutoBuilder.buildAutoChooser("Test");
@@ -99,10 +110,10 @@ public class RobotContainer {
                     .withRotationalRate(-driveController.getRightX() * MaxAngularRate))); // Drive counterclockwise with negative X (left)
         driveController.a().whileTrue(drivetrain.applyRequest(() -> brake)); // A = X drivetrain wheels
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())); //  LB = Reset field-centric heading
-        // drivetrain.registerTelemetry(logger::telemeterize);
+        drivetrain.registerTelemetry(logger::telemeterize);
 
     /* Operator controls */
-        opController.back().onTrue(
+        opController.start().onTrue(
             new InstantCommand(
                 () -> {
                     coralMode = !coralMode;
@@ -110,62 +121,62 @@ public class RobotContainer {
                 }
             )
         );
-        opController.leftBumper().onTrue(
+        opController.povDown().onTrue(
             new InstantCommand(
                 () -> {
                     scoringLevel -= 1;
                     if (scoringLevel < 1) 
                         scoringLevel = 1;
-                    System.out.println("Scoring level now set to: " + scoringLevel); // LB = Decrease scoring level
+                    System.out.println("Scoring level now set to: " + scoringLevel); // Down dpad = Decrease scoring level
                 }
             )
         );
-        opController.rightBumper().onTrue(
+        opController.povUp().onTrue(
             new InstantCommand(
                 () -> {
                     scoringLevel += 1;
                     if (scoringLevel > 4)
                         scoringLevel = 4;
-                    System.out.println("Scoring level now set to: " + scoringLevel); // RB = Increase scoring level
+                    System.out.println("Scoring level now set to: " + scoringLevel); // Up dpad = Increase scoring level
                 }
             )
         );
 
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
+        Trigger algaeModeTrigger = new Trigger(() -> !coralMode);
+        Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
         Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
         Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
         Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
-        // examples of how to use these triggers
-        opController.a().onTrue(
-            new InstantCommand(() -> System.out.println("A Pressed - Default Action"))
-        );
+        // // coralModeTrigger.and(scoringLevel1.and(
+        //     opController.y().onTrue(wristAlgaeLvl1.andThen(elevatorAlgaeLvl1));
+        // // coralModeTrigger.and(scoringLevel2.and(
+        //     opController.b().onTrue(wristAlgaeLvl2.andThen(elevatorAlgaeLvl2));
+        // opController.leftStick().onTrue(wristScoreAlgae.andThen(elevatorScoreAlgae));
+        // opController.rightStick().onTrue(wristCoralLvl4.andThen(elevatorCoralLv4));
 
-        coralModeTrigger.and(opController.a()).onTrue(
-            new InstantCommand(() -> System.out.println("A Pressed - Coral Mode Action"))
-        );
+        // algaeModeTrigger.and(scoringLevel0.and(opController.y().onTrue(elevatorScoreAlgae.andThen(wristScoreAlgae))));
+        // algaeModeTrigger.and(scoringLevel1.and(opController.y().onTrue(elevatorAlgaeLvl1.andThen(wristAlgaeLvl1).andThen(intakeAlgae))));
+        // algaeModeTrigger.and(scoringLevel2.and(opController.y().onTrue(elevatorAlgaeLvl2.andThen(wristAlgaeLvl2).andThen(intakeAlgae))));
 
-        opController.b().onTrue(
-            new InstantCommand(() -> System.out.println("B Pressed - Default Action"))
-        );
 
-        coralModeTrigger.and(opController.b()).onTrue(
-            new InstantCommand(() -> System.out.println("B Pressed - Coral Mode Action"))
-        );
+        opController.rightBumper().whileTrue(outTakeCoral);
+        opController.leftBumper().whileTrue(intakeCoral);
+        opController.leftTrigger().whileTrue(intakeAlgae);
+        opController.rightTrigger().whileTrue(outTakeAlgae);
+        opController.povDown().onTrue(wristCoralLvl1.andThen(elevatorCoralLv1));
 
-        opController.povDown().onTrue(elevatorCoralLv1);
-        opController.povLeft().onTrue(elevatorCoralLv2);
-        // opController.povUp().onTrue(elevatorCoralLv3);
-        // opController.povRight().onTrue(elevatorCoralLv4);
-        opController.a().onTrue(elevatorHome);
+        opController.a().onTrue(elevatorHome.andThen(wristHome));
 
-        opController.x().onTrue(wristHome);
-        opController.y().onTrue(wristScoreAlgae);
+        opController.povLeft().onTrue(wristCoralLvl2.andThen(elevatorCoralLv2));
+        opController.povRight().onTrue(wristCoralLvl3.andThen(elevatorCoralLv3));
+        opController.povUp().onTrue(wristCoralLvl4.andThen(elevatorCoralLv4));//whileTrue(outTakeCoralFast);
 
         /* Technician controls */
-        // techController.povUp().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
-        // techController.povDown().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
+        opController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
+        opController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
 
         // Run SysId routines when holding back/start and X/Y.
         // Note that each routine should be run exactly once in a single log.

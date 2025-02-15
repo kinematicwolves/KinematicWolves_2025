@@ -10,6 +10,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.playingwithfusion.TimeOfFlight;
 
+import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GripperProfile;
@@ -18,6 +19,7 @@ public class Gripper extends SubsystemBase {
     private TalonFX m_gripper = new TalonFX(GripperProfile.motorId);
     public TalonFXConfiguration gripperConfig = new TalonFXConfiguration();
     private TimeOfFlight m_TOF = new TimeOfFlight(GripperProfile.tofId);
+    private PowerDistribution pdp = new PowerDistribution();
 
     private double rollerSpeed = 0;
             
@@ -33,7 +35,7 @@ public class Gripper extends SubsystemBase {
         gripperConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
         
         /* Idle Mode */
-        gripperConfig.MotorOutput.NeutralMode = NeutralModeValue.Coast;
+        gripperConfig.MotorOutput.NeutralMode = NeutralModeValue.Brake;
 
         /* Save Config */
         m_gripper.getConfigurator().refresh(gripperConfig);
@@ -52,6 +54,19 @@ public class Gripper extends SubsystemBase {
     }
 
     /**
+     * Checks if motor current is spiking
+     * @return true if current is spiking, else false
+     */
+    public boolean hasAlgae() {
+        if (pdp.getCurrent(11) <= 25) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+    /**
      * User sets the roller speed
      * 
      * @param speed commanded output value, -1 to 1
@@ -65,5 +80,6 @@ public class Gripper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
+        SmartDashboard.putNumber("Gripper current", pdp.getCurrent(11));
     }
 }

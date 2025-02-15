@@ -63,8 +63,8 @@ public class Elevator extends SubsystemBase {
         /**Software Limits */
         softLimitConfig.apply(liftConfigA.softLimit);
         softLimitConfig.apply(liftConfigB.softLimit);
-        liftConfigA.softLimit.reverseSoftLimitEnabled(true);
-        liftConfigB.softLimit.reverseSoftLimitEnabled(true);
+        liftConfigA.softLimit.reverseSoftLimitEnabled(false);
+        liftConfigB.softLimit.reverseSoftLimitEnabled(false);
         liftConfigA.softLimit.forwardSoftLimitEnabled(true);
         liftConfigB.softLimit.forwardSoftLimitEnabled(true);
         liftConfigA.softLimit.reverseSoftLimit(0);
@@ -119,6 +119,7 @@ public class Elevator extends SubsystemBase {
     public boolean atPosition(){
         double lowerLimit = setPoint - ElevatorProfile.encoderSetPointError;
         double UpperLimit = setPoint + ElevatorProfile.encoderSetPointError;
+        System.out.println("Encoder value:" + getPosition() + ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)));
 
         if ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)) {
             return true;
@@ -133,6 +134,5 @@ public class Elevator extends SubsystemBase {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Elevator encoder position", getPosition());
         SmartDashboard.putNumber("Elevator set point", setPoint);
-
     }
 }
