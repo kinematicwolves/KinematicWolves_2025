@@ -119,7 +119,7 @@ public class Elevator extends SubsystemBase {
     public boolean atPosition(){
         double lowerLimit = setPoint - ElevatorProfile.encoderSetPointError;
         double UpperLimit = setPoint + ElevatorProfile.encoderSetPointError;
-        System.out.println("Encoder value:" + getPosition() + ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)));
+        // System.out.println("Encoder value:" + getPosition() + ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)));
 
         if ((getPosition() >= lowerLimit) && (getPosition()<= UpperLimit)) {
             return true;
@@ -134,5 +134,6 @@ public class Elevator extends SubsystemBase {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Elevator encoder position", getPosition());
         SmartDashboard.putNumber("Elevator set point", setPoint);
+        SmartDashboard.putBoolean("Elevator At Pose", atPosition());
     }
 }

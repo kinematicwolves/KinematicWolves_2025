@@ -87,5 +87,6 @@ public class Gripper extends SubsystemBase {
         SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
         SmartDashboard.putNumber("Gripper current", m_gripper.getStatorCurrent().getValueAsDouble());
         SmartDashboard.putNumber("Tof distance", m_TOF.getRange());
+        SmartDashboard.putBoolean("GripperHasCorral", this.coralStowed());
     }
 }

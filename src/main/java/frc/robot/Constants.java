@@ -14,7 +14,7 @@ public class Constants {
         public static final int liftB_Id = 51;
 
         /* Motor Current Limit */
-        public static final int currentLimit = 40;
+        public static final int currentLimit = 10;
 
         /* Elevator Height Limit */
         public static final double fwdSoftLimitNum = 300; // TODO: Config to max height
@@ -26,7 +26,7 @@ public class Constants {
         public static final double kP = 0.125;
 
         /* Encoder Error */
-        public static final double encoderSetPointError = 25; // TODO: Config to precise positioning
+        public static final double encoderSetPointError = 1; // TODO: Config to precise positioning
     }
 
     public class GripperProfile {

@@ -37,6 +37,6 @@ public class SetWristPosition extends Command {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return wrist.wristAtPos();
+    return wrist.atPosition();
   }
 }

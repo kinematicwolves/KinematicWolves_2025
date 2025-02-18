@@ -9,7 +9,6 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.pathplanner.lib.events.TriggerEvent;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireCoral;
+import frc.robot.commands.IndexCoral;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.RunRoller;
 import frc.robot.commands.RunWrist;
@@ -71,7 +71,7 @@ public class RobotContainer {
     private final SetElevatorPosition elevatorCoralLv2    = new SetElevatorPosition(elevatorSubsystem, 50.5);
     private final SetElevatorPosition elevatorCoralLv1    = new SetElevatorPosition(elevatorSubsystem, 71.25);
 
-    private final SetElevatorPosition elevatorHome        = new SetElevatorPosition(elevatorSubsystem, 0);
+    // private final SetElevatorPosition elevatorHome        = new SetElevatorPosition(elevatorSubsystem, 0);
 
     private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
 
@@ -80,24 +80,23 @@ public class RobotContainer {
     private final SetElevatorPosition elevatorScoreAlgae  = new SetElevatorPosition(elevatorSubsystem, -91.5);
 
     // Wrist
-    private final SetWristPosition wristHome            = new SetWristPosition(wristSubsystem, -2);
+    // private final SetWristPosition wristHome       = new SetWristPosition(wristSubsystem, -2);
+    // private final SetWristPosition wristReady      = new SetWristPosition(wristSubsystem, 10);
 
-    private final SetWristPosition wristCoralAcquiredPos = new SetWristPosition(wristSubsystem, 10);
+    private final SetWristPosition wristCoralLvl1  = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl2  = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl3  = new SetWristPosition(wristSubsystem, 4);
+    private final SetWristPosition wristCoralLvl4  = new SetWristPosition(wristSubsystem, 10);
 
-    private final SetWristPosition wristClearElevatorPos = new SetWristPosition(wristSubsystem, 10);
+    private final SetWristPosition wristAlgaeLvl1  = new SetWristPosition(wristSubsystem, 49);
+    private final SetWristPosition wristAlgaeLvl2  = new SetWristPosition(wristSubsystem, 30);
+    private final SetWristPosition wristScoreAlgae = new SetWristPosition(wristSubsystem, 60);
 
-    private final SetWristPosition wristCoralLvl1       = new SetWristPosition(wristSubsystem, 4);
-    private final SetWristPosition wristCoralLvl2       = new SetWristPosition(wristSubsystem, 4);
-    private final SetWristPosition wristCoralLvl3       = new SetWristPosition(wristSubsystem, 4);
-    private final SetWristPosition wristCoralLvl4       = new SetWristPosition(wristSubsystem, 10);
-
-    private final SetWristPosition wristAlgaeLvl1       = new SetWristPosition(wristSubsystem, 49);
-    private final SetWristPosition wristAlgaeLvl2       = new SetWristPosition(wristSubsystem, 30);
-    private final SetWristPosition wristScoreAlgae      = new SetWristPosition(wristSubsystem, 60);
-    
     // Gripper
-    private final RunRoller intakeCoral      = new RunRoller(gripperSubsystem, 0.1);
-    private final RunRoller outTakeCoral     = new RunRoller(gripperSubsystem, -0.1);
+    private final AcquireCoral acquireCoral = new AcquireCoral(gripperSubsystem, 0.1);
+    private final IndexCoral indexCoral     = new IndexCoral(gripperSubsystem, 0.1);
+    // private final RunRoller intakeCoral      = new RunRoller(gripperSubsystem, 0.1);
+    private final RunRoller outTakeCoral     = new RunRoller(gripperSubsystem, 0.1);
 
     private final RunRoller intakeAlgae      = new RunRoller(gripperSubsystem, -0.3);
     private final RunRoller outTakeAlgae     = new RunRoller(gripperSubsystem, 0.5);
@@ -154,65 +153,91 @@ public class RobotContainer {
         );
 
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
-        Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
+        // Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
         Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
         Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
         Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
-        // opController.y().onTrue(new InstantCommand(() -> {
-        //     if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel1.getAsBoolean())) {
-        //         wristClearElevatorPos.andThen(elevatorCoralLv1).andThen(wristCoralLvl1);
-        //     }
-        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel2.getAsBoolean())) {
-        //         wristClearElevatorPos.andThen(elevatorCoralLv2).andThen(wristCoralLvl2);
-        //     }
-        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel3.getAsBoolean())) {
-        //         wristClearElevatorPos.andThen(elevatorCoralLv3).andThen(wristCoralLvl3);
-        //     }
-        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel4.getAsBoolean())) {
-        //         wristClearElevatorPos.andThen(elevatorCoralLv4).andThen(wristCoralLvl4);
-        //     }
-            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel1.getAsBoolean())) {
-            //     wristClearElevatorPos.andThen(elevatorAlgaeLvl1).andThen(wristAlgaeLvl1).andThen(intakeAlgae);
-            // }
-            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel2.getAsBoolean())) {
-            //     wristClearElevatorPos.andThen(elevatorAlgaeLvl2).andThen(wristAlgaeLvl2).andThen(intakeAlgae);
-            // }
-            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel0.getAsBoolean())) {
-            //     wristClearElevatorPos.andThen(elevatorScoreAlgae).andThen(wristScoreAlgae);
-            // }
-        //   }
-    //     )
-    //   );
 
-            // opController.rightTrigger().whileTrue(
-            // if (coralModeTrigger.getAsBoolean() == true) {
-            //     new RunRoller(gripperSubsystem, -0.1);
-            // }
-            // else if (coralModeTrigger.getAsBoolean() == false) {
-            //     new RunRoller(gripperSubsystem, 0.1);
-            // }
-            // );
+        // these compositions work fine
+        // opController.y().onTrue(new SetWristPosition(wristSubsystem, 10).andThen(elevatorCoralLv1));
+        // opController.y().onFalse(new SetElevatorPosition(elevatorSubsystem, 0).andThen(new SetWristPosition(wristSubsystem, -2)));
 
-        // opController.rightTrigger().whileTrue(outTakeCoral.onlyIf(coralModeTrigger.getAsBoolean() == true));
-        // opController.rightTrigger().whileTrue(outTakeAlgae.onlyIf(coralModeTrigger.getAsBoolean() == false));
+        // opController.x().onTrue(new SetWristPosition(wristSubsystem, 10).andThen(elevatorCoralLv2));
+        // opController.x().onFalse(new SetElevatorPosition(elevatorSubsystem, 0).andThen(new SetWristPosition(wristSubsystem, -2)));
 
-            // if ((coralModeTrigger.getAsBoolean() == true)) {
-            //     opController.rightTrigger().whileTrue(outTakeCoral);
-            // }
-            // else if ((coralModeTrigger.getAsBoolean() == false)) {
-            //     opController.rightTrigger().whileTrue(outTakeAlgae);
-            // }
+        // opController.a().onTrue(new SetWristPosition(wristSubsystem, 10).andThen(elevatorCoralLv3));
+        // opController.a().onFalse(new SetElevatorPosition(elevatorSubsystem, 0).andThen(new SetWristPosition(wristSubsystem, -2)));
+
+        // opController.b().onTrue(new SetWristPosition(wristSubsystem, 10).andThen(elevatorCoralLv4));
+        // opController.b().onFalse(new SetElevatorPosition(elevatorSubsystem, 0).andThen(new SetWristPosition(wristSubsystem, -2)));
+
+        opController.rightBumper().onTrue(acquireCoral.andThen(indexCoral).andThen(new SetWristPosition(wristSubsystem, 10)));
+
+        // these compositions also work fine
+        opController.a()
+            .and(scoringLevel1)
+            .onTrue(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(elevatorCoralLv1)
+                .andThen(wristCoralLvl1)
+            )
+            .onFalse(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(new SetElevatorPosition(elevatorSubsystem, 0))
+                .andThen(new SetWristPosition(wristSubsystem, -2))
+            );
+
+        opController.a()
+            .and(scoringLevel2)
+            .onTrue(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(elevatorCoralLv2)
+                .andThen(wristCoralLvl2)
+            )
+            .onFalse(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(new SetElevatorPosition(elevatorSubsystem, 0))
+                .andThen(new SetWristPosition(wristSubsystem, -2))
+            );
+
+        opController.a()
+            .and(scoringLevel3)
+            .onTrue(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(elevatorCoralLv3)
+                .andThen(wristCoralLvl3)
+            )
+            .onFalse(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(new SetElevatorPosition(elevatorSubsystem, 0))
+                .andThen(new SetWristPosition(wristSubsystem, -2))
+                );
+
+        opController.a()
+            .and(scoringLevel4)
+            .onTrue(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(elevatorCoralLv4)
+                .andThen(wristCoralLvl4)
+            )
+            .onFalse(
+                new SetWristPosition(wristSubsystem, 10)
+                .andThen(new SetElevatorPosition(elevatorSubsystem, 0))
+                .andThen(new SetWristPosition(wristSubsystem, -2))
+            );
+
+        opController.leftBumper().whileTrue(outTakeCoral);
 
         /* Technician controls */
         techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
         techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
 
-        techController.povDown().whileTrue(new RunWrist(wristSubsystem, -0.2));
-        techController.povUp().whileTrue(new RunWrist(wristSubsystem, 0.2));
+        // techController.povDown().whileTrue(new RunWrist(wristSubsystem, -0.2));
+        // techController.povUp().whileTrue(new RunWrist(wristSubsystem, 0.2));
 
-        techController.leftBumper().whileTrue(new RunRoller(gripperSubsystem, 0.2));
+        // techController.leftBumper().whileTrue(new RunRoller(gripperSubsystem, 0.2));
     }
 
     public Command getAutonomousCommand() {
