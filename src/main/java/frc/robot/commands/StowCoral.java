@@ -8,17 +8,17 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Gripper;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunRoller extends Command {
+public class StowCoral extends Command {
     /* Declare all the things this command needs */
     private Gripper gripperSubsystem;
     private double rollerSpeed;
 
     /**
-     * Runs gripper motor until false value is returned to command.
+     * Intake coral with tof sensor ending the command.
      * @param gripperSub subsystem, gripper subsystem
-     * @param commandedRollerSpeed double, percentage output.
+     * @param commandedRollerSpeed double, percentage output
      */
-    public RunRoller(Gripper gripperSub, double commandedRollerSpeed) {
+    public StowCoral(Gripper gripperSub, double commandedRollerSpeed) {
         // set our local variables
         gripperSubsystem = gripperSub;
         rollerSpeed = commandedRollerSpeed;
@@ -46,11 +46,6 @@ public class RunRoller extends Command {
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return false; 
-    }
-
-    public Command onlyIf(boolean b) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'onlyIf'");
+        return gripperSubsystem.coralStowed(); 
     }
 }

@@ -9,16 +9,19 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.pathplanner.lib.events.TriggerEvent;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireCoral;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.RunRoller;
+import frc.robot.commands.RunWrist;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetWristPosition;
@@ -42,7 +45,7 @@ public class RobotContainer {
     /* Controllers */
     private final CommandXboxController driveController = new CommandXboxController(0);
     private final CommandXboxController opController = new CommandXboxController(1);
-    // private final CommandXboxController techController = new CommandXboxController(2);
+    private final CommandXboxController techController = new CommandXboxController(2);
     
     /* Choosers */
     // private final SendableChooser<Command> autoChooser;
@@ -67,29 +70,37 @@ public class RobotContainer {
     private final SetElevatorPosition elevatorCoralLv3    = new SetElevatorPosition(elevatorSubsystem, 161.8);
     private final SetElevatorPosition elevatorCoralLv2    = new SetElevatorPosition(elevatorSubsystem, 50.5);
     private final SetElevatorPosition elevatorCoralLv1    = new SetElevatorPosition(elevatorSubsystem, 71.25);
+
     private final SetElevatorPosition elevatorHome        = new SetElevatorPosition(elevatorSubsystem, 0);
+
     private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
+
     private final SetElevatorPosition elevatorAlgaeLvl1   = new SetElevatorPosition(elevatorSubsystem, -81.5);
     private final SetElevatorPosition elevatorAlgaeLvl2   = new SetElevatorPosition(elevatorSubsystem, -18.5);
     private final SetElevatorPosition elevatorScoreAlgae  = new SetElevatorPosition(elevatorSubsystem, -91.5);
 
     // Wrist
-    private final SetWristPosition wristHome            = new SetWristPosition(wristSubsystem, 0);
-    private final SetWristPosition wristCoralAquiredPos = new SetWristPosition(wristSubsystem, 0);
+    private final SetWristPosition wristHome            = new SetWristPosition(wristSubsystem, -2);
+
+    private final SetWristPosition wristCoralAcquiredPos = new SetWristPosition(wristSubsystem, 10);
+
+    private final SetWristPosition wristClearElevatorPos = new SetWristPosition(wristSubsystem, 10);
+
     private final SetWristPosition wristCoralLvl1       = new SetWristPosition(wristSubsystem, 4);
     private final SetWristPosition wristCoralLvl2       = new SetWristPosition(wristSubsystem, 4);
     private final SetWristPosition wristCoralLvl3       = new SetWristPosition(wristSubsystem, 4);
     private final SetWristPosition wristCoralLvl4       = new SetWristPosition(wristSubsystem, 10);
+
     private final SetWristPosition wristAlgaeLvl1       = new SetWristPosition(wristSubsystem, 49);
     private final SetWristPosition wristAlgaeLvl2       = new SetWristPosition(wristSubsystem, 30);
     private final SetWristPosition wristScoreAlgae      = new SetWristPosition(wristSubsystem, 60);
     
     // Gripper
-    private final RunRoller intakeCoral      = new RunRoller(gripperSubsystem, 0.3);
-    private final RunRoller intakeAlgae      = new RunRoller(gripperSubsystem, 0.3);
-    private final RunRoller outTakeAlgae     = new RunRoller(gripperSubsystem, -0.5);
-    private final RunRoller outTakeCoralFast = new RunRoller(gripperSubsystem, -0.7);
+    private final RunRoller intakeCoral      = new RunRoller(gripperSubsystem, 0.1);
     private final RunRoller outTakeCoral     = new RunRoller(gripperSubsystem, -0.1);
+
+    private final RunRoller intakeAlgae      = new RunRoller(gripperSubsystem, -0.3);
+    private final RunRoller outTakeAlgae     = new RunRoller(gripperSubsystem, 0.5);
 
     public RobotContainer() {
         // autoChooser = AutoBuilder.buildAutoChooser("Test");
@@ -113,15 +124,15 @@ public class RobotContainer {
         drivetrain.registerTelemetry(logger::telemeterize);
 
     /* Operator controls */
-        opController.start().onTrue(
+        opController.start().onTrue( //Coral Mode Toggle
             new InstantCommand(
                 () -> {
                     coralMode = !coralMode;
-                    SmartDashboard.putBoolean("Coral Mode Toggled:", coralMode); // Back = Coral/Algae mode toggle
+                    SmartDashboard.putBoolean("Coral Mode Toggled:", coralMode);
                 }
             )
         );
-        opController.povDown().onTrue(
+        opController.povDown().onTrue( //Decrease lvl
             new InstantCommand(
                 () -> {
                     scoringLevel -= 1;
@@ -131,7 +142,7 @@ public class RobotContainer {
                 }
             )
         );
-        opController.povUp().onTrue(
+        opController.povUp().onTrue( //Increase lvl
             new InstantCommand(
                 () -> {
                     scoringLevel += 1;
@@ -143,47 +154,65 @@ public class RobotContainer {
         );
 
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
-        Trigger algaeModeTrigger = new Trigger(() -> !coralMode);
         Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
         Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
         Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
         Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
-        // // coralModeTrigger.and(scoringLevel1.and(
-        //     opController.y().onTrue(wristAlgaeLvl1.andThen(elevatorAlgaeLvl1));
-        // // coralModeTrigger.and(scoringLevel2.and(
-        //     opController.b().onTrue(wristAlgaeLvl2.andThen(elevatorAlgaeLvl2));
-        // opController.leftStick().onTrue(wristScoreAlgae.andThen(elevatorScoreAlgae));
-        // opController.rightStick().onTrue(wristCoralLvl4.andThen(elevatorCoralLv4));
+        // opController.y().onTrue(new InstantCommand(() -> {
+        //     if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel1.getAsBoolean())) {
+        //         wristClearElevatorPos.andThen(elevatorCoralLv1).andThen(wristCoralLvl1);
+        //     }
+        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel2.getAsBoolean())) {
+        //         wristClearElevatorPos.andThen(elevatorCoralLv2).andThen(wristCoralLvl2);
+        //     }
+        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel3.getAsBoolean())) {
+        //         wristClearElevatorPos.andThen(elevatorCoralLv3).andThen(wristCoralLvl3);
+        //     }
+        //     else if ((coralModeTrigger.getAsBoolean() == true) && (scoringLevel4.getAsBoolean())) {
+        //         wristClearElevatorPos.andThen(elevatorCoralLv4).andThen(wristCoralLvl4);
+        //     }
+            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel1.getAsBoolean())) {
+            //     wristClearElevatorPos.andThen(elevatorAlgaeLvl1).andThen(wristAlgaeLvl1).andThen(intakeAlgae);
+            // }
+            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel2.getAsBoolean())) {
+            //     wristClearElevatorPos.andThen(elevatorAlgaeLvl2).andThen(wristAlgaeLvl2).andThen(intakeAlgae);
+            // }
+            // else if ((coralModeTrigger.getAsBoolean() == false) && (scoringLevel0.getAsBoolean())) {
+            //     wristClearElevatorPos.andThen(elevatorScoreAlgae).andThen(wristScoreAlgae);
+            // }
+        //   }
+    //     )
+    //   );
 
-        // algaeModeTrigger.and(scoringLevel0.and(opController.y().onTrue(elevatorScoreAlgae.andThen(wristScoreAlgae))));
-        // algaeModeTrigger.and(scoringLevel1.and(opController.y().onTrue(elevatorAlgaeLvl1.andThen(wristAlgaeLvl1).andThen(intakeAlgae))));
-        // algaeModeTrigger.and(scoringLevel2.and(opController.y().onTrue(elevatorAlgaeLvl2.andThen(wristAlgaeLvl2).andThen(intakeAlgae))));
+            // opController.rightTrigger().whileTrue(
+            // if (coralModeTrigger.getAsBoolean() == true) {
+            //     new RunRoller(gripperSubsystem, -0.1);
+            // }
+            // else if (coralModeTrigger.getAsBoolean() == false) {
+            //     new RunRoller(gripperSubsystem, 0.1);
+            // }
+            // );
 
+        // opController.rightTrigger().whileTrue(outTakeCoral.onlyIf(coralModeTrigger.getAsBoolean() == true));
+        // opController.rightTrigger().whileTrue(outTakeAlgae.onlyIf(coralModeTrigger.getAsBoolean() == false));
 
-        opController.rightBumper().whileTrue(outTakeCoral);
-        opController.leftBumper().whileTrue(intakeCoral);
-        opController.leftTrigger().whileTrue(intakeAlgae);
-        opController.rightTrigger().whileTrue(outTakeAlgae);
-        opController.povDown().onTrue(wristCoralLvl1.andThen(elevatorCoralLv1));
-
-        opController.a().onTrue(elevatorHome.andThen(wristHome));
-
-        opController.povLeft().onTrue(wristCoralLvl2.andThen(elevatorCoralLv2));
-        opController.povRight().onTrue(wristCoralLvl3.andThen(elevatorCoralLv3));
-        opController.povUp().onTrue(wristCoralLvl4.andThen(elevatorCoralLv4));//whileTrue(outTakeCoralFast);
+            // if ((coralModeTrigger.getAsBoolean() == true)) {
+            //     opController.rightTrigger().whileTrue(outTakeCoral);
+            // }
+            // else if ((coralModeTrigger.getAsBoolean() == false)) {
+            //     opController.rightTrigger().whileTrue(outTakeAlgae);
+            // }
 
         /* Technician controls */
-        opController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
-        opController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
+        techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
+        techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
 
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-        // techController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // techController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // techController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // techController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
+        techController.povDown().whileTrue(new RunWrist(wristSubsystem, -0.2));
+        techController.povUp().whileTrue(new RunWrist(wristSubsystem, 0.2));
+
+        techController.leftBumper().whileTrue(new RunRoller(gripperSubsystem, 0.2));
     }
 
     public Command getAutonomousCommand() {

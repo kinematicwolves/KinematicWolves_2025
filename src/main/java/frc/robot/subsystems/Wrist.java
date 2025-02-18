@@ -35,6 +35,14 @@ public class Wrist extends SubsystemBase {
   }
 
   /**
+   * Sets power to wrist motor.
+   * @param outputFraction double, commanded output fraction
+   */
+  public void run(double outputFraction) {
+    m_wrist.set(outputFraction);
+  } 
+
+  /**
   * Retrieves wrist absolute through bore encoder value
   * 
   * @return double, through bore position

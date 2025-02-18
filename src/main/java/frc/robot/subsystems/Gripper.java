@@ -19,7 +19,6 @@ public class Gripper extends SubsystemBase {
     private TalonFX m_gripper = new TalonFX(GripperProfile.motorId);
     public TalonFXConfiguration gripperConfig = new TalonFXConfiguration();
     private TimeOfFlight m_TOF = new TimeOfFlight(GripperProfile.tofId);
-    private PowerDistribution pdp = new PowerDistribution();
 
     private double rollerSpeed = 0;
             
@@ -47,7 +46,7 @@ public class Gripper extends SubsystemBase {
      * @return true if coral is in gripper, else its false
      */
     public boolean hasCoral() {
-        if (m_TOF.getRange() <= GripperProfile.tofCoralRange)
+        if (m_TOF.getRange() <= 200)
             return true;
         else 
             return false;
@@ -58,12 +57,18 @@ public class Gripper extends SubsystemBase {
      * @return true if current is spiking, else false
      */
     public boolean hasAlgae() {
-        if (pdp.getCurrent(11) <= 25) {
+        if (m_gripper.getStatorCurrent().getValueAsDouble() >= 10) {
             return true;
         }
         else {
             return false;
         }
+    }
+    public boolean coralStowed() {
+        if (m_TOF.getRange() <= 185)
+            return true;
+        else 
+            return false;
     }
 
     /**
@@ -80,6 +85,7 @@ public class Gripper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
-        SmartDashboard.putNumber("Gripper current", pdp.getCurrent(11));
+        SmartDashboard.putNumber("Gripper current", m_gripper.getStatorCurrent().getValueAsDouble());
+        SmartDashboard.putNumber("Tof distance", m_TOF.getRange());
     }
 }
