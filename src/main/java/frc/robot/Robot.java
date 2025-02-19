@@ -22,6 +22,7 @@ public class Robot extends TimedRobot {
     
         SmartDashboard.putBoolean("CoralMode", m_robotContainer.coralMode);
         SmartDashboard.putNumber("ScoringLevel", m_robotContainer.scoringLevel);
+        SmartDashboard.putBoolean("Coral Mode Toggled:", m_robotContainer.coralMode);
     }
 
     @Override

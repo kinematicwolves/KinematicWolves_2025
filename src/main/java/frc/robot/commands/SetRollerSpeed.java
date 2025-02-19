@@ -8,7 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Gripper;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunRoller extends Command {
+public class SetRollerSpeed extends Command {
     /* Declare all the things this command needs */
     private Gripper gripperSubsystem;
     private double rollerSpeed;
@@ -18,7 +18,7 @@ public class RunRoller extends Command {
      * @param gripperSub subsystem, gripper subsystem
      * @param commandedRollerSpeed double, percentage output.
      */
-    public RunRoller(Gripper gripperSub, double commandedRollerSpeed) {
+    public SetRollerSpeed(Gripper gripperSub, double commandedRollerSpeed) {
         // set our local variables
         gripperSubsystem = gripperSub;
         rollerSpeed = commandedRollerSpeed;

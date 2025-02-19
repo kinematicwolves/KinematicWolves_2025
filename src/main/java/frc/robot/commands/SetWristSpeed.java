@@ -8,12 +8,12 @@ import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Wrist;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
-public class RunWrist extends Command {
+public class SetWristSpeed extends Command {
   private Wrist wrist;
   private double outputFraction;
 
   /** Creates a new RunWrist. */
-  public RunWrist(Wrist wrist, double outputFraction) {
+  public SetWristSpeed(Wrist wrist, double outputFraction) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.wrist = wrist;    
     this.outputFraction = outputFraction;

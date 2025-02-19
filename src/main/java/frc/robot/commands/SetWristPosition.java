@@ -12,7 +12,11 @@ public class SetWristPosition extends Command {
   private Wrist wrist;
   private double setPoint;
 
-  /** Creates a new SetWristPosition. */
+  /**
+  * Moves the wrist to the set point. Finished when at commanded set point.
+  * @param wrist subsystem, wrist subsystem
+  * @param setPoint double, falcon motor encoder revolutions
+  */
   public SetWristPosition(Wrist wrist, double setPoint) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.wrist = wrist;

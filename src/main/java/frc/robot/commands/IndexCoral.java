@@ -14,7 +14,7 @@ public class IndexCoral extends Command {
     private double rollerSpeed;
 
     /**
-     * Intake coral with tof sensor ending the command.
+     * Index coral with tof sensor ending the command.
      * @param gripperSub subsystem, gripper subsystem
      * @param commandedRollerSpeed double, percentage output
      */
