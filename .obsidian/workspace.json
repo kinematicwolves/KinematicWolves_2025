@@ -23,8 +23,38 @@
               "icon": "lucide-layout-dashboard",
               "title": "Robot Wire Map"
             }
+          },
+          {
+            "id": "44b59043bcf2b31c",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "notes/Command Map.canvas",
+                "viewState": {
+                  "x": -559,
+                  "y": -150,
+                  "zoom": -0.9299544175604637
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Command Map"
+            }
+          },
+          {
+            "id": "2308cbb85813f399",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.8.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.8.7"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -43,7 +73,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -80,8 +111,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "e7eec21e6d0d9a35",
@@ -166,8 +196,10 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "58c07654e48923f8",
+  "active": "2308cbb85813f399",
   "lastOpenFiles": [
+    "notes/Command Map.canvas",
+    "notes/Robot Wire Map.canvas",
     "vendordeps/PlayingWithFusion-2025.01.04.json",
     "vendordeps/Phoenix6-frc2025-latest.json",
     "vendordeps/PathplannerLib-2025.2.1.json",
@@ -178,9 +210,7 @@
     "build/classes/java/main/frc/robot/LimelightHelpers.class",
     "build/classes/java/main/frc/robot/LimelightHelpers$PoseEstimate.class",
     "build/classes/java/main/frc/robot/LimelightHelpers$RawDetection.class",
-    "build/classes/java/main/frc/robot/LimelightHelpers$RawFiducial.class",
     "notes/Robot Map.canvas",
-    "notes/Robot Wire Map.canvas",
     "notes/Robot Wire Map.png"
   ]
 }
