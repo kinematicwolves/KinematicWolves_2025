@@ -61,16 +61,16 @@ public class Elevator extends SubsystemBase {
         LiftEncoderA.setPosition(0);
 
         /**Software Limits */
-        softLimitConfig.apply(liftConfigA.softLimit);
-        softLimitConfig.apply(liftConfigB.softLimit);
-        liftConfigA.softLimit.reverseSoftLimitEnabled(false);
-        liftConfigB.softLimit.reverseSoftLimitEnabled(false);
-        liftConfigA.softLimit.forwardSoftLimitEnabled(true);
-        liftConfigB.softLimit.forwardSoftLimitEnabled(true);
-        liftConfigA.softLimit.reverseSoftLimit(0);
-        liftConfigB.softLimit.reverseSoftLimit(0);
-        liftConfigA.softLimit.forwardSoftLimit(ElevatorProfile.fwdSoftLimitNum);
-        liftConfigB.softLimit.forwardSoftLimit(ElevatorProfile.fwdSoftLimitNum);
+        // softLimitConfig.apply(liftConfigA.softLimit);
+        // softLimitConfig.apply(liftConfigB.softLimit);
+        // liftConfigA.softLimit.reverseSoftLimitEnabled(false);
+        // liftConfigB.softLimit.reverseSoftLimitEnabled(false);
+        // liftConfigA.softLimit.forwardSoftLimitEnabled(true);
+        // liftConfigB.softLimit.forwardSoftLimitEnabled(true);
+        // liftConfigA.softLimit.reverseSoftLimit(0);
+        // liftConfigB.softLimit.reverseSoftLimit(0);
+        // liftConfigA.softLimit.forwardSoftLimit(ElevatorProfile.fwdSoftLimitNum);
+        // liftConfigB.softLimit.forwardSoftLimit(ElevatorProfile.fwdSoftLimitNum);
 
         /** Neutral Modes */
         liftConfigA.idleMode(ElevatorProfile.defaultIdleMode);

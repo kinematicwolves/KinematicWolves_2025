@@ -16,13 +16,17 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireCoral;
-import frc.robot.commands.HomeSystem;
+import frc.robot.commands.HomeSystemAlgae;
+import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
 import frc.robot.commands.MoveToLevel;
 import frc.robot.commands.SetRollerSpeed;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetWristPosition;
+import frc.robot.commands.SetWristSpeed;
+
+import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
@@ -66,25 +70,22 @@ public class RobotContainer {
     // Elevator
     private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
 
-    private final SetElevatorPosition elevatorAlgaeLvl1  = new SetElevatorPosition(elevatorSubsystem, -81.5);
-    private final SetElevatorPosition elevatorAlgaeLvl2  = new SetElevatorPosition(elevatorSubsystem, -18.5);
-    private final SetElevatorPosition elevatorScoreAlgae = new SetElevatorPosition(elevatorSubsystem, -91.5);
-
     // Wrist
-    private final SetWristPosition wristAlgaeLvl1  = new SetWristPosition(wristSubsystem, 49);
-    private final SetWristPosition wristAlgaeLvl2  = new SetWristPosition(wristSubsystem, 30);
-    private final SetWristPosition wristScoreAlgae = new SetWristPosition(wristSubsystem, 60);
 
     // Wist and Elevator
     private final MoveToLevel moveCoraLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 71.25,  4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoraLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoraLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 161.8,  4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoraLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 289.5, 10); // TODO: Put Number into Constants.ElevatorProfile
+    
+    private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
+    // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, -91.5, 60); // TODO: Put Number into Constants.ElevatorProfile
 
     // Gripper
     private final AcquireCoral   acquireCoral = new AcquireCoral(gripperSubsystem, 0.1);
     private final IndexCoral     indexCoral   = new IndexCoral(gripperSubsystem, 0.1);
-    private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.1);
+    private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.8);
 
     private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, -0.3);
     private final SetRollerSpeed outTakeAlgae = new SetRollerSpeed(gripperSubsystem, 0.5);
@@ -117,8 +118,8 @@ public class RobotContainer {
             new InstantCommand(
                 () -> {
                     scoringLevel -= 1;
-                    if (scoringLevel < 1) 
-                        scoringLevel = 1;
+                    if (scoringLevel < 0) 
+                        scoringLevel = 0;
                 }
             )
         );
@@ -133,53 +134,85 @@ public class RobotContainer {
         );
 
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
+        Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
         Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
         Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
         Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
         // intake / outtake coral
-        opController.rightBumper().onTrue(
-            acquireCoral
-            .andThen(indexCoral)
-            .andThen(new SetWristPosition(wristSubsystem, 10))
-        );
+        // coralModeTrigger.and(
+        // opController.rightBumper().onTrue(
+        //     acquireCoral
+        //     .andThen(indexCoral)
+        //     .andThen(new SetWristPosition(wristSubsystem, 10))
+        // ));
 
         opController.leftBumper().whileTrue(outTakeCoral);
 
         // moving to coral levels
-        // we need to create a new HomeSystem command each time
-        // because otherwise the same command is bound to multiple triggers, 
-        // and that causes code to crash
         opController.a()
             .and(scoringLevel1)
+            .and(coralModeTrigger)
             .onTrue(moveCoraLevel1)
-            .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
         );
 
         opController.a()
             .and(scoringLevel2)
+            .and(coralModeTrigger)
             .onTrue(moveCoraLevel2)
-            .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
         );
 
         opController.a()
             .and(scoringLevel3)
+            .and(coralModeTrigger)
             .onTrue(moveCoraLevel3)
-            .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
         );
 
         opController.a()
             .and(scoringLevel4)
+            .and(coralModeTrigger)
             .onTrue(moveCoraLevel4)
-            .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
         );
+
+        // moving to algae levels
+        opController.a()
+            .and(scoringLevel1)
+            .and(coralModeTrigger.negate())
+            .onTrue(moveAlgaeLevel1)
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem)
+        );
+
+        opController.a()
+            .and(scoringLevel2)
+            .and(coralModeTrigger.negate())
+            .onTrue(moveAlgaeLevel2)
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem)
+        );
+
+        // opController.rightBumper().whileTrue()
+        // .and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
+
+        coralModeTrigger.negate().and(
+            opController.rightBumper().whileTrue(
+                intakeAlgae
+            ));
+        // opController.a()
+        //     .and(scoringLevel0)
+        //     .and(coralModeTrigger.negate())
+        //     .onTrue(moveAlgaeScore)
+        //     .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
+        // );
 
     /* Technician controls */
         // elevator
         techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
         techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
-
+        // wristSubsystem.setDefaultCommand(new SetWristSpeed(wristSubsystem, techController.getLeftTriggerAxis() - techController.getRightTriggerAxis()));
         // wrist
         // techController.povDown().whileTrue(new RunWrist(wristSubsystem, -0.2));
         // techController.povUp().whileTrue(new RunWrist(wristSubsystem, 0.2));

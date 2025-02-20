@@ -12,15 +12,15 @@ import frc.robot.subsystems.Wrist;
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
-public class HomeSystem extends SequentialCommandGroup {
+public class HomeSystemAlgae extends SequentialCommandGroup {
     /** Creates a new HomeSystem. */
-    public HomeSystem(Wrist wristSubsystem, Elevator elevatorSubsystem) {
+    public HomeSystemAlgae(Wrist wristSubsystem, Elevator elevatorSubsystem) {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetWristPosition(wristSubsystem, 10), // TODO: Put Number into Constants.WristProfile
-            new SetElevatorPosition(elevatorSubsystem, 0), // TODO: Put Number into Constants.ElevatorProfile
-            new SetWristPosition(wristSubsystem, -2) // TODO: Put Number into Constants.WirstProfile
+            new SetWristPosition(wristSubsystem, 24), // TODO: Put Number into Constants.WristProfile
+            new SetElevatorPosition(elevatorSubsystem, -1), // TODO: Put Number into Constants.ElevatorProfile
+            new SetWristPosition(wristSubsystem, 24) // TODO: Put Number into Constants.WirstProfile
         );
     }
 }
