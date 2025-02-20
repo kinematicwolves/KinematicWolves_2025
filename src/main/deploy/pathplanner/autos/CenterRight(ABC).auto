@@ -7,37 +7,37 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftWall_BranchI"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "CenterRight_BranchA"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BranchI_LeftStation"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 1.0
+            "pathName": "BranchA_RightStation"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "LeftStation_BranchK"
+            "pathName": "RightStation_BranchB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchB_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchC"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "(2)CenterRight",
   "choreoAuto": false
 }

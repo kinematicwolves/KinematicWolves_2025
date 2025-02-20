@@ -1,0 +1,43 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightBlue_BranchA"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchA_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchC_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchD"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": "(1)RightBlue",
+  "choreoAuto": false
+}

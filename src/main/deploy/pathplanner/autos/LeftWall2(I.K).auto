@@ -7,19 +7,25 @@
         {
           "type": "path",
           "data": {
-            "pathName": "LeftWall_BranchK"
+            "pathName": "LeftWall_BranchI"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "BranchK_LeftStation"
+            "pathName": "BranchI_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchK"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "(1)LeftWall",
   "choreoAuto": false
 }

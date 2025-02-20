@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "CenterLeft_BranchJ"
+            "pathName": "LeftWall_BranchJ"
           }
         },
         {
@@ -45,11 +45,17 @@
           "data": {
             "pathName": "LeftStation_BranchA"
           }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0
+          }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "(1)LeftWall",
   "choreoAuto": false
 }

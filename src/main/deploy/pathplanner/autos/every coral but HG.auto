@@ -1,0 +1,133 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftWall_BranchI"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchI_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchJ"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchJ_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchK"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchK_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchL"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchL_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchA"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchA_LeftStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "LeftStation_BranchB"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchB_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchC"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchC_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchD"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchD_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchE"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchE_RightStation"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchF"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "BranchF_RightStation"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}

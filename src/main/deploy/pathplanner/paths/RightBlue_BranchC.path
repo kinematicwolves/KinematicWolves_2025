@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.3,
+        "y": 5.0
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.299999999999999,
+        "y": 5.0
+      },
+      "isLocked": false,
+      "linkedName": "RightBlue"
+    },
+    {
+      "anchor": {
+        "x": 5.365793918918919,
+        "y": 2.5822635135135137
+      },
+      "prevControl": {
+        "x": 6.249888859213849,
+        "y": 3.049570839097977
+      },
+      "nextControl": {
+        "x": 4.481698978623989,
+        "y": 2.1149561879290504
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.7,
+        "y": 2.9
+      },
+      "prevControl": {
+        "x": 3.2,
+        "y": 2.0339745962155615
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BranchC"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 6.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 57.474113813778864
+  },
+  "reversed": false,
+  "folder": "RightBlue to Branch",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": true
+}
