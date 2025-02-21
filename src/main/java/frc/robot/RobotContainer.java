@@ -9,7 +9,6 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
-import com.fasterxml.jackson.databind.deser.impl.SetterlessProperty;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -24,7 +23,6 @@ import frc.robot.commands.MoveToLevel;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetRollerSpeed;
-import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -72,10 +70,10 @@ public class RobotContainer {
     // Wrist
 
     // Wist and Elevator
-    private final MoveToLevel moveCoraLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoraLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoraLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 153,  4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoraLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 153,  4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
     
     private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
@@ -106,10 +104,18 @@ public class RobotContainer {
                 () -> fieldCentricDrive
                     .withVelocityX(-driveController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
                     .withVelocityY(-driveController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driveController.getRightX() * MaxAngularRate)) // Drive counterclockwise with negative X (left)
+                    .withRotationalRate(-driveController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+            ) 
         );
-        driveController.a().whileTrue(drivetrain.applyRequest(() -> brake)); // A = X drivetrain wheels
-        driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric())); //  LB = Reset field-centric heading
+
+        driveController.a().whileTrue( // A = X drivetrain wheels
+            drivetrain.applyRequest(() -> brake)
+        ); 
+
+        driveController.leftBumper().onTrue( //  LB = Reset field-centric heading
+            drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
+        );
+
         drivetrain.registerTelemetry(logger::telemeterize);
 
     /* Operator controls */
@@ -123,6 +129,7 @@ public class RobotContainer {
                 }
             )
         );
+
         opController.povUp().onTrue( //Increase lvl
             new InstantCommand(
                 () -> {
@@ -141,73 +148,81 @@ public class RobotContainer {
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
         // intake / outtake coral
-        coralModeTrigger.and(
-        opController.rightBumper().onTrue(
-            acquireCoral
-            .andThen(indexCoral)
-            // .andThen(new SetWristPosition(wristSubsystem, 10))
-        ));
+        opController.rightBumper()
+            .and(coralModeTrigger)
+            .onTrue(acquireCoral.andThen(indexCoral));
+            //.andThen(new SetWristPosition(wristSubsystem, 10))
 
-        opController.leftBumper().whileTrue(outTakeCoral);
-        opController.b().whileTrue(overRideIntakeCoral);
+        opController.leftBumper()
+            .and(coralModeTrigger)
+            .whileTrue(outTakeCoral);
+
+        opController.b()
+            .and(coralModeTrigger)
+            .whileTrue(overRideIntakeCoral);
 
         // moving to coral levels
         opController.a()
             .and(scoringLevel1)
             .and(coralModeTrigger)
-            .onTrue(moveCoraLevel1)
-            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
-        );
+            .onTrue(moveCoralLevel1)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
         opController.a()
             .and(scoringLevel2)
             .and(coralModeTrigger)
-            .onTrue(moveCoraLevel2)
-            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
-        );
+            .onTrue(moveCoralLevel2)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
         opController.a()
             .and(scoringLevel3)
             .and(coralModeTrigger)
-            .onTrue(moveCoraLevel3)
-            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
-        );
+            .onTrue(moveCoralLevel3)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
         opController.a()
             .and(scoringLevel4)
             .and(coralModeTrigger)
-            .onTrue(moveCoraLevel4)
-            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem)
-        );
+            .onTrue(moveCoralLevel4)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
         // moving to algae levels
         opController.a()
             .and(scoringLevel1)
             .and(coralModeTrigger.negate())
             .onTrue(moveAlgaeLevel1)
-            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem)
-        );
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
 
         opController.a()
             .and(scoringLevel2)
             .and(coralModeTrigger.negate())
             .onTrue(moveAlgaeLevel2)
-            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem)
-        );
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
 
-        // opController.rightBumper().whileTrue()
-        // .and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
-
-        // coralModeTrigger.negate().and(
-        //     opController.rightBumper().whileTrue(
-        //         intakeAlgae
-        //     ));
+        // TODO: Determine processor scoring wrist and elevator values
         // opController.a()
         //     .and(scoringLevel0)
         //     .and(coralModeTrigger.negate())
         //     .onTrue(moveAlgaeScore)
         //     .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
         // );
+
+        // intake / outtake algae
+        opController.leftBumper()
+            .and(coralModeTrigger).negate()
+            .whileTrue(outTakeAlgae);
+
+        // this was the problematic composition
+        // coralModeTrigger.negate().and(opController.rightBumper().whileTrue(intakeAlgae));
+        
+        // this is the [hopefully] fixed composition
+        opController.rightBumper().and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
+        // notice the and() function only contains coralModeTrigger.negate() in the [hopefully] fixed version
+        // in the broken version, and() contained opController.rightBumper().whileTrue(intakeAlgae)
+        // opController.rightBumper().whileTrue(intakeAlgae) was evaluated as java attempted to evaluate the composite trigger
+        // When evaluated, the intakeAlgae command ran.
+        // Thus, we were effectively ignoring coral mode...
+        // Be careful when making these composite triggers, they can be tricky
 
     /* Technician controls */
         // elevator
