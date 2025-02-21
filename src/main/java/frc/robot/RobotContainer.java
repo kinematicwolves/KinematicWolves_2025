@@ -9,6 +9,7 @@ import static edu.wpi.first.units.Units.RadiansPerSecond;
 import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
+import com.fasterxml.jackson.databind.deser.impl.SetterlessProperty;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
 import edu.wpi.first.wpilibj2.command.Command;
@@ -20,12 +21,10 @@ import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
 import frc.robot.commands.MoveToLevel;
-import frc.robot.commands.SetRollerSpeed;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
+import frc.robot.commands.SetRollerSpeed;
 import frc.robot.commands.SetWristPosition;
-import frc.robot.commands.SetWristSpeed;
-
 import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
@@ -73,10 +72,10 @@ public class RobotContainer {
     // Wrist
 
     // Wist and Elevator
-    private final MoveToLevel moveCoraLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 71.25,  4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoraLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoraLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoraLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 161.8,  4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoraLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 289.5, 10); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoraLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 153,  4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoraLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
     
     private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
@@ -84,10 +83,11 @@ public class RobotContainer {
 
     // Gripper
     private final AcquireCoral   acquireCoral = new AcquireCoral(gripperSubsystem, 0.1);
+    private final SetRollerSpeed overRideIntakeCoral = new SetRollerSpeed(gripperSubsystem, 0.09);
     private final IndexCoral     indexCoral   = new IndexCoral(gripperSubsystem, 0.1);
-    private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.8);
+    private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.2);
 
-    private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, -0.3);
+    private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, 0.3);
     private final SetRollerSpeed outTakeAlgae = new SetRollerSpeed(gripperSubsystem, 0.5);
 
     public RobotContainer() {
@@ -141,14 +141,15 @@ public class RobotContainer {
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
         // intake / outtake coral
-        // coralModeTrigger.and(
-        // opController.rightBumper().onTrue(
-        //     acquireCoral
-        //     .andThen(indexCoral)
-        //     .andThen(new SetWristPosition(wristSubsystem, 10))
-        // ));
+        coralModeTrigger.and(
+        opController.rightBumper().onTrue(
+            acquireCoral
+            .andThen(indexCoral)
+            // .andThen(new SetWristPosition(wristSubsystem, 10))
+        ));
 
         opController.leftBumper().whileTrue(outTakeCoral);
+        opController.b().whileTrue(overRideIntakeCoral);
 
         // moving to coral levels
         opController.a()
@@ -197,10 +198,10 @@ public class RobotContainer {
         // opController.rightBumper().whileTrue()
         // .and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
 
-        coralModeTrigger.negate().and(
-            opController.rightBumper().whileTrue(
-                intakeAlgae
-            ));
+        // coralModeTrigger.negate().and(
+        //     opController.rightBumper().whileTrue(
+        //         intakeAlgae
+        //     ));
         // opController.a()
         //     .and(scoringLevel0)
         //     .and(coralModeTrigger.negate())
@@ -214,11 +215,11 @@ public class RobotContainer {
         techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
         // wristSubsystem.setDefaultCommand(new SetWristSpeed(wristSubsystem, techController.getLeftTriggerAxis() - techController.getRightTriggerAxis()));
         // wrist
-        // techController.povDown().whileTrue(new RunWrist(wristSubsystem, -0.2));
-        // techController.povUp().whileTrue(new RunWrist(wristSubsystem, 0.2));
+        techController.povDown().whileTrue(new SetWristSpeed(wristSubsystem, -0.2));
+        techController.povUp().whileTrue(new SetWristSpeed(wristSubsystem, 0.2));
 
         // gripper
-        // techController.leftBumper().whileTrue(new RunRoller(gripperSubsystem, 0.2));
+        techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.2));
     }
 
     public Command getAutonomousCommand() {
