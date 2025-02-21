@@ -11,8 +11,11 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.AcquireCoral;
@@ -148,9 +151,22 @@ public class RobotContainer {
         Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
 
         // intake / outtake coral
+        // experimenting with rumble, and making sure we do not end up in a endless state
         opController.rightBumper()
             .and(coralModeTrigger)
-            .onTrue(acquireCoral.andThen(indexCoral));
+            .onTrue(
+                // a Parallel race command group will run commands in sequence, and terminate all when one ends
+                // in this case, it will run once the intake sequence ends or the wait timer ends
+                // since the acquireCoral Command may never terminate, this will prevent us from getting stuck in this command.
+                new ParallelRaceGroup(
+                    new InstantCommand(() -> opController.setRumble(RumbleType.kBothRumble, 1)) // turning on rumble as we run the intake
+                    .andThen(acquireCoral)
+                    .andThen(indexCoral)
+                    .andThen(new InstantCommand(() -> opController.setRumble(RumbleType.kBothRumble, 0))) // turning off the rumble
+                    , new WaitCommand(5) // ensures this command will terminate if it runs longer than 5 seconds.
+                    // either the intake sequence will end, or our wait command will end, and when one ends, the other will be terminated
+                )
+            );
             //.andThen(new SetWristPosition(wristSubsystem, 10))
 
         opController.leftBumper()
