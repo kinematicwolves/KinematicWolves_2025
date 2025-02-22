@@ -57,7 +57,7 @@ public class Gripper extends SubsystemBase {
      * @return true if current is spiking, else false
      */
     public boolean hasAlgae() {
-        if (m_gripper.getStatorCurrent().getValueAsDouble() >= 10) {
+        if (m_gripper.getStatorCurrent().getValueAsDouble() >= 35) {
             return true;
         }
         else {

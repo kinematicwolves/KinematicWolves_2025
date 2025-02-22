@@ -11,6 +11,7 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -18,25 +19,29 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.VisionProfile;
 import frc.robot.commands.AcquireCoral;
 import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
+import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.MoveToLevel;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetRollerSpeed;
+import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Wrist;
 
 public class RobotContainer {
     /* Swerve Speeds */
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.45).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     // Setting up bindings for necessary control of the swerve drive platform
     private final SwerveRequest.FieldCentric fieldCentricDrive = new SwerveRequest.FieldCentric()
@@ -68,19 +73,19 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     // Elevator
-    private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
+    private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 128.4);
 
     // Wrist
 
     // Wist and Elevator
     private final MoveToLevel moveCoralLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoralLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 153,  4); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 158,  7); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
     
-    private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel  moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
-    // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, -91.5, 60); // TODO: Put Number into Constants.ElevatorProfile
+    // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, 0, 60); // TODO: Put Number into Constants.ElevatorProfile
 
     // Gripper
     private final AcquireCoral   acquireCoral = new AcquireCoral(gripperSubsystem, 0.1);
@@ -88,8 +93,14 @@ public class RobotContainer {
     private final IndexCoral     indexCoral   = new IndexCoral(gripperSubsystem, 0.1);
     private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.2);
 
-    private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, 0.3);
+    private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, -0.3);
     private final SetRollerSpeed outTakeAlgae = new SetRollerSpeed(gripperSubsystem, 0.5);
+
+    private final SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.Velocity);
+
+    private final Vision vision = new Vision();
+
+    /* Path follower */
 
     public RobotContainer() {
         // autoChooser = AutoBuilder.buildAutoChooser("Test");
@@ -115,9 +126,37 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> brake)
         ); 
 
-        driveController.leftBumper().onTrue( //  LB = Reset field-centric heading
+        driveController.y().onTrue( //  LB = Reset field-centric heading
             drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
         );
+
+        // Reef auto align
+        driveController.rightBumper().debounce(0.2).whileTrue(drivetrain.applyRequest(
+            () -> robotCentric
+                .withRotationalRate(vision.getRightReefTx(VisionProfile.frontLimelight)/VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * 0.8)
+                .withVelocityY(-driveController.getLeftX() * 0.5)
+                ));
+
+        driveController.leftBumper().debounce(0.2).whileTrue(
+            drivetrain.applyRequest(
+                () -> robotCentric
+                .withRotationalRate(vision.getLeftReefTx(VisionProfile.frontLimelight)/VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * 0.8)
+                .withVelocityY(-driveController.getLeftX() * 0.5)
+                ));
+    
+        driveController.rightBumper().and(driveController.leftBumper()).debounce(0.3).whileTrue(drivetrain.applyRequest(
+            () -> robotCentric
+                .withRotationalRate(vision.getCenterReefTx(VisionProfile.frontLimelight)/VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * 0.8)
+                .withVelocityY(-driveController.getLeftX() * 0.5)
+                ));
+
+        driveController.a().whileTrue(drivetrain.applyRequest(() -> brake));
+
+        // reset the field-centric heading on left bumper press
+        //driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
 
         drivetrain.registerTelemetry(logger::telemeterize);
 
@@ -152,7 +191,7 @@ public class RobotContainer {
 
         // intake / outtake coral
         // experimenting with rumble, and making sure we do not end up in a endless state
-        opController.rightBumper()
+        opController.x()
             .and(coralModeTrigger)
             .onTrue(
                 // a Parallel race command group will run commands in sequence, and terminate all when one ends
@@ -169,7 +208,7 @@ public class RobotContainer {
             );
             //.andThen(new SetWristPosition(wristSubsystem, 10))
 
-        opController.leftBumper()
+        opController.rightTrigger()
             .and(coralModeTrigger)
             .whileTrue(outTakeCoral);
 
@@ -178,61 +217,59 @@ public class RobotContainer {
             .whileTrue(overRideIntakeCoral);
 
         // moving to coral levels
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel1)
             .and(coralModeTrigger)
             .onTrue(moveCoralLevel1)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel2)
             .and(coralModeTrigger)
             .onTrue(moveCoralLevel2)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel3)
             .and(coralModeTrigger)
             .onTrue(moveCoralLevel3)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel4)
             .and(coralModeTrigger)
             .onTrue(moveCoralLevel4)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
 
         // moving to algae levels
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel1)
             .and(coralModeTrigger.negate())
             .onTrue(moveAlgaeLevel1)
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
 
-        opController.a()
+        opController.leftTrigger()
             .and(scoringLevel2)
             .and(coralModeTrigger.negate())
             .onTrue(moveAlgaeLevel2)
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
 
         // TODO: Determine processor scoring wrist and elevator values
-        // opController.a()
-        //     .and(scoringLevel0)
-        //     .and(coralModeTrigger.negate())
-        //     .onTrue(moveAlgaeScore)
-        //     .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
-        // );
+        opController.leftTrigger()
+            .and(scoringLevel0)
+            .and(coralModeTrigger.negate())
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, 35)
+            .andThen(new SetWristPosition(wristSubsystem, 54)))
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem)
+        );
 
         // intake / outtake algae
-        opController.leftBumper()
-            .and(coralModeTrigger).negate()
+        opController.rightBumper()
+            //.and(coralModeTrigger).negate()
             .whileTrue(outTakeAlgae);
 
-        // this was the problematic composition
-        // coralModeTrigger.negate().and(opController.rightBumper().whileTrue(intakeAlgae));
-        
         // this is the [hopefully] fixed composition
-        opController.rightBumper().and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
+        opController.x().and(coralModeTrigger.negate()).whileTrue(new IntakeAlgae(gripperSubsystem, -0.4, -0.18));
         // notice the and() function only contains coralModeTrigger.negate() in the [hopefully] fixed version
         // in the broken version, and() contained opController.rightBumper().whileTrue(intakeAlgae)
         // opController.rightBumper().whileTrue(intakeAlgae) was evaluated as java attempted to evaluate the composite trigger
@@ -250,7 +287,7 @@ public class RobotContainer {
         techController.povUp().whileTrue(new SetWristSpeed(wristSubsystem, 0.2));
 
         // gripper
-        techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.2));
+        techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.4));
     }
 
     public Command getAutonomousCommand() {

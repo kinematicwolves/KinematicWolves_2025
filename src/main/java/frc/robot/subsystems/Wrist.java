@@ -27,10 +27,19 @@ public class Wrist extends SubsystemBase {
   /** Creates a new Wrist. */
   public Wrist() {
     m_wrist.configure(wristConfig, ResetMode.kResetSafeParameters,null);
-    wristConfig.smartCurrentLimit(40);
+    wristConfig.smartCurrentLimit(20);
     wristConfig.inverted(false); // we may need to change this one later
     wristConfig.idleMode(IdleMode.kCoast);
-    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.05, 0, 0.01);
+    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.035, 0, 6
+    
+    
+    
+    
+    
+    
+    
+    
+    );
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }
 
