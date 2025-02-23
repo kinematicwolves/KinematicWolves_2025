@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.1403681506849312,
+        "y": 4.160231164383561
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 2.1403681506849317,
+        "y": 4.160231164383561
+      },
+      "isLocked": false,
+      "linkedName": "BranchA"
+    },
+    {
+      "anchor": {
+        "x": 2.3518581081081082,
+        "y": 5.4875
+      },
+      "prevControl": {
+        "x": 2.3396156275557622,
+        "y": 4.6917387640975035
+      },
+      "nextControl": {
+        "x": 2.366883793039615,
+        "y": 6.464169520547944
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 1.4,
+        "y": 7.2
+      },
+      "prevControl": {
+        "x": 2.0427876096865387,
+        "y": 6.433955556881022
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "LeftStation"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -50.0
+  },
+  "reversed": false,
+  "folder": "Branch to LeftStation",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

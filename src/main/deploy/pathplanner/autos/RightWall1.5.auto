@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "New Path"
+            "pathName": "RightWall_BranchC"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "SimplePath"
+            "pathName": "BranchC_RightStation"
           }
         }
       ]

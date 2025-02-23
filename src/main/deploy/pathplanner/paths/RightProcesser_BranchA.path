@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 6.0,
+        "y": 0.6
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.0,
+        "y": 1.599999999999997
+      },
+      "isLocked": false,
+      "linkedName": "RightProcesser"
+    },
+    {
+      "anchor": {
+        "x": 3.9823479729729736,
+        "y": 2.28581081081081
+      },
+      "prevControl": {
+        "x": 4.869847972972973,
+        "y": 1.773310810810809
+      },
+      "nextControl": {
+        "x": 3.0948479729729743,
+        "y": 2.7983108108108112
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.2,
+        "y": 3.9
+      },
+      "prevControl": {
+        "x": 2.200000000000002,
+        "y": 3.9
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BranchB"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "RightProcesser to Branches",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

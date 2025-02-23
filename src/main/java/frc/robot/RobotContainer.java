@@ -10,11 +10,16 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
 import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -41,7 +46,7 @@ import frc.robot.subsystems.Wrist;
 public class RobotContainer {
     /* Swerve Speeds */
     private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.45).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double MaxAngularRate = RotationsPerSecond.of(0.5).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     // Setting up bindings for necessary control of the swerve drive platform
     private final SwerveRequest.FieldCentric fieldCentricDrive = new SwerveRequest.FieldCentric()
@@ -84,7 +89,7 @@ public class RobotContainer {
     private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
     
     private final MoveToLevel  moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel  moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
     // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, 0, 60); // TODO: Put Number into Constants.ElevatorProfile
 
     // Gripper
@@ -101,10 +106,26 @@ public class RobotContainer {
     private final Vision vision = new Vision();
 
     /* Path follower */
+    private final SendableChooser<Command> autoChooser;
 
     public RobotContainer() {
-        // autoChooser = AutoBuilder.buildAutoChooser("Test");
-        // SmartDashboard.putData("Auto Mode", autoChooser);
+        // pathplanner stuff
+        // Named Commands must be before building the auto chooser
+        NamedCommands.registerCommand("homeSystemCoral", new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
+        NamedCommands.registerCommand("moveCoralLevel1", moveCoralLevel1);
+        NamedCommands.registerCommand("moveCoralLevel2", moveCoralLevel2);
+        NamedCommands.registerCommand("moveCoralLevel3", moveCoralLevel3);
+        NamedCommands.registerCommand("moveCoralLevel4", moveCoralLevel4);
+        NamedCommands.registerCommand(
+            "outTakeCoral", 
+            new ParallelDeadlineGroup(
+                new WaitCommand(1), 
+                new SetRollerSpeed(gripperSubsystem, 0.5)
+            )
+        );
+
+        autoChooser = AutoBuilder.buildAutoChooser("LeftWall2");
+        SmartDashboard.putData("Auto Mode", autoChooser);
 
         configureBindings();
     }
@@ -292,7 +313,7 @@ public class RobotContainer {
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        // return autoChooser.getSelected();
-        return new InstantCommand();
+        return autoChooser.getSelected();
+        // return new InstantCommand();
     }
 }

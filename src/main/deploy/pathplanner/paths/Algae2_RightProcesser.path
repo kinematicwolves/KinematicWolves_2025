@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.7,
+        "y": 2.9
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 3.2000000000000033,
+        "y": 2.0339745962155664
+      },
+      "isLocked": false,
+      "linkedName": "Algae2"
+    },
+    {
+      "anchor": {
+        "x": 6.0,
+        "y": 0.6
+      },
+      "prevControl": {
+        "x": 6.0,
+        "y": 1.5999999999999968
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "RightProcesser"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 2.5,
+    "maxAcceleration": 5.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "reversed": false,
+  "folder": "Algae to Right Processer",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 57.474113813778864
+  },
+  "useDefaultConstraints": true
+}
