@@ -123,6 +123,10 @@ public class RobotContainer {
                 new SetRollerSpeed(gripperSubsystem, 0.5)
             )
         );
+        NamedCommands.registerCommand("intakeCoral", // turning on rumble as we run the intake
+            new AcquireCoral(gripperSubsystem, 0.1)
+            .andThen(new IndexCoral(gripperSubsystem, 0.1))
+        );
 
         autoChooser = AutoBuilder.buildAutoChooser("LeftWall2");
         SmartDashboard.putData("Auto Mode", autoChooser);

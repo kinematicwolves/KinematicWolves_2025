@@ -7,7 +7,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "RightWall_BranchC"
+            "pathName": "RightWall_BranchF"
           }
         },
         {
@@ -27,15 +27,15 @@
           "data": {
             "commands": [
               {
-                "type": "named",
+                "type": "path",
                 "data": {
-                  "name": "homeSystemCoral"
+                  "pathName": "BranchF_RightStation"
                 }
               },
               {
-                "type": "path",
+                "type": "named",
                 "data": {
-                  "pathName": "BranchC_RightStation"
+                  "name": "homeSystemCoral"
                 }
               }
             ]
@@ -45,6 +45,30 @@
           "type": "named",
           "data": {
             "name": "intakeCoral"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "RightStation_BranchC"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "moveCoralLevel3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "outTakeCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "homeSystemCoral"
           }
         }
       ]

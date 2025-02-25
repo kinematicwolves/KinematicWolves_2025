@@ -11,9 +11,34 @@
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "BranchK_LeftStation"
+            "name": "moveCoralLevel3"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "outTakeCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeSystemCoral"
+                }
+              },
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BranchK_LeftStation"
+                }
+              }
+            ]
           }
         }
       ]

@@ -23,7 +23,7 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDS */
-        public static final double kP = 0.7;
+        public static final double kP = 2;
 
         /* Encoder Error */
         public static final double encoderSetPointError = 1; // TODO: Config to precise positioning
@@ -57,7 +57,7 @@ public class Constants {
         public static int stationTestPipeline_Test = 0;
 
         /* Proportional limits for front limelight */
-        public static int frontProportionalTx = 15;
+        public static int frontProportionalTx = 7;
         public static int frontProportionalTy = 20;
         public static int frontProportionalTa = 20;
 
