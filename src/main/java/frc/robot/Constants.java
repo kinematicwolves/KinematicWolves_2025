@@ -4,23 +4,16 @@
 
 package frc.robot;
 
-import com.ctre.phoenix.led.Animation;
-
 /** Add your docs here. */
 public class Constants {
     public class LightingProfile {
     /* Id's */
-    public static final int chassisCandleId = 61;
-    public static final int elevatorCandleId = 62;
+    public static final int elevatorCandleId = 61;
     
     /* Brightness */
     public static final double kBrightnessScalar = 1;
 
     /* Total Number of Led's */
-    public static final int chassisNumLedStrip = 88;
     public static final int elevatorNumLedStrip = 88;
-
-    public static  Animation elevatorAnimation = null;
-    public static Animation chassisAnimation = null;
     }
 }

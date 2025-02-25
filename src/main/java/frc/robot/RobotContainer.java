@@ -15,9 +15,7 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.RobotStates.SetDisabledState;
 import frc.robot.RobotStates.SetTeleOpState;
 import frc.robot.RobotStates.SetTestState;
@@ -83,48 +81,6 @@ public class RobotContainer {
         
         // reset the field-centric heading on left bumper press
         driveController.leftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
-
-        /* Operator controls */
-        // untested
-        opController.back().onChange(
-            new InstantCommand(
-                () -> {
-                    coralMode = !coralMode;
-                    System.out.println("Coral Mode Toggled: " + coralMode);
-                }
-            )
-        );
-
-        // untested
-        Trigger coralModeTrigger = new Trigger(() -> coralMode);
-
-        // untested
-        opController.a().onTrue(
-            new InstantCommand(() -> System.out.println("A Pressed - Default Action"))
-        );
-
-        // untested
-        coralModeTrigger.and(opController.a()).onTrue(
-                new InstantCommand(() -> System.out.println("A Pressed - Coral Mode Action"))
-        );
-
-        // untested
-        opController.b().onTrue(
-            new InstantCommand(() -> System.out.println("B Pressed - Default Action"))
-        );
-
-        // untested
-        coralModeTrigger.and(opController.b()).onTrue(
-                new InstantCommand(() -> System.out.println("B Pressed - Coral Mode Action"))
-        );
-        
-        /* Technician controls */
-        // Run SysId routines when holding back/start and X/Y.
-        // Note that each routine should be run exactly once in a single log.
-        // techController.back().and(driverController.y()).whileTrue(drivetrain.sysIdDynamic(Direction.kForward));
-        // techController.back().and(driverController.x()).whileTrue(drivetrain.sysIdDynamic(Direction.kReverse));
-        // techController.start().and(driverController.y()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kForward));
-        // techController.start().and(driverController.x()).whileTrue(drivetrain.sysIdQuasistatic(Direction.kReverse));
 
         /* Other */
         drivetrain.registerTelemetry(logger::telemeterize);

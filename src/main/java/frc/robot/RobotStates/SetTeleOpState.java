@@ -35,14 +35,6 @@ public class SetTeleOpState extends Command {
   public void execute() {
     matchTimer -= 20;
     SmartDashboard.putNumber("Match Time Remaining", Units.millisecondsToSeconds(matchTimer));
-
-    lighting.setRgbFadeLightShow(LightingProfile.elevatorAnimation, 1, LightingProfile.elevatorNumLedStrip);
-    if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
-      lighting.setBlueLightShow(LightingProfile.chassisAnimation, LightingProfile.chassisNumLedStrip);
-    }
-    else {
-      lighting.setRedLightShow(LightingProfile.chassisAnimation, LightingProfile.chassisNumLedStrip);
-    }
   }
 
   // Called once the command ends or is interrupted.

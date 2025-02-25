@@ -5,7 +5,6 @@
 package frc.robot.RobotStates;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Constants.LightingProfile;
 import frc.robot.subsystems.Lighting;
 
 /* You should consider using the more terse Command factories API instead https://docs.wpilib.org/en/stable/docs/software/commandbased/organizing-command-based.html#defining-commands */
@@ -22,8 +21,7 @@ public class SetDisabledState extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lighting.setRainbowLightShow(LightingProfile.elevatorAnimation, 0.3, LightingProfile.elevatorNumLedStrip);
-    lighting.setRainbowLightShow(LightingProfile.chassisAnimation, 1, LightingProfile.elevatorNumLedStrip);
+    lighting.setRainbowLightShow( 0.3, 0.2);
   }
 
   // Called once the command ends or is interrupted.
