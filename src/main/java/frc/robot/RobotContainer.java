@@ -78,18 +78,18 @@ public class RobotContainer {
     private final Telemetry logger = new Telemetry(MaxSpeed);
 
     // Elevator
-    private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 128.4);
+    private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, 128.4, 0);
 
     // Wrist
 
     // Wist and Elevator
     private final MoveToLevel moveCoralLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoralLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 158,  7); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 156,  7); // TODO: Put Number into Constants.ElevatorProfile
     private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
     
-    private final MoveToLevel  moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel  moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel  moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 113, 47); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel  moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 199, 47); // TODO: Put Number into Constants.ElevatorProfile
     // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, 0, 60); // TODO: Put Number into Constants.ElevatorProfile
 
     // Gripper
@@ -240,6 +240,12 @@ public class RobotContainer {
         opController.b()
             .and(coralModeTrigger)
             .whileTrue(overRideIntakeCoral);
+
+        opController.leftTrigger()
+            .and(scoringLevel0)
+            .and(coralModeTrigger)
+            .onTrue(elevatorShallowCage)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));            
 
         // moving to coral levels
         opController.leftTrigger()

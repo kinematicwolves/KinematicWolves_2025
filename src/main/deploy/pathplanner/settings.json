@@ -1,6 +1,6 @@
 {
-  "robotWidth": 0.9,
-  "robotLength": 0.9,
+  "robotWidth": 0.89,
+  "robotLength": 0.89,
   "holonomicMode": true,
   "pathFolders": [
     "Algae to Processer",
@@ -18,8 +18,8 @@
     "RightWall to Branch"
   ],
   "autoFolders": [],
-  "defaultMaxVel": 2.5,
-  "defaultMaxAccel": 1.3,
+  "defaultMaxVel": 2.8,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 180.0,
   "defaultMaxAngAccel": 180.0,
   "defaultNominalVoltage": 12.0,
@@ -28,7 +28,7 @@
   "robotTrackwidth": 0.546,
   "driveWheelRadius": 0.048,
   "driveGearing": 5.9,
-  "maxDriveSpeed": 4.94,
+  "maxDriveSpeed": 4.98,
   "driveMotorType": "falcon500",
   "driveCurrentLimit": 40.0,
   "wheelCOF": 1.2,
