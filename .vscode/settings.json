@@ -58,9 +58,9 @@
     "edu.wpi.first.math.**.struct.*",
   ],
   "cSpell.words": [
-    "Debouncer"
-  ],
-  "cSpell.words": [
+    "Brushless",
+    "pathplanner",
+    "PIDS",
     "Brushless",
     "PIDS"
   ]

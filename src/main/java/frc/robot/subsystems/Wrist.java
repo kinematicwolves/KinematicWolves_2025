@@ -16,9 +16,10 @@ import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.WristProfile;
 
 public class Wrist extends SubsystemBase {
-    private SparkMax m_wrist = new SparkMax(60, SparkLowLevel.MotorType.kBrushless);
+    private SparkMax m_wrist = new SparkMax(WristProfile.motorID, SparkLowLevel.MotorType.kBrushless);
     private SparkMaxConfig wristConfig = new SparkMaxConfig();
     private SparkClosedLoopController wristController = m_wrist.getClosedLoopController();
 
@@ -27,19 +28,10 @@ public class Wrist extends SubsystemBase {
   /** Creates a new Wrist. */
   public Wrist() {
     m_wrist.configure(wristConfig, ResetMode.kResetSafeParameters,null);
-    wristConfig.smartCurrentLimit(20);
+    wristConfig.smartCurrentLimit(WristProfile.currentLimit);
     wristConfig.inverted(false); // we may need to change this one later
     wristConfig.idleMode(IdleMode.kCoast);
-    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(0.035, 0, 6
-    
-    
-    
-    
-    
-    
-    
-    
-    );
+    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(WristProfile.kP, WristProfile.kI, WristProfile.kD);
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }
 
@@ -70,8 +62,8 @@ public class Wrist extends SubsystemBase {
   }
 
   public boolean atPosition() {
-    double lowerLimit = setPoint - 0.5;
-    double upperLimit = setPoint + 0.5;
+    double lowerLimit = setPoint - WristProfile.encoderSetPointError;
+    double upperLimit = setPoint + WristProfile.encoderSetPointError;
 
     if ((getWristPos() >= lowerLimit) && (getWristPos() <= upperLimit)) {
       return true;

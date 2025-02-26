@@ -63,8 +63,8 @@ public class Elevator extends SubsystemBase {
         /**Software Limits */
         // softLimitConfig.apply(liftConfigA.softLimit);
         // softLimitConfig.apply(liftConfigB.softLimit);
-        // liftConfigA.softLimit.reverseSoftLimitEnabled(false);
-        // liftConfigB.softLimit.reverseSoftLimitEnabled(false);
+        // liftConfigA.softLimit.reverseSoftLimitEnabled(true);
+        // liftConfigB.softLimit.reverseSoftLimitEnabled(true);
         // liftConfigA.softLimit.forwardSoftLimitEnabled(true);
         // liftConfigB.softLimit.forwardSoftLimitEnabled(true);
         // liftConfigA.softLimit.reverseSoftLimit(0);
@@ -77,8 +77,8 @@ public class Elevator extends SubsystemBase {
         liftConfigB.idleMode(ElevatorProfile.defaultIdleMode);
 
         /* PIDS */
-        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(ElevatorProfile.kP, 0, 0.1);
-        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(ElevatorProfile.kP, 0, 0.1);
+        liftConfigA.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(ElevatorProfile.kP, ElevatorProfile.kI, ElevatorProfile.kD);
+        liftConfigB.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(ElevatorProfile.kP, ElevatorProfile.kI, ElevatorProfile.kD);
 
         /* Burning Configs */
         m_LiftA.configure(liftConfigA, null, PersistMode.kPersistParameters);
