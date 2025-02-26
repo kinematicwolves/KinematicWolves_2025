@@ -164,7 +164,7 @@ public class RobotContainer {
                 .withVelocityY(-driveController.getLeftX() * 0.5)
                 ));
 
-        drivetrain.registerTelemetry(logger::telemeterize);
+        // drivetrain.registerTelemetry(logger::telemeterize);
 
 
     /* Operator controls */
