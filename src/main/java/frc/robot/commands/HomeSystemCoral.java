@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ElevatorProfile;
+import frc.robot.Constants.WristProfile;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 
@@ -18,9 +20,9 @@ public class HomeSystemCoral extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetWristPosition(wristSubsystem, 10), // TODO: Put Number into Constants.WristProfile
-            new SetElevatorPosition(elevatorSubsystem, -1), // TODO: Put Number into Constants.ElevatorProfile
-            new SetWristPosition(wristSubsystem, -2) // TODO: Put Number into Constants.WirstProfile
+            new SetWristPosition(wristSubsystem, WristProfile.safeTravelPos),
+            new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.homePos), 
+            new SetWristPosition(wristSubsystem, WristProfile.homePos)
         );
     }
 }

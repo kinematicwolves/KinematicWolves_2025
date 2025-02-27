@@ -10,12 +10,16 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class Constants {
     public class DriverProfile {
         /* Angular speed multiplier */
-        public static final double kRotationMagnitude = 0.5;
+        public static final double kRotationMagnitude = 0.45;
 
         /* Driver station ports */
         public static final int driverPortNum = 0;
         public static final int operatorPortNum = 1;
         public static final int technicianPortNum = 2;
+
+        /* Alignment Speed Multiplier */
+        public static final double x_AlignmentMultiplier = 0.5;
+        public static final double y_AlignmentMultiplier = 0.8;
     }
     public class ElevatorProfile {
         /* CAN Id's */
@@ -32,24 +36,26 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDs */
-        public static final double kP = 0.7; // TODO: config for new gear ratio
-        public static final double kI = 0; // TODO: config for new gear ratio
-        public static final double kD = 0.1; // TODO: config for new gear ratio
+        public static final double kP = 0.4;
+        public static final double kI = 0;
+        public static final double kD = 0.1;
 
         /* Encoder Error */
-        public static final double encoderSetPointError = 1; // TODO: Config to precise positioning
+        public static final double encoderSetPointError = 1;
 
         /* Positions */
-        public static final double coralLvl1Pos = 10; // TODO: config for new gear ratio
-        public static final double coralLvl2Pos = 50.5; // TODO: config for new gear ratio
-        public static final double coralLvl3Pos = 156; // TODO: config for new gear ratio
-        public static final double coralLvl4Pos = 295; // TODO: config for new gear ratio
+        public static final double homePos = -1;
 
-        public static final double algaeLvl1Pos = 113; // TODO: config for new gear ratio
-        public static final double algaeLvl2Pos = 199; // TODO: config for new gear ratio
-        public static final double algaeScorePos = 35; // TODO: config for new gear ratio
+        public static final double coralLvl1Pos = 10;
+        public static final double coralLvl2Pos = 50.5;
+        public static final double coralLvl3Pos = 156;
+        public static final double coralLvl4Pos = 295;
 
-        public static final double shallowCagePos = 128.4; // TODO: config for new gear ratio
+        public static final double algaeLvl1Pos = 113;
+        public static final double algaeLvl2Pos = 199;
+        public static final double algaeScorePos = 35;
+
+        public static final double shallowCagePos = 128.4;
     }
 
     public class WristProfile {
@@ -67,7 +73,11 @@ public class Constants {
         /* Encoder Error */
         public static final double encoderSetPointError = 0.5;
 
-        /* Positions */ //TODO: Might need to config for new gear ratio
+        /* Positions */
+        public static final double homePos = -2;
+        public static final double algaeHomePos = 24;
+        public static final double safeTravelPos = 10;
+
         public static final double coralLvl1Pos = 4;
         public static final double coralLvl2Pos = 4;
         public static final double coralLvl3Pos = 7;
@@ -95,8 +105,8 @@ public class Constants {
         public static final double acquireCoralSpeed = 0.11;
         public static final double indexCoralSpeed = 0.09;
 
-        public static final double intakeAlgaeSpeed = -0.4;
-        public static final double holdAlgaeOutput = -0.18;
+        public static final double intakeAlgaeSpeed = -0.3;
+        public static final double holdAlgaeOutput = -0.17;
         public static final double outTakeSpeed = 0.3;
     }
 
@@ -114,16 +124,9 @@ public class Constants {
         public static int redReefLeftPipeline = 5;
         public static int redReedRightPipeline = 6;
 
-        public static int stationTestPipeline_Test = 0;
-
         /* Proportional limits for front limelight */
-        public static int frontProportionalTx = 7;
-        public static int frontProportionalTy = 20;
-        public static int frontProportionalTa = 20;
-
-        /* Proportional limits for rear limelight */
-        public static int rearProportionalTx = 20;
-        public static int rearProportionalTy = 20;
-        public static int rearProportionalTa = 20;
+        public static double frontProportionalTx = 7.5;
+        public static double frontProportionalTy = 20;
+        public static double frontProportionalTa = 20;
     }
 }

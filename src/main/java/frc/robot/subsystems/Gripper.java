@@ -51,18 +51,6 @@ public class Gripper extends SubsystemBase {
             return false;
     }
 
-    /**
-     * Checks if motor current is spiking
-     * @return true if current is spiking, else false
-     */
-    public boolean hasAlgae() {
-        if (m_gripper.getStatorCurrent().getValueAsDouble() >= 35) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     public boolean coralStowed() {
         if (m_TOF.getRange() <= 185)
             return true;

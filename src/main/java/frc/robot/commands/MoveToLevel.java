@@ -5,6 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.WristProfile;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
 
@@ -17,7 +18,7 @@ public class MoveToLevel extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetWristPosition(wristSubsystem, 10), // TODO: Put Number into Constants.WristProfile
+            new SetWristPosition(wristSubsystem, WristProfile.safeTravelPos),
             new SetElevatorPosition(elevatorSubsystem, elevatorScoringPose),
             new SetWristPosition(wristSubsystem, wristScoringPose)
         );
