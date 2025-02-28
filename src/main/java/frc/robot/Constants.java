@@ -10,7 +10,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class Constants {
     public class DriverProfile {
         /* Angular speed multiplier */
-        public static final double kRotationMagnitude = 0.45;
+        public static final double kRotationMagnitude = 0.4;
 
         /* Driver station ports */
         public static final int driverPortNum = 0;
@@ -36,7 +36,7 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDs */
-        public static final double kP = 0.4;
+        public static final double kP = 1;
         public static final double kI = 0;
         public static final double kD = 0.1;
 
@@ -46,16 +46,16 @@ public class Constants {
         /* Positions */
         public static final double homePos = -1;
 
-        public static final double coralLvl1Pos = 10;
-        public static final double coralLvl2Pos = 50.5;
-        public static final double coralLvl3Pos = 156;
-        public static final double coralLvl4Pos = 295;
+        public static final double coralLvl1Pos = 0;
+        public static final double coralLvl2Pos = 48.2;
+        public static final double coralLvl3Pos = 111.6;
+        public static final double coralLvl4Pos = 219;
 
-        public static final double algaeLvl1Pos = 113;
-        public static final double algaeLvl2Pos = 199;
-        public static final double algaeScorePos = 35;
+        public static final double algaeLvl1Pos = 75;
+        public static final double algaeLvl2Pos = 155;
+        public static final double algaeScorePos = 31;
 
-        public static final double shallowCagePos = 128.4;
+        public static final double shallowCagePos = 92;
     }
 
     public class WristProfile {
@@ -78,14 +78,14 @@ public class Constants {
         public static final double algaeHomePos = 24;
         public static final double safeTravelPos = 10;
 
-        public static final double coralLvl1Pos = 4;
-        public static final double coralLvl2Pos = 4;
-        public static final double coralLvl3Pos = 7;
+        public static final double coralLvl1Pos = 0;
+        public static final double coralLvl2Pos = 7.4;
+        public static final double coralLvl3Pos = 6.9;
         public static final double coralLvl4Pos = 10;
 
         public static final double algaeLvl1Pos = 47;
-        public static final double algaeLvl2Pos = 47;
-        public static final double algaeScorePos = 54;
+        public static final double algaeLvl2Pos = 43;
+        public static final double algaeScorePos = 56.3;
 
         public static final double shallowCagePos = 0;
     }
@@ -106,7 +106,7 @@ public class Constants {
         public static final double indexCoralSpeed = 0.09;
 
         public static final double intakeAlgaeSpeed = -0.3;
-        public static final double holdAlgaeOutput = -0.17;
+        public static final double holdAlgaeOutput = -0.18;
         public static final double outTakeSpeed = 0.3;
     }
 

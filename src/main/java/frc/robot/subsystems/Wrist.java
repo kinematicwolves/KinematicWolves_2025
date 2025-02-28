@@ -30,7 +30,7 @@ public class Wrist extends SubsystemBase {
     m_wrist.configure(wristConfig, ResetMode.kResetSafeParameters,null);
     wristConfig.smartCurrentLimit(WristProfile.currentLimit);
     wristConfig.inverted(false); // we may need to change this one later
-    wristConfig.idleMode(IdleMode.kCoast);
+    wristConfig.idleMode(IdleMode.kBrake);
     wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(WristProfile.kP, WristProfile.kI, WristProfile.kD);
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }

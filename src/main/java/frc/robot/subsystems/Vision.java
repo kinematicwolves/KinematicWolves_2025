@@ -35,7 +35,7 @@ public class Vision extends SubsystemBase {
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
       setLimelightPipeline(limelight, VisionProfile.blueReefLeftPipeline);
 
-      return LimelightHelpers.getTX(limelight);
+      return -LimelightHelpers.getTX(limelight);
     }
     else {
       setLimelightPipeline(limelight, VisionProfile.redReefLeftPipeline);
@@ -53,7 +53,7 @@ public class Vision extends SubsystemBase {
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
       setLimelightPipeline(limelight, VisionProfile.blueReefRightPipeline);
 
-      return LimelightHelpers.getTX(limelight);
+      return -LimelightHelpers.getTX(limelight);
     }
     else {
       setLimelightPipeline(limelight, VisionProfile.redReedRightPipeline);
@@ -71,7 +71,7 @@ public class Vision extends SubsystemBase {
     if (DriverStation.getAlliance().get() == DriverStation.Alliance.Blue) {
       setLimelightPipeline(limelight, VisionProfile.blueReefCenterPipeline);
 
-      return LimelightHelpers.getTX(limelight);
+      return -LimelightHelpers.getTX(limelight);
     }
     else {
       setLimelightPipeline(limelight, VisionProfile.redReefCenterPipeline);

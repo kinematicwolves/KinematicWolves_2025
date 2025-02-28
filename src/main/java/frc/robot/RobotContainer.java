@@ -27,12 +27,14 @@ import frc.robot.Constants.ElevatorProfile;
 import frc.robot.Constants.GripperProfile;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.Constants.WristProfile;
+import frc.robot.RobotStates.SetTeleOpState;
 import frc.robot.commands.AcquireCoral;
 import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.MoveToLevel;
+import frc.robot.commands.RunElevatorOpenLoop;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetRollerSpeed;
@@ -103,6 +105,7 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure control bindings (button mappings and input handlers)
         configureBindings();
+        new SetTeleOpState();
     
         /* Named Commands for PathPlanner */
         // Register various robot commands to be used in autonomous routines
@@ -281,6 +284,7 @@ public class RobotContainer {
         // Manual elevator control
         techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2)); // Move up
         techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2)); // Move down
+        techController.a().whileTrue(new RunElevatorOpenLoop(elevatorSubsystem, techController.getHID()));
     
         // Manual wrist control
         techController.povDown().whileTrue(new SetWristSpeed(wristSubsystem, -0.2)); // Move down
