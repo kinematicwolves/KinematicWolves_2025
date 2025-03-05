@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 7.3,
-        "y": 6.2
+        "y": 3.9
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.300000000000008,
-        "y": 6.2
+        "y": 3.9
       },
       "isLocked": false,
       "linkedName": "CenterLeft"
@@ -45,7 +45,7 @@
     "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Center to Branch",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "moveCoralLevel3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "outTakeCoral"
           }
         },
@@ -26,12 +20,6 @@
           "type": "parallel",
           "data": {
             "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "homeSystemCoral"
-                }
-              },
               {
                 "type": "path",
                 "data": {

@@ -10,7 +10,7 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class Constants {
     public class DriverProfile {
         /* Angular speed multiplier */
-        public static final double kRotationMagnitude = 0.4;
+        public static final double kRotationMagnitude = 0.45;
 
         /* Driver station ports */
         public static final int driverPortNum = 0;
@@ -19,7 +19,12 @@ public class Constants {
 
         /* Alignment Speed Multiplier */
         public static final double x_AlignmentMultiplier = 0.5;
-        public static final double y_AlignmentMultiplier = 0.8;
+        public static final double y_AlignmentMultiplier = 0.85; 
+
+        /* Slow Mode Speeds */
+        public static final double x_slowMode = 0.8;
+        public static final double y_slowMode = 0.8;
+        public static final double rx_slowMode = 0.4;
     }
     public class ElevatorProfile {
         /* CAN Id's */
@@ -36,7 +41,7 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDs */
-        public static final double kP = 1;
+        public static final double kP = 1.6;
         public static final double kI = 0;
         public static final double kD = 0.1;
 
@@ -46,12 +51,12 @@ public class Constants {
         /* Positions */
         public static final double homePos = -1;
 
-        public static final double coralLvl1Pos = 0;
+        public static final double coralLvl1Pos = 35;
         public static final double coralLvl2Pos = 48.2;
         public static final double coralLvl3Pos = 111.6;
         public static final double coralLvl4Pos = 219;
 
-        public static final double algaeLvl1Pos = 75;
+        public static final double algaeLvl1Pos = 86;
         public static final double algaeLvl2Pos = 155;
         public static final double algaeScorePos = 31;
 
@@ -66,26 +71,26 @@ public class Constants {
         public static final int currentLimit = 20;
 
         /* PIDs */
-        public static final double kP = 0.035;
+        public static final double kP = 0.03;
         public static final double kI = 0;
-        public static final double kD = 6;
+        public static final double kD = 2.8;
 
         /* Encoder Error */
         public static final double encoderSetPointError = 0.5;
 
         /* Positions */
-        public static final double homePos = -2;
+        public static final double homePos = -10;
         public static final double algaeHomePos = 24;
         public static final double safeTravelPos = 10;
 
-        public static final double coralLvl1Pos = 0;
+        public static final double coralLvl1Pos = 3;
         public static final double coralLvl2Pos = 7.4;
         public static final double coralLvl3Pos = 6.9;
         public static final double coralLvl4Pos = 10;
 
         public static final double algaeLvl1Pos = 47;
         public static final double algaeLvl2Pos = 43;
-        public static final double algaeScorePos = 56.3;
+        public static final double algaeScorePos = 57.3;
 
         public static final double shallowCagePos = 0;
     }
@@ -96,17 +101,17 @@ public class Constants {
         public static final int tofId = 57;
 
         /* Motor Current Limit */
-        public static final double currentLimit = 15;
+        public static final double currentLimit = 20;
 
         /* Sensor Range Values */
         public static final double tofCoralRange = 75;
 
         /* Default Speeds (Percentage Outputs) */
-        public static final double acquireCoralSpeed = 0.11;
+        public static final double acquireCoralSpeed = 0.135;
         public static final double indexCoralSpeed = 0.09;
 
         public static final double intakeAlgaeSpeed = -0.3;
-        public static final double holdAlgaeOutput = -0.18;
+        public static final double holdAlgaeOutput = -0.3;
         public static final double outTakeSpeed = 0.3;
     }
 

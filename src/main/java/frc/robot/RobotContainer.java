@@ -27,13 +27,13 @@ import frc.robot.Constants.ElevatorProfile;
 import frc.robot.Constants.GripperProfile;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.Constants.WristProfile;
-import frc.robot.RobotStates.SetTeleOpState;
 import frc.robot.commands.AcquireCoral;
 import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.MoveToLevel;
+import frc.robot.commands.MoveToLevelAlgae;
 import frc.robot.commands.RunElevatorOpenLoop;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
@@ -89,8 +89,8 @@ public class RobotContainer {
     private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl3Pos, WristProfile.coralLvl3Pos);
     private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl4Pos, WristProfile.coralLvl4Pos);
 
-    private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl1Pos, WristProfile.algaeLvl1Pos);
-    private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl2Pos, WristProfile.algaeLvl2Pos);
+    private final MoveToLevelAlgae moveAlgaeLevel1 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl1Pos, WristProfile.algaeLvl1Pos);
+    private final MoveToLevelAlgae moveAlgaeLevel2 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl2Pos, WristProfile.algaeLvl2Pos);
 
     private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.shallowCagePos, WristProfile.shallowCagePos);
 
@@ -105,7 +105,6 @@ public class RobotContainer {
     public RobotContainer() {
         // Configure control bindings (button mappings and input handlers)
         configureBindings();
-        new SetTeleOpState();
     
         /* Named Commands for PathPlanner */
         // Register various robot commands to be used in autonomous routines
@@ -115,6 +114,9 @@ public class RobotContainer {
         NamedCommands.registerCommand("moveCoralLevel2", moveCoralLevel2);
         NamedCommands.registerCommand("moveCoralLevel3", moveCoralLevel3);
         NamedCommands.registerCommand("moveCoralLevel4", moveCoralLevel4);
+        NamedCommands.registerCommand("algaeLevel1", new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl1Pos)
+                                                                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl1Pos)));
+        NamedCommands.registerCommand("toggleToAlgaeMode", new InstantCommand(() -> coralMode = !coralMode));
     
         // Command to outtake coral: Runs the roller at 50% speed for 1 second
         NamedCommands.registerCommand("outTakeCoral", new ParallelDeadlineGroup(
@@ -123,9 +125,14 @@ public class RobotContainer {
         ));
     
         // Command to intake coral: First acquires at 10% speed, then indexes at 10% speed
-        NamedCommands.registerCommand("intakeCoral", new AcquireCoral(gripperSubsystem, 0.1)
-            .andThen(new IndexCoral(gripperSubsystem, 0.1))
+        NamedCommands.registerCommand("intakeCoral", new AcquireCoral(gripperSubsystem, GripperProfile.acquireCoralSpeed)
+            .andThen(new IndexCoral(gripperSubsystem, GripperProfile.indexCoralSpeed))
         );
+
+        NamedCommands.registerCommand("intakeAlgae", new ParallelDeadlineGroup(
+            new WaitCommand(5),
+            new IntakeAlgae(gripperSubsystem, GripperProfile.intakeAlgaeSpeed, GripperProfile.holdAlgaeOutput)
+        ));
     
         /* Autonomous Selector */
         // Builds the autonomous chooser with a default starting option
@@ -147,6 +154,14 @@ public class RobotContainer {
                     .withVelocityY(-driveController.getLeftX() * maxSpeed) // Left/right movement
                     .withRotationalRate(-driveController.getRightX() * maxAngularRate) // Rotational movement
             ) 
+        );
+
+        driveController.leftTrigger().whileTrue(drivetrain.applyRequest(
+            () -> fieldCentricDrive
+                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_slowMode)
+                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_slowMode)
+                .withRotationalRate(-driveController.getRightX() * DriverProfile.rx_slowMode)
+            )
         );
     
         // Engage brake mode when the right trigger is held
@@ -186,16 +201,6 @@ public class RobotContainer {
         // drivetrain.registerTelemetry(logger::telemeterize);
     
     /* Operator Controls */
-        // Toggle Coral Mode and home the appropriate system
-        opController.start().onTrue(new InstantCommand(() -> {
-            coralMode = !coralMode;
-            if (coralMode) {
-                new HomeSystemCoral(wristSubsystem, elevatorSubsystem);
-            } else {
-                new HomeSystemAlgae(wristSubsystem, elevatorSubsystem);
-            }
-        }));
-
         // Decrease scoring level when POV Down is pressed
         opController.povDown().onTrue(
             new InstantCommand(
@@ -217,6 +222,15 @@ public class RobotContainer {
                 }
             )
         );
+
+        // Toggle Coral Mode and home the appropriate system
+        opController.start().onTrue(
+            new InstantCommand(
+                () -> {
+                    coralMode = !coralMode; 
+                }
+            )
+        );
     
         /* Triggers for Coral Mode and Scoring Levels */
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
@@ -225,6 +239,9 @@ public class RobotContainer {
         Trigger scoringLevel2 = new Trigger(() -> scoringLevel == 2);
         Trigger scoringLevel3 = new Trigger(() -> scoringLevel == 3);
         Trigger scoringLevel4 = new Trigger(() -> scoringLevel == 4);
+
+        coralModeTrigger.onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+        coralModeTrigger.onTrue(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
     
         /* Intake / Outtake */
         // Intake coral when 'X' is pressed in Coral Mode
@@ -234,14 +251,14 @@ public class RobotContainer {
                 acquireCoral.andThen(indexCoral),
                 new WaitCommand(5) // Stop command after 5 seconds
             ));
-    
-        // Outtake coral when right trigger is held
-        opController.rightTrigger().whileTrue(outTake);
-    
+
         // Intake algae when 'X' is pressed in Algae Mode
         opController.x()
             .and(coralModeTrigger.negate())
             .whileTrue(intakeAlgae);
+    
+        // Outtake coral when right trigger is held
+        opController.rightTrigger().whileTrue(outTake);
     
         /* Move to Coral Scoring Levels */
         opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger)
@@ -267,17 +284,22 @@ public class RobotContainer {
     
         /* Move to Algae Scoring Levels */
         opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger.negate())
-            .onTrue(moveAlgaeLevel1)
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl1Pos)
+                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl1Pos)))
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
     
         opController.leftTrigger().and(scoringLevel2).and(coralModeTrigger.negate())
-            .onTrue(moveAlgaeLevel2)
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl2Pos)
+                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl2Pos)))
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
     
         // Algae scoring position (Level 0)
         opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger.negate())
             .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeScorePos)
                 .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeScorePos)))
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+        
+        opController.leftTrigger().and(coralModeTrigger.negate())
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
     
     /* Technician Controls */

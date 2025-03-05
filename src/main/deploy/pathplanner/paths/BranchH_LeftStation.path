@@ -61,7 +61,7 @@
     "rotation": -50.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "Center to Branch",
   "idealStartingState": {
     "velocity": 0,
     "rotation": 180.0

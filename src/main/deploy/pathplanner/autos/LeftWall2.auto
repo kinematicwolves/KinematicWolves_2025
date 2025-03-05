@@ -13,19 +13,7 @@
         {
           "type": "named",
           "data": {
-            "name": "moveCoralLevel3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "outTakeCoral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "homeSystemCoral"
           }
         },
         {
@@ -49,12 +37,6 @@
                 "data": {
                   "pathName": "LeftStation_BranchK"
                 }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "moveCoralLevel2"
-                }
               }
             ]
           }
@@ -62,19 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "moveCoralLevel2"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "outTakeCoral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "homeSystemCoral"
           }
         }
       ]

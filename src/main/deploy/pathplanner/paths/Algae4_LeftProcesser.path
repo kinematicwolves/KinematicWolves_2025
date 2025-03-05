@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.8,
-        "y": 4.0
+        "x": 5.696052631578947,
+        "y": 4.025
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.799999999999999,
-        "y": 4.0
+        "x": 6.696052631578946,
+        "y": 4.025
       },
       "isLocked": false,
       "linkedName": "Algae4"

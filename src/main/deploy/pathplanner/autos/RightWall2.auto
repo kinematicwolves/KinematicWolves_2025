@@ -13,12 +13,6 @@
         {
           "type": "named",
           "data": {
-            "name": "moveCoralLevel3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "outTakeCoral"
           }
         },
@@ -30,12 +24,6 @@
                 "type": "path",
                 "data": {
                   "pathName": "BranchF_RightStation"
-                }
-              },
-              {
-                "type": "named",
-                "data": {
-                  "name": "homeSystemCoral"
                 }
               }
             ]
@@ -56,19 +44,7 @@
         {
           "type": "named",
           "data": {
-            "name": "moveCoralLevel3"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
             "name": "outTakeCoral"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "homeSystemCoral"
           }
         }
       ]
