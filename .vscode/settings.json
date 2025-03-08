@@ -59,6 +59,9 @@
   ],
   "cSpell.words": [
     "Brushless",
-    "PIDS"
+    "deadband",
+    "pathplanner",
+    "PIDS",
+    "telemeterize"
   ]
 }

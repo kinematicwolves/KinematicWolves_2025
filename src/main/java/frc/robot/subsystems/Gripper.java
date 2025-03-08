@@ -10,7 +10,6 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.playingwithfusion.TimeOfFlight;
 
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GripperProfile;
@@ -52,18 +51,6 @@ public class Gripper extends SubsystemBase {
             return false;
     }
 
-    /**
-     * Checks if motor current is spiking
-     * @return true if current is spiking, else false
-     */
-    public boolean hasAlgae() {
-        if (m_gripper.getStatorCurrent().getValueAsDouble() >= 10) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
     public boolean coralStowed() {
         if (m_TOF.getRange() <= 185)
             return true;
@@ -84,9 +71,9 @@ public class Gripper extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
+        //SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
         SmartDashboard.putNumber("Gripper current", m_gripper.getStatorCurrent().getValueAsDouble());
-        SmartDashboard.putNumber("Tof distance", m_TOF.getRange());
-        SmartDashboard.putBoolean("GripperHasCorral", this.coralStowed());
+        //SmartDashboard.putNumber("Tof distance", m_TOF.getRange());
+        //SmartDashboard.putBoolean("GripperHasCorral", this.coralStowed());
     }
 }

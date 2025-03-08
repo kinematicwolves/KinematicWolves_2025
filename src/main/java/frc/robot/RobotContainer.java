@@ -10,120 +10,199 @@ import static edu.wpi.first.units.Units.RotationsPerSecond;
 
 import com.ctre.phoenix6.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.DriverProfile;
+import frc.robot.Constants.ElevatorProfile;
+import frc.robot.Constants.GripperProfile;
+import frc.robot.Constants.VisionProfile;
+import frc.robot.Constants.WristProfile;
 import frc.robot.commands.AcquireCoral;
 import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
+import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.MoveToLevel;
+import frc.robot.commands.MoveToLevelAlgae;
+import frc.robot.commands.RunElevatorOpenLoop;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetRollerSpeed;
+import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Wrist;
 
 public class RobotContainer {
     /* Swerve Speeds */
-    private double MaxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
-    private double MaxAngularRate = RotationsPerSecond.of(0.75).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
+    private double maxSpeed = TunerConstants.kSpeedAt12Volts.in(MetersPerSecond); // kSpeedAt12Volts desired top speed
+    private double maxAngularRate = RotationsPerSecond.of(DriverProfile.kRotationMagnitude).in(RadiansPerSecond); // 3/4 of a rotation per second max angular velocity
 
     // Setting up bindings for necessary control of the swerve drive platform
     private final SwerveRequest.FieldCentric fieldCentricDrive = new SwerveRequest.FieldCentric()
-        .withDeadband(MaxSpeed * 0.1)
-        .withRotationalDeadband(MaxAngularRate * 0.1) // 10% dead band
+        .withDeadband(maxSpeed * 0.1)
+        .withRotationalDeadband(maxAngularRate * 0.1) // 10% deadband
         .withDriveRequestType(DriveRequestType.Velocity); // Use open-loop control for drive motors
-    
+
     /* Controllers */
-    private final CommandXboxController driveController = new CommandXboxController(0);
-    private final CommandXboxController opController = new CommandXboxController(1);
-    private final CommandXboxController techController = new CommandXboxController(2);
-    
-    /* Choosers */
-    // private final SendableChooser<Command> autoChooser;
-    
-    /* Robot states */
+    private final CommandXboxController driveController = new CommandXboxController(DriverProfile.driverPortNum);
+    private final CommandXboxController opController = new CommandXboxController(DriverProfile.operatorPortNum);
+    private final CommandXboxController techController = new CommandXboxController(DriverProfile.technicianPortNum);
+
+    /* Driver Station Choosers */
+    private final SendableChooser<Command> autoChooser;
+
+    /* Robot States */
     public boolean coralMode = true;
     public int scoringLevel = 1;
 
-    /**Subsystems */
+    /* Subsystems */
     public final CommandSwerveDrivetrain drivetrain = TunerConstants.createDrivetrain();
     private final Elevator elevatorSubsystem = new Elevator();
     private final Gripper gripperSubsystem = new Gripper();
     private final Wrist wristSubsystem = new Wrist();
+    private final Vision vision = new Vision();
 
     /* Commands */
     // Swerve
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-    private final Telemetry logger = new Telemetry(MaxSpeed);
+    private final SwerveRequest.RobotCentric robotCentric = new SwerveRequest.RobotCentric().withDriveRequestType(DriveRequestType.Velocity);
+    private final Telemetry logger = new Telemetry(maxSpeed);
 
-    // Elevator
-    private final SetElevatorPosition elevatorShallowCage = new SetElevatorPosition(elevatorSubsystem, 142.5);
+    // Wrist and Elevator
+    private final MoveToLevel moveCoralLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl1Pos, WristProfile.coralLvl1Pos);
+    private final MoveToLevel moveCoralLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl2Pos, WristProfile.coralLvl2Pos);
+    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl3Pos, WristProfile.coralLvl3Pos);
+    private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.coralLvl4Pos, WristProfile.coralLvl4Pos);
 
-    // Wrist
+    private final MoveToLevelAlgae moveAlgaeLevel1 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl1Pos, WristProfile.algaeLvl1Pos);
+    private final MoveToLevelAlgae moveAlgaeLevel2 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl2Pos, WristProfile.algaeLvl2Pos);
 
-    // Wist and Elevator
-    private final MoveToLevel moveCoralLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 10,  4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoralLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 50.5,   4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoralLevel3 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 153,  4); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveCoralLevel4 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 295, 10); // TODO: Put Number into Constants.ElevatorProfile
-    
-    private final MoveToLevel moveAlgaeLevel1 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 110, 47); // TODO: Put Number into Constants.ElevatorProfile
-    private final MoveToLevel moveAlgaeLevel2 = new MoveToLevel(wristSubsystem, elevatorSubsystem, 195, 47); // TODO: Put Number into Constants.ElevatorProfile
-    // private final MoveToLevel moveAlgaeScore  = new MoveToLevel(wristSubsystem, elevatorSubsystem, -91.5, 60); // TODO: Put Number into Constants.ElevatorProfile
+    private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.shallowCagePos, WristProfile.shallowCagePos);
 
     // Gripper
-    private final AcquireCoral   acquireCoral = new AcquireCoral(gripperSubsystem, 0.1);
-    private final SetRollerSpeed overRideIntakeCoral = new SetRollerSpeed(gripperSubsystem, 0.09);
-    private final IndexCoral     indexCoral   = new IndexCoral(gripperSubsystem, 0.1);
-    private final SetRollerSpeed outTakeCoral = new SetRollerSpeed(gripperSubsystem, 0.2);
+    private final AcquireCoral acquireCoral = new AcquireCoral(gripperSubsystem, GripperProfile.acquireCoralSpeed);
+    private final IndexCoral indexCoral = new IndexCoral(gripperSubsystem, GripperProfile.indexCoralSpeed);
+    private final SetRollerSpeed outTake = new SetRollerSpeed(gripperSubsystem, GripperProfile.outTakeSpeed);
 
-    private final SetRollerSpeed intakeAlgae  = new SetRollerSpeed(gripperSubsystem, 0.3);
-    private final SetRollerSpeed outTakeAlgae = new SetRollerSpeed(gripperSubsystem, 0.5);
+    private final IntakeAlgae intakeAlgae = new IntakeAlgae(gripperSubsystem, GripperProfile.intakeAlgaeSpeed, GripperProfile.holdAlgaeOutput);
+
 
     public RobotContainer() {
-        // autoChooser = AutoBuilder.buildAutoChooser("Test");
-        // SmartDashboard.putData("Auto Mode", autoChooser);
-
+        // Configure control bindings (button mappings and input handlers)
         configureBindings();
+    
+        /* Named Commands for PathPlanner */
+        // Register various robot commands to be used in autonomous routines
+        NamedCommands.registerCommand("homeSystemCoral", new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
+        NamedCommands.registerCommand("homeSystemAlgae", new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+        NamedCommands.registerCommand("moveCoralLevel1", moveCoralLevel1);
+        NamedCommands.registerCommand("moveCoralLevel2", moveCoralLevel2);
+        NamedCommands.registerCommand("moveCoralLevel3", moveCoralLevel3);
+        NamedCommands.registerCommand("moveCoralLevel4", moveCoralLevel4);
+        NamedCommands.registerCommand("algaeLevel1", new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl1Pos)
+                                                                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl1Pos)));
+        NamedCommands.registerCommand("toggleToAlgaeMode", new InstantCommand(() -> coralMode = !coralMode));
+    
+        // Command to outtake coral: Runs the roller at 50% speed for 1 second
+        NamedCommands.registerCommand("outTakeCoral", new ParallelDeadlineGroup(
+            new WaitCommand(1), 
+            new SetRollerSpeed(gripperSubsystem, 0.5)
+        ));
+    
+        // Command to intake coral: First acquires at 10% speed, then indexes at 10% speed
+        NamedCommands.registerCommand("intakeCoral", new AcquireCoral(gripperSubsystem, GripperProfile.acquireCoralSpeed)
+            .andThen(new IndexCoral(gripperSubsystem, GripperProfile.indexCoralSpeed))
+        );
+
+        NamedCommands.registerCommand("intakeAlgae", new ParallelDeadlineGroup(
+            new WaitCommand(5),
+            new IntakeAlgae(gripperSubsystem, GripperProfile.intakeAlgaeSpeed, GripperProfile.holdAlgaeOutput)
+        ));
+    
+        /* Autonomous Selector */
+        // Builds the autonomous chooser with a default starting option
+        autoChooser = AutoBuilder.buildAutoChooser("LeftWall2");
+    
+        // Displays the auto mode selection on the SmartDashboard
+        SmartDashboard.putData("Auto Mode", autoChooser);
     }
 
     private void configureBindings() {
-    /* Driver controls */
-        // Note that X is defined as forward according to WPILib convention, and Y is defined as to the left according to WPILib convention.
+    /* Driver Controls */
+        // Note that X is defined as forward according to WPILib convention, and Y is defined as left.
+    
+        // Default drivetrain command for field-centric control
         drivetrain.setDefaultCommand(
-            // Drivetrain will execute this command periodically
             drivetrain.applyRequest(
                 () -> fieldCentricDrive
-                    .withVelocityX(-driveController.getLeftY() * MaxSpeed) // Drive forward with negative Y (forward)
-                    .withVelocityY(-driveController.getLeftX() * MaxSpeed) // Drive left with negative X (left)
-                    .withRotationalRate(-driveController.getRightX() * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                    .withVelocityX(-driveController.getLeftY() * maxSpeed) // Forward/backward movement
+                    .withVelocityY(-driveController.getLeftX() * maxSpeed) // Left/right movement
+                    .withRotationalRate(-driveController.getRightX() * maxAngularRate) // Rotational movement
             ) 
         );
 
-        driveController.a().whileTrue( // A = X drivetrain wheels
-            drivetrain.applyRequest(() -> brake)
-        ); 
-
-        driveController.leftBumper().onTrue( //  LB = Reset field-centric heading
-            drivetrain.runOnce(() -> drivetrain.seedFieldCentric())
+        driveController.leftTrigger().whileTrue(drivetrain.applyRequest(
+            () -> fieldCentricDrive
+                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_slowMode)
+                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_slowMode)
+                .withRotationalRate(-driveController.getRightX() * DriverProfile.rx_slowMode)
+            )
+        );
+    
+        // Engage brake mode when the right trigger is held
+        driveController.rightTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
+    
+        // Reset field-centric heading when 'Y' is pressed
+        driveController.y().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldCentric()));
+    
+        /* Reef Auto-Alignment */
+        // Right bumper aligns to the right reef using vision
+        driveController.rightBumper().debounce(0.2).whileTrue(
+            drivetrain.applyRequest(() -> robotCentric
+                .withRotationalRate(vision.getRightReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
+                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            )
+        );
+    
+        // Left bumper aligns to the left reef using vision
+        driveController.leftBumper().debounce(0.2).whileTrue(
+            drivetrain.applyRequest(() -> robotCentric
+                .withRotationalRate(vision.getLeftReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
+                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            )
+        );
+    
+        // Both bumpers align to the center reef using vision
+        driveController.rightBumper().and(driveController.leftBumper()).debounce(0.3).whileTrue(
+            drivetrain.applyRequest(() -> robotCentric
+                .withRotationalRate(vision.getCenterReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
+                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            )
         );
 
-        drivetrain.registerTelemetry(logger::telemeterize);
-
-    /* Operator controls */
-        opController.start().onTrue(new InstantCommand(() -> coralMode = !coralMode)); //Coral Mode Toggle
-        opController.povDown().onTrue( //Decrease lvl
+        // drivetrain.registerTelemetry(logger::telemeterize);
+    
+    /* Operator Controls */
+        // Decrease scoring level when POV Down is pressed
+        opController.povDown().onTrue(
             new InstantCommand(
                 () -> {
                     scoringLevel -= 1;
@@ -133,7 +212,8 @@ public class RobotContainer {
             )
         );
 
-        opController.povUp().onTrue( //Increase lvl
+        // Increase scoring level when POV Up is pressed
+        opController.povUp().onTrue(
             new InstantCommand(
                 () -> {
                     scoringLevel += 1;
@@ -143,119 +223,103 @@ public class RobotContainer {
             )
         );
 
+        // Toggle Coral Mode and home the appropriate system
+        opController.start().onTrue(
+            new InstantCommand(
+                () -> {
+                    coralMode = !coralMode; 
+                }
+            )
+        );
+    
+        /* Triggers for Coral Mode and Scoring Levels */
         Trigger coralModeTrigger = new Trigger(() -> coralMode);
-        Trigger scoringLevel0    = new Trigger(() -> scoringLevel == 0);
-        Trigger scoringLevel1    = new Trigger(() -> scoringLevel == 1);
-        Trigger scoringLevel2    = new Trigger(() -> scoringLevel == 2);
-        Trigger scoringLevel3    = new Trigger(() -> scoringLevel == 3);
-        Trigger scoringLevel4    = new Trigger(() -> scoringLevel == 4);
+        Trigger scoringLevel0 = new Trigger(() -> scoringLevel == 0);
+        Trigger scoringLevel1 = new Trigger(() -> scoringLevel == 1);
+        Trigger scoringLevel2 = new Trigger(() -> scoringLevel == 2);
+        Trigger scoringLevel3 = new Trigger(() -> scoringLevel == 3);
+        Trigger scoringLevel4 = new Trigger(() -> scoringLevel == 4);
 
-        // intake / outtake coral
-        // experimenting with rumble, and making sure we do not end up in a endless state
-        opController.rightBumper()
+        coralModeTrigger.onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+        coralModeTrigger.onTrue(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+    
+        /* Intake / Outtake */
+        // Intake coral when 'X' is pressed in Coral Mode
+        opController.x()
             .and(coralModeTrigger)
-            .onTrue(
-                // a Parallel race command group will run commands in sequence, and terminate all when one ends
-                // in this case, it will run once the intake sequence ends or the wait timer ends
-                // since the acquireCoral Command may never terminate, this will prevent us from getting stuck in this command.
-                new ParallelRaceGroup(
-                    new InstantCommand(() -> opController.setRumble(RumbleType.kBothRumble, 1)) // turning on rumble as we run the intake
-                    .andThen(acquireCoral)
-                    .andThen(indexCoral)
-                    .andThen(new InstantCommand(() -> opController.setRumble(RumbleType.kBothRumble, 0))) // turning off the rumble
-                    , new WaitCommand(5) // ensures this command will terminate if it runs longer than 5 seconds.
-                    // either the intake sequence will end, or our wait command will end, and when one ends, the other will be terminated
-                )
-            );
-            //.andThen(new SetWristPosition(wristSubsystem, 10))
+            .onTrue(new ParallelRaceGroup(
+                acquireCoral.andThen(indexCoral),
+                new WaitCommand(5) // Stop command after 5 seconds
+            ));
 
-        opController.leftBumper()
-            .and(coralModeTrigger)
-            .whileTrue(outTakeCoral);
-
-        opController.b()
-            .and(coralModeTrigger)
-            .whileTrue(overRideIntakeCoral);
-
-        // moving to coral levels
-        opController.a()
-            .and(scoringLevel1)
-            .and(coralModeTrigger)
+        // Intake algae when 'X' is pressed in Algae Mode
+        opController.x()
+            .and(coralModeTrigger.negate())
+            .whileTrue(intakeAlgae);
+    
+        // Outtake coral when right trigger is held
+        opController.rightTrigger().whileTrue(outTake);
+    
+        /* Move to Coral Scoring Levels */
+        opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger)
             .onTrue(moveCoralLevel1)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
-
-        opController.a()
-            .and(scoringLevel2)
-            .and(coralModeTrigger)
+    
+        opController.leftTrigger().and(scoringLevel2).and(coralModeTrigger)
             .onTrue(moveCoralLevel2)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
-
-        opController.a()
-            .and(scoringLevel3)
-            .and(coralModeTrigger)
+    
+        opController.leftTrigger().and(scoringLevel3).and(coralModeTrigger)
             .onTrue(moveCoralLevel3)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
-
-        opController.a()
-            .and(scoringLevel4)
-            .and(coralModeTrigger)
+    
+        opController.leftTrigger().and(scoringLevel4).and(coralModeTrigger)
             .onTrue(moveCoralLevel4)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
-
-        // moving to algae levels
-        opController.a()
-            .and(scoringLevel1)
-            .and(coralModeTrigger.negate())
-            .onTrue(moveAlgaeLevel1)
+    
+        // Shallow cage climb in Coral Mode (Level 0)
+        opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger)
+            .onTrue(elevatorShallowCage)
+            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
+    
+        /* Move to Algae Scoring Levels */
+        opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger.negate())
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl1Pos)
+                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl1Pos)))
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
-
-        opController.a()
-            .and(scoringLevel2)
-            .and(coralModeTrigger.negate())
-            .onTrue(moveAlgaeLevel2)
+    
+        opController.leftTrigger().and(scoringLevel2).and(coralModeTrigger.negate())
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl2Pos)
+                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl2Pos)))
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
-
-        // TODO: Determine processor scoring wrist and elevator values
-        // opController.a()
-        //     .and(scoringLevel0)
-        //     .and(coralModeTrigger.negate())
-        //     .onTrue(moveAlgaeScore)
-        //     .onFalse(new HomeSystem(wristSubsystem, elevatorSubsystem)
-        // );
-
-        // intake / outtake algae
-        opController.leftBumper()
-            .and(coralModeTrigger).negate()
-            .whileTrue(outTakeAlgae);
-
-        // this was the problematic composition
-        // coralModeTrigger.negate().and(opController.rightBumper().whileTrue(intakeAlgae));
+    
+        // Algae scoring position (Level 0)
+        opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger.negate())
+            .onTrue(new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeScorePos)
+                .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeScorePos)))
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
         
-        // this is the [hopefully] fixed composition
-        opController.rightBumper().and(coralModeTrigger.negate()).whileTrue(intakeAlgae);
-        // notice the and() function only contains coralModeTrigger.negate() in the [hopefully] fixed version
-        // in the broken version, and() contained opController.rightBumper().whileTrue(intakeAlgae)
-        // opController.rightBumper().whileTrue(intakeAlgae) was evaluated as java attempted to evaluate the composite trigger
-        // When evaluated, the intakeAlgae command ran.
-        // Thus, we were effectively ignoring coral mode...
-        // Be careful when making these composite triggers, they can be tricky
-
-    /* Technician controls */
-        // elevator
-        techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2));
-        techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2));
-        // wristSubsystem.setDefaultCommand(new SetWristSpeed(wristSubsystem, techController.getLeftTriggerAxis() - techController.getRightTriggerAxis()));
-        // wrist
-        techController.povDown().whileTrue(new SetWristSpeed(wristSubsystem, -0.2));
-        techController.povUp().whileTrue(new SetWristSpeed(wristSubsystem, 0.2));
-
-        // gripper
-        techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.2));
-    }
+        opController.leftTrigger().and(coralModeTrigger.negate())
+            .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+    
+    /* Technician Controls */
+        // Manual elevator control
+        techController.start().whileTrue(new SetElevatorSpeed(elevatorSubsystem, 0.2)); // Move up
+        techController.back().whileTrue(new SetElevatorSpeed(elevatorSubsystem, -0.2)); // Move down
+        techController.a().whileTrue(new RunElevatorOpenLoop(elevatorSubsystem, techController.getHID()));
+    
+        // Manual wrist control
+        techController.povDown().whileTrue(new SetWristSpeed(wristSubsystem, -0.2)); // Move down
+        techController.povUp().whileTrue(new SetWristSpeed(wristSubsystem, 0.2)); // Move up
+    
+        // Manual gripper control
+        techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.3)); // Intake
+        techController.rightBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.1)); // Hold
+        techController.b().whileTrue(new SetRollerSpeed(gripperSubsystem, -0.3)); // Outtake
+    }    
 
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        // return autoChooser.getSelected();
-        return new InstantCommand();
+        return autoChooser.getSelected();
     }
 }
