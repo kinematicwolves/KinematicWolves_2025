@@ -79,7 +79,7 @@ public class Constants {
         public static final double encoderSetPointError = 0.5;
 
         /* Positions */
-        public static final double homePos = -1;
+        public static final double homePos = -0.5;
         public static final double algaeHomePos = 24;
         public static final double safeTravelPos = 10;
 
