@@ -5,9 +5,22 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "parallel",
           "data": {
-            "pathName": "LeftWall_BranchI"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "LeftWall_BranchI"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "moveCoralLevel4"
+                }
+              }
+            ]
           }
         },
         {
@@ -17,9 +30,28 @@
           }
         },
         {
-          "type": "path",
+          "type": "race",
           "data": {
-            "pathName": "BranchI_LeftStation"
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BranchI_LeftStation"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeSystemCoral"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 4.0
+                }
+              }
+            ]
           }
         },
         {
@@ -35,7 +67,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftStation_BranchK"
+                  "pathName": "LeftStation_BranchL"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "moveCoralLevel4"
                 }
               }
             ]
@@ -45,6 +83,31 @@
           "type": "named",
           "data": {
             "name": "outTakeCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "BranchL_LeftStation"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeSystemCoral"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "intakeAlgae"
           }
         }
       ]

@@ -24,7 +24,8 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.Notifier;
 import edu.wpi.first.wpilibj.RobotController;
-import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+// import edu.wpi.first.wpilibj.smartdashboard.Field2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -56,7 +57,7 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
     private final SwerveRequest.SysIdSwerveRotation m_rotationCharacterization = new SwerveRequest.SysIdSwerveRotation();
 
     /* Field map for showing robot pose */
-    private Field2d field2d = new Field2d();
+    // private Field2d field2d = new Field2d();
 
     /* SysId routine for characterizing translation. This is used to find PID gains for the drive motors. */
     private final SysIdRoutine m_sysIdRoutineTranslation = new SysIdRoutine(
@@ -280,7 +281,12 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
             });
         }
 
-        field2d.setRobotPose(this.getState().Pose);
+        // field2d.setRobotPose(this.getState().Pose);
+        // SmartDashboard.putData("RobotPose", field2d);
+        SmartDashboard.putNumber("RobotX", getState().Pose.getX());
+        SmartDashboard.putNumber("RobotY", getState().Pose.getY());
+        SmartDashboard.putNumber("RobotR", getState().Pose.getRotation().getDegrees());
+
     }
 
     private void startSimThread() {

@@ -92,7 +92,7 @@ public class RobotContainer {
     private final MoveToLevelAlgae moveAlgaeLevel1 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl1Pos, WristProfile.algaeLvl1Pos);
     private final MoveToLevelAlgae moveAlgaeLevel2 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl2Pos, WristProfile.algaeLvl2Pos);
 
-    private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.shallowCagePos, WristProfile.shallowCagePos);
+    // private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.shallowCagePos, WristProfile.shallowCagePos);
 
     // Gripper
     private final AcquireCoral acquireCoral = new AcquireCoral(gripperSubsystem, GripperProfile.acquireCoralSpeed);
@@ -198,7 +198,7 @@ public class RobotContainer {
             )
         );
 
-        // drivetrain.registerTelemetry(logger::telemeterize);
+        drivetrain.registerTelemetry(logger::telemeterize);
     
     /* Operator Controls */
         // Decrease scoring level when POV Down is pressed
@@ -278,9 +278,9 @@ public class RobotContainer {
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
     
         // Shallow cage climb in Coral Mode (Level 0)
-        opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger)
-            .onTrue(elevatorShallowCage)
-            .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
+        // opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger)
+        //     .onTrue(elevatorShallowCage)
+        //     .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
     
         /* Move to Algae Scoring Levels */
         opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger.negate())

@@ -18,14 +18,10 @@ public class Robot extends TimedRobot {
 
     private final RobotContainer m_robotContainer;
 
-    private final boolean kUseLimelight = true;
+    private final boolean kUseLimelight = false;
 
     public Robot() {
         m_robotContainer = new RobotContainer();
-    
-        SmartDashboard.putBoolean("CoralMode", m_robotContainer.coralMode);
-        SmartDashboard.putNumber("ScoringLevel", m_robotContainer.scoringLevel);
-        SmartDashboard.putBoolean("Coral Mode Toggled:", m_robotContainer.coralMode);
     }
 
     @Override
@@ -37,10 +33,11 @@ public class Robot extends TimedRobot {
             double headingDeg = driveState.Pose.getRotation().getDegrees();
             double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-            LimelightHelpers.SetRobotOrientation(Constants.VisionProfile.frontLimelight, headingDeg, 0, 0, 0, 0, 0);
-            var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+            LimelightHelpers.SetRobotOrientation(Constants.VisionProfile.rearLimelight, headingDeg, 0, 0, 0, 0, 0);
+            var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2(Constants.VisionProfile.rearLimelight);
             if (llMeasurement != null && llMeasurement.tagCount > 0 && omegaRps < 2.0) {
                 m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, Utils.fpgaToCurrentTime(llMeasurement.timestampSeconds));
+                System.out.println(llMeasurement.pose);
             }
         }
 

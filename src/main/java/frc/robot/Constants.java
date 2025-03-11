@@ -41,26 +41,26 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDs */
-        public static final double kP = 1.6;
-        public static final double kI = 0;
-        public static final double kD = 0.1;
+        public static final double kP = 0.06;
+        public static final double kI = 0.00001;
+        public static final double kD = 0.5;
 
         /* Encoder Error */
-        public static final double encoderSetPointError = 1;
+        public static final double encoderSetPointError = 2;
 
         /* Positions */
         public static final double homePos = -1;
 
-        public static final double coralLvl1Pos = 35;
-        public static final double coralLvl2Pos = 48.2;
-        public static final double coralLvl3Pos = 111.6;
-        public static final double coralLvl4Pos = 219;
+        public static final double coralLvl1Pos = 14.6;
+        public static final double coralLvl2Pos = 19.4;
+        public static final double coralLvl3Pos = 36;
+        public static final double coralLvl4Pos = 72.8;
 
-        public static final double algaeLvl1Pos = 86;
-        public static final double algaeLvl2Pos = 155;
-        public static final double algaeScorePos = 31;
+        public static final double algaeLvl1Pos  = 35;
+        public static final double algaeLvl2Pos  = 47;
+        public static final double algaeScorePos = 31  * 20/45;
 
-        public static final double shallowCagePos = 92;
+        // public static final double shallowCagePos = 92 * 20/45;
     }
 
     public class WristProfile {
@@ -71,7 +71,7 @@ public class Constants {
         public static final int currentLimit = 20;
 
         /* PIDs */
-        public static final double kP = 0.03;
+        public static final double kP = 0.06;
         public static final double kI = 0;
         public static final double kD = 2.8;
 
@@ -79,14 +79,14 @@ public class Constants {
         public static final double encoderSetPointError = 0.5;
 
         /* Positions */
-        public static final double homePos = -10;
+        public static final double homePos = -1;
         public static final double algaeHomePos = 24;
         public static final double safeTravelPos = 10;
 
         public static final double coralLvl1Pos = 3;
         public static final double coralLvl2Pos = 7.4;
-        public static final double coralLvl3Pos = 6.9;
-        public static final double coralLvl4Pos = 10;
+        public static final double coralLvl3Pos = 7.1;
+        public static final double coralLvl4Pos = 12;
 
         public static final double algaeLvl1Pos = 47;
         public static final double algaeLvl2Pos = 43;
