@@ -13,18 +13,48 @@
             "state": {
               "type": "canvas",
               "state": {
-                "file": "notes/Robot Map.canvas",
+                "file": "notes/Robot Wire Map.canvas",
                 "viewState": {
-                  "x": 370,
-                  "y": 570,
-                  "zoom": -1.2465510522929124
+                  "x": 328.5,
+                  "y": 143,
+                  "zoom": -1.5357152039001458
                 }
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Robot Map"
+              "title": "Robot Wire Map"
+            }
+          },
+          {
+            "id": "44b59043bcf2b31c",
+            "type": "leaf",
+            "state": {
+              "type": "canvas",
+              "state": {
+                "file": "notes/Command Map.canvas",
+                "viewState": {
+                  "x": -559,
+                  "y": -150,
+                  "zoom": -0.9299544175604637
+                }
+              },
+              "icon": "lucide-layout-dashboard",
+              "title": "Command Map"
+            }
+          },
+          {
+            "id": "2308cbb85813f399",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.8.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.8.7"
             }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -43,7 +73,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -165,10 +196,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "58c07654e48923f8",
+  "active": "2308cbb85813f399",
   "lastOpenFiles": [
+    "notes/Command Map.canvas",
     "notes/Robot Wire Map.canvas",
-    "notes/Robot Wire Map.png",
-    "notes/Robot Map.canvas"
+    "vendordeps/PlayingWithFusion-2025.01.04.json",
+    "vendordeps/Phoenix6-frc2025-latest.json",
+    "vendordeps/PathplannerLib-2025.2.1.json",
+    "build/jni/release/libCTRE_SimProTalonFXS.so",
+    "build/jni/release/libPlayingWithFusionDriver.so",
+    "build/classes/java/main/frc/robot/RobotContainer.class",
+    "build/classes/java/main/frc/robot/Robot.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers$PoseEstimate.class",
+    "build/classes/java/main/frc/robot/LimelightHelpers$RawDetection.class",
+    "notes/Robot Map.canvas",
+    "notes/Robot Wire Map.png"
   ]
 }
