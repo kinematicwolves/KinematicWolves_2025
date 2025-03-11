@@ -1,6 +1,6 @@
 //LimelightHelpers v1.7 (May 9, 2024) (REQUIRES 2024.6)
 
-package frc.robot.generated;
+package frc.robot;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;

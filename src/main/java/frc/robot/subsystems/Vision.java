@@ -6,8 +6,8 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.LimelightHelpers;
 import frc.robot.Constants.VisionProfile;
-import frc.robot.generated.LimelightHelpers;
 
 public class Vision extends SubsystemBase {
   

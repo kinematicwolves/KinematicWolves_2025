@@ -116,7 +116,7 @@ public class RobotContainer {
         NamedCommands.registerCommand("moveCoralLevel4", moveCoralLevel4);
         NamedCommands.registerCommand("algaeLevel1", new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.algaeLvl1Pos)
                                                                 .andThen(new SetWristPosition(wristSubsystem, WristProfile.algaeLvl1Pos)));
-        NamedCommands.registerCommand("toggleToAlgaeMode", new InstantCommand(() -> coralMode = !coralMode));
+        NamedCommands.registerCommand("toggleToAlgaeMode", new InstantCommand(() -> coralMode = false)); // setting it to false is better, since you want to guarantee it's in algae mode
     
         // Command to outtake coral: Runs the roller at 50% speed for 1 second
         NamedCommands.registerCommand("outTakeCoral", new ParallelDeadlineGroup(
