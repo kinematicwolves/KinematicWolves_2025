@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.107148972602739,
-        "y": 0.4939640410958907
+        "x": 7.3413651315789465,
+        "y": 1.3405427631578948
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.107148972602739,
-        "y": 0.4939640410958908
+        "x": 6.3413651315789465,
+        "y": 1.3405427631578948
       },
       "isLocked": false,
       "linkedName": "RightWall"
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 1.7,
+    "maxVelocity": 1.5,
+    "maxAcceleration": 1.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 150.25511870305775
   },
   "useDefaultConstraints": true
 }

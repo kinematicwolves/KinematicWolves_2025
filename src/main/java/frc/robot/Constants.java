@@ -107,7 +107,7 @@ public class Constants {
         public static final double tofCoralRange = 75;
 
         /* Default Speeds (Percentage Outputs) */
-        public static final double acquireCoralSpeed = 0.135;
+        public static final double acquireCoralSpeed = 0.145;
         public static final double indexCoralSpeed = 0.09;
 
         public static final double intakeAlgaeSpeed = -0.3;
