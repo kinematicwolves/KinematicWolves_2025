@@ -145,16 +145,27 @@ public class RobotContainer {
     private void configureBindings() {
     /* Driver Controls */
         // Note that X is defined as forward according to WPILib convention, and Y is defined as left.
-    
-        // Default drivetrain command for field-centric control
-        drivetrain.setDefaultCommand(
-            drivetrain.applyRequest(
-                () -> fieldCentricDrive
-                    .withVelocityX(-driveController.getLeftY() * maxSpeed) // Forward/backward movement
-                    .withVelocityY(-driveController.getLeftX() * maxSpeed) // Left/right movement
-                    .withRotationalRate(-driveController.getRightX() * maxAngularRate) // Rotational movement
-            ) 
-        );
+        // Default drivetrain command for field-centric control.
+        if (elevatorSubsystem.getPosition() >= ElevatorProfile.maxElevatorCG) { // Slows down when elevator is above center of gravity threshold position.
+            drivetrain.setDefaultCommand(
+                drivetrain.applyRequest(
+                    () -> fieldCentricDrive
+                        .withVelocityX((-driveController.getLeftY() * maxSpeed) * DriverProfile.x_SlowMultiplier) // Forward/backward movement
+                        .withVelocityY((-driveController.getLeftX() * maxSpeed) * DriverProfile.y_SlowMultiplier) // Left/right movement
+                        .withRotationalRate((-driveController.getRightX() * maxAngularRate) * DriverProfile.rx_SlowMultiplier) // Rotational movement
+                )
+            );
+        }
+        else {
+            drivetrain.setDefaultCommand(
+                drivetrain.applyRequest(
+                    () -> fieldCentricDrive
+                        .withVelocityX(-driveController.getLeftY() * maxSpeed) // Forward/backward movement
+                        .withVelocityY(-driveController.getLeftX() * maxSpeed) // Left/right movement
+                        .withRotationalRate(-driveController.getRightX() * maxAngularRate) // Rotational movement
+                )
+            );
+        }
 
         driveController.leftTrigger().whileTrue(drivetrain.applyRequest(
             () -> fieldCentricDrive

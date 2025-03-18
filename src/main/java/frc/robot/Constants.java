@@ -10,7 +10,12 @@ import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 public class Constants {
     public class DriverProfile {
         /* Angular speed multiplier */
-        public static final double kRotationMagnitude = 0.45;
+        public static final double kRotationMagnitude = 0.48;
+
+        /* Slow mode speeds */
+        public static final double x_SlowMultiplier = 0.5;
+        public static final double y_SlowMultiplier = 0.5;
+        public static final double rx_SlowMultiplier = 0.5;
 
         /* Driver station ports */
         public static final int driverPortNum = 0;
@@ -21,11 +26,12 @@ public class Constants {
         public static final double x_AlignmentMultiplier = 0.5;
         public static final double y_AlignmentMultiplier = 0.85; 
 
-        /* Slow Mode Speeds */
+        /* Alignment Speeds */
         public static final double x_slowMode = 0.8;
         public static final double y_slowMode = 0.8;
         public static final double rx_slowMode = 0.4;
     }
+
     public class ElevatorProfile {
         /* CAN Id's */
         public static final int liftA_Id = 50;
@@ -59,6 +65,8 @@ public class Constants {
         public static final double algaeLvl1Pos  = 35;
         public static final double algaeLvl2Pos  = 47;
         public static final double algaeScorePos = 31  * 20/45;
+
+        public static final double maxElevatorCG = 20;
 
         // public static final double shallowCagePos = 92 * 20/45;
     }

@@ -89,7 +89,7 @@ public class Elevator extends SubsystemBase {
      * returns the value of the motor encoder in rotations
      * @return double, motor rotations
      */
-    private double getPosition(){
+    public double getPosition(){
         return LiftEncoderA.getPosition();
     }
 
