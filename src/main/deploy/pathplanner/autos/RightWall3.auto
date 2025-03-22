@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftWall_BranchI"
+                  "pathName": "RightWall_BranchE"
                 }
               },
               {
@@ -30,25 +30,19 @@
           }
         },
         {
-          "type": "race",
+          "type": "parallel",
           "data": {
             "commands": [
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BranchI_LeftStation"
+                  "pathName": "BranchE_RightStation"
                 }
               },
               {
                 "type": "named",
                 "data": {
                   "name": "homeSystemCoral"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 4.0
                 }
               }
             ]
@@ -67,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftStation_BranchL"
+                  "pathName": "RightStation_BranchD"
                 }
               },
               {
@@ -92,7 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BranchL_LeftStation"
+                  "pathName": "BranchD_RightStation"
                 }
               },
               {
@@ -107,13 +101,38 @@
         {
           "type": "named",
           "data": {
-            "name": "intakeAlgae"
+            "name": "intakeCoral"
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "RightStation_BranchB"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "moveCoralLevel4"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "outTakeCoral"
           }
         }
       ]
     }
   },
   "resetOdom": true,
-  "folder": "2 or 2.5 Auto",
+  "folder": "3Auto",
   "choreoAuto": false
 }

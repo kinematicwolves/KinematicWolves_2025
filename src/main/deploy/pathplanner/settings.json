@@ -12,14 +12,19 @@
     "LeftStation to Branch",
     "LeftWall to Branch",
     "Leftstation to Algae",
+    "Random",
     "RightProcesser to Branches",
     "RightStation to Algae",
     "RightStation to Branch",
     "RightWall to Branch"
   ],
-  "autoFolders": [],
-  "defaultMaxVel": 1.5,
-  "defaultMaxAccel": 1.0,
+  "autoFolders": [
+    "2 or 2.5 Auto",
+    "3Auto",
+    "1.5 Auto"
+  ],
+  "defaultMaxVel": 2.0,
+  "defaultMaxAccel": 1.5,
   "defaultMaxAngVel": 180.0,
   "defaultMaxAngAccel": 180.0,
   "defaultNominalVoltage": 12.0,
