@@ -27,7 +27,7 @@ public class Constants {
         public static final double y_AlignmentMultiplier = 0.85; 
 
         /* Alignment Speeds */
-        public static final double x_slowMode = 0.8;
+        public static final double x_slowMode = 0.7;
         public static final double y_slowMode = 0.8;
         public static final double rx_slowMode = 0.4;
     }
@@ -59,8 +59,8 @@ public class Constants {
 
         public static final double coralLvl1Pos = 14.6;
         public static final double coralLvl2Pos = 19.4;
-        public static final double coralLvl3Pos = 36;
-        public static final double coralLvl4Pos = 72.8;
+        public static final double coralLvl3Pos = 37.2;
+        public static final double coralLvl4Pos = 74.8;
 
         public static final double algaeLvl1Pos  = 35;
         public static final double algaeLvl2Pos  = 47;
@@ -126,9 +126,14 @@ public class Constants {
     public class VisionProfile {
         /* Limelight names */
         public static String frontLimelight = "limelight-front";
-        public static String rearLimelight = "limelight-rear";
+        public static String elevatorLimelight = "limelight-elevator";
 
-        /* Calibrated limelight pipelines */
+        /* Calibrated frontLimelight Pipeline */
+        public static int autoTestPipeline = 0;
+        public static int redAutoPipeline = 1;
+        public static int blueAutoPipeline = 2;
+
+        /* Calibrated elevator limelight pipelines */
         public static int reefPipeline_Test = 0;
         public static int blueReefCenterPipeline = 1;
         public static int blueReefLeftPipeline = 2;
@@ -138,8 +143,6 @@ public class Constants {
         public static int redReedRightPipeline = 6;
 
         /* Proportional limits for front limelight */
-        public static double frontProportionalTx = 7.5;
-        public static double frontProportionalTy = 20;
-        public static double frontProportionalTa = 20;
+        public static double reefProportionalTx = 7.5;
     }
 }

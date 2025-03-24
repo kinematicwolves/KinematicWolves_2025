@@ -185,7 +185,7 @@ public class RobotContainer {
         // Right bumper aligns to the right reef using vision
         driveController.rightBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getRightReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withRotationalRate(vision.getRightReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
                 .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
@@ -194,7 +194,7 @@ public class RobotContainer {
         // Left bumper aligns to the left reef using vision
         driveController.leftBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getLeftReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withRotationalRate(vision.getLeftReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
                 .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
@@ -203,7 +203,7 @@ public class RobotContainer {
         // Both bumpers align to the center reef using vision
         driveController.rightBumper().and(driveController.leftBumper()).debounce(0.3).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getCenterReefTx(VisionProfile.frontLimelight) / VisionProfile.frontProportionalTx)
+                .withRotationalRate(vision.getCenterReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
                 .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
@@ -287,11 +287,6 @@ public class RobotContainer {
         opController.leftTrigger().and(scoringLevel4).and(coralModeTrigger)
             .onTrue(moveCoralLevel4)
             .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
-    
-        // Shallow cage climb in Coral Mode (Level 0)
-        // opController.leftTrigger().and(scoringLevel0).and(coralModeTrigger)
-        //     .onTrue(elevatorShallowCage)
-        //     .onFalse(new HomeSystemCoral(wristSubsystem, elevatorSubsystem));
     
         /* Move to Algae Scoring Levels */
         opController.leftTrigger().and(scoringLevel1).and(coralModeTrigger.negate())
