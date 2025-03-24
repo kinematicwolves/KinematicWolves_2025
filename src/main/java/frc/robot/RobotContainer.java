@@ -185,7 +185,7 @@ public class RobotContainer {
         // Right bumper aligns to the right reef using vision
         driveController.rightBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getRightReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
+                .withRotationalRate(vision.getRightReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
                 .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
@@ -194,7 +194,7 @@ public class RobotContainer {
         // Left bumper aligns to the left reef using vision
         driveController.leftBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getLeftReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
+                .withRotationalRate(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
                 .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
