@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.3490625,
-        "y": 6.737272727272726
+        "x": 7.070652234112774,
+        "y": 5.942675004182038
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.3490625,
-        "y": 6.737272727272726
+        "x": 6.070652234112774,
+        "y": 5.942675004182038
       },
       "isLocked": false,
       "linkedName": "LeftWall"
@@ -48,7 +48,7 @@
   "folder": "LeftWall to Branch",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -145.0
+    "rotation": -136.72190348558937
   },
   "useDefaultConstraints": true
 }

@@ -13,8 +13,7 @@ public class Vision extends SubsystemBase {
   
   /* Creates a new Vision. */
   public Vision() {
-    setLimelightPipeline(VisionProfile.frontLimelight, VisionProfile.reefPipeline_Test);
-
+    setLimelightPipeline(VisionProfile.frontLimelight, VisionProfile.autoPipeline);
   }
 
   /**

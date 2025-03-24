@@ -129,9 +129,7 @@ public class Constants {
         public static String elevatorLimelight = "limelight-elevator";
 
         /* Calibrated frontLimelight Pipeline */
-        public static int autoTestPipeline = 0;
-        public static int redAutoPipeline = 1;
-        public static int blueAutoPipeline = 2;
+        public static int autoPipeline = 0;
 
         /* Calibrated elevator limelight pipelines */
         public static int reefPipeline_Test = 0;
