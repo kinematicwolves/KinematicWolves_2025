@@ -126,22 +126,22 @@ public class Constants {
     public class VisionProfile {
         /* Limelight names */
         public static String frontLimelight = "limelight-front";
-        public static String elevatorLimelight = "limelight-elevator";
+        public static String elevatorLimelight = "limelight-rear";
 
         /* Calibrated frontLimelight Pipeline */
         public static int autoPipeline = 0;
 
         /* Calibrated elevator limelight pipelines */
         public static int reefPipeline_Test = 0;
-        public static int blueReefCenterPipeline = 1;
-        public static int blueReefLeftPipeline = 2;
+        public static int blueReefCenterPipeline = 2;
+        public static int blueReefLeftPipeline = 1;
         public static int blueReefRightPipeline = 3;
         public static int redReefCenterPipeline = 4;
         public static int redReefLeftPipeline = 5;
         public static int redReedRightPipeline = 6;
 
         /* Proportional limits for front limelight */
-        public static double reefProportionalTx = 8;
+        public static double reefProportionalTx = 30;
         public static double algaeProportionalTx = 7.5;
     }
 }

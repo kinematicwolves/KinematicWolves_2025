@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.799176136363636,
-        "y": 4.8825568181818175
+        "x": 3.7113441780821916,
+        "y": 4.873951198630137
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3507909666467484,
-        "y": 5.6591827134918615
+        "x": 3.262959008365304,
+        "y": 5.650577093940181
       },
       "isLocked": false,
       "linkedName": "BranchL"
@@ -49,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 2.8,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,

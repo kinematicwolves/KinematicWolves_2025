@@ -13,6 +13,7 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
+import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -136,7 +137,7 @@ public class RobotContainer {
     
         /* Autonomous Selector */
         // Builds the autonomous chooser with a default starting option
-        autoChooser = AutoBuilder.buildAutoChooser("LeftWall2");
+        autoChooser = AutoBuilder.buildAutoChooser("LeftWall3");
     
         // Displays the auto mode selection on the SmartDashboard
         SmartDashboard.putData("Auto Mode", autoChooser);
@@ -185,19 +186,19 @@ public class RobotContainer {
         // Right bumper aligns to the right reef using vision
         driveController.rightBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getRightReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)
+                .withRotationalRate(0)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
         );
     
         // Left bumper aligns to the left reef using vision
         driveController.leftBumper().debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
-                .withRotationalRate(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)
-                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
-            )
+            .withRotationalRate(0)
+            .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
+            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+        )
         );
     
         // Both bumpers align to the center reef using vision
