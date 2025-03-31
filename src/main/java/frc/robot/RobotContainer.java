@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriverProfile;
 import frc.robot.Constants.ElevatorProfile;
@@ -121,7 +122,7 @@ public class RobotContainer {
     
         // Command to outtake coral: Runs the roller at 50% speed for 1 second
         NamedCommands.registerCommand("outTakeCoral", new ParallelDeadlineGroup(
-            new WaitCommand(1), 
+            new WaitCommand(0.5), 
             new SetRollerSpeed(gripperSubsystem, 0.5)
         ));
     
@@ -147,34 +148,32 @@ public class RobotContainer {
     /* Driver Controls */
         // Note that X is defined as forward according to WPILib convention, and Y is defined as left.
         // Default drivetrain command for field-centric control.
-        if (elevatorSubsystem.getPosition() >= ElevatorProfile.maxElevatorCG) { // Slows down when elevator is above center of gravity threshold position.
-            drivetrain.setDefaultCommand(
-                drivetrain.applyRequest(
-                    () -> fieldCentricDrive
-                        .withVelocityX((-driveController.getLeftY() * maxSpeed) * DriverProfile.x_SlowMultiplier) // Forward/backward movement
-                        .withVelocityY((-driveController.getLeftX() * maxSpeed) * DriverProfile.y_SlowMultiplier) // Left/right movement
-                        .withRotationalRate((-driveController.getRightX() * maxAngularRate) * DriverProfile.rx_SlowMultiplier) // Rotational movement
-                )
-            );
-        }
-        else {
-            drivetrain.setDefaultCommand(
-                drivetrain.applyRequest(
-                    () -> fieldCentricDrive
-                        .withVelocityX(-driveController.getLeftY() * maxSpeed) // Forward/backward movement
-                        .withVelocityY(-driveController.getLeftX() * maxSpeed) // Left/right movement
-                        .withRotationalRate(-driveController.getRightX() * maxAngularRate) // Rotational movement
-                )
-            );
-        }
-
-        driveController.leftTrigger().whileTrue(drivetrain.applyRequest(
-            () -> fieldCentricDrive
-                .withVelocityX(-driveController.getLeftY() * DriverProfile.y_slowMode)
-                .withVelocityY(-driveController.getLeftX() * DriverProfile.x_slowMode)
-                .withRotationalRate(-driveController.getRightX() * DriverProfile.rx_slowMode)
+        // if (elevatorSubsystem.getPosition() > ElevatorProfile.maxElevatorCG) { // Slows down when elevator is above center of gravity threshold position.
+        //         drivetrain.applyRequest(
+        //             () -> fieldCentricDrive
+        //                 .withVelocityX((-driveController.getLeftY() * maxSpeed) * DriverProfile.x_SlowMultiplier) // Forward/backward movement
+        //                 .withVelocityY((-driveController.getLeftX() * maxSpeed) * DriverProfile.y_SlowMultiplier) // Left/right movement
+        //                 .withRotationalRate((-driveController.getRightX() * maxAngularRate) * DriverProfile.rx_SlowMultiplier) // Rotational movement
+        //     );
+        // }
+        // else {
+        drivetrain.setDefaultCommand(
+            drivetrain.applyRequest(
+                () -> fieldCentricDrive
+                    .withVelocityX(elevatorSubsystem.getPosition() > ElevatorProfile.maxElevatorCG ? (-driveController.getLeftY() * maxSpeed) * DriverProfile.y_SlowMultiplier : -driveController.getLeftY() * maxSpeed) // Forward/backward movement
+                    .withVelocityY(elevatorSubsystem.getPosition() > ElevatorProfile.maxElevatorCG ? (-driveController.getLeftX() * maxSpeed) * DriverProfile.y_SlowMultiplier : -driveController.getLeftX() * maxSpeed) // Left/right movement
+                    .withRotationalRate(elevatorSubsystem.getPosition() > ElevatorProfile.maxElevatorCG ? (-driveController.getRightX() * maxAngularRate) * DriverProfile.rx_SlowMultiplier : -driveController.getRightX() * maxAngularRate) // Rotational movement
             )
         );
+        // }
+
+        // driveController.leftTrigger().whileTrue(drivetrain.applyRequest(
+        //     () -> fieldCentricDrive
+        //         .withVelocityX(-driveController.getLeftY() * DriverProfile.y_slowMode)
+        //         .withVelocityY(-driveController.getLeftX() * DriverProfile.x_slowMode)
+        //         .withRotationalRate(-driveController.getRightX() * DriverProfile.rx_slowMode)
+        //     )
+        // );
     
         // Engage brake mode when the right trigger is held
         driveController.rightTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
@@ -188,7 +187,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> robotCentric
                 .withRotationalRate(0)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / 22)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
         );
     
@@ -197,7 +196,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> robotCentric
             .withRotationalRate(0)
             .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / VisionProfile.reefProportionalTx)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / 30)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
         )
         );
     
@@ -263,6 +262,14 @@ public class RobotContainer {
                 acquireCoral.andThen(indexCoral),
                 new WaitCommand(5) // Stop command after 5 seconds
             ));
+        
+        // Reverse Intake Backup Button
+        opController.b()
+            .and(coralModeTrigger)
+            .onTrue(
+                new InstantCommand(() -> gripperSubsystem.setRollerSpeed(GripperProfile.backUpIntakeSpeed)
+                ))
+            .onFalse(new InstantCommand(() -> gripperSubsystem.setRollerSpeed(0)));
 
         // Intake algae when 'X' is pressed in Algae Mode
         opController.x()

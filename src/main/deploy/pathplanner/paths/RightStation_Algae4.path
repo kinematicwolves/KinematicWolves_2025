@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.6453125,
-        "y": 0.6958881578947365
+        "x": 1.5626712328767125,
+        "y": 0.7719392123287673
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1453124999999993,
-        "y": 1.5619135616791744
+        "x": 2.0626712328767116,
+        "y": 1.6379646161132055
       },
       "isLocked": false,
       "linkedName": "RightStation"
@@ -49,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.8,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
@@ -64,7 +64,7 @@
   "folder": "RightStation to Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 51.70983680775693
+    "rotation": 57.528807709151494
   },
   "useDefaultConstraints": true
 }

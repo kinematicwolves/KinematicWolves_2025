@@ -13,9 +13,9 @@ public class Constants {
         public static final double kRotationMagnitude = 0.48;
 
         /* Slow mode speeds */
-        public static final double x_SlowMultiplier = 0.5;
-        public static final double y_SlowMultiplier = 0.5;
-        public static final double rx_SlowMultiplier = 0.5;
+        public static final double x_SlowMultiplier = 0.65;
+        public static final double y_SlowMultiplier = 0.65;
+        public static final double rx_SlowMultiplier = 0.75;
 
         /* Driver station ports */
         public static final int driverPortNum = 0;
@@ -57,10 +57,10 @@ public class Constants {
         /* Positions */
         public static final double homePos = -1;
 
-        public static final double coralLvl1Pos = 14.6;
+        public static final double coralLvl1Pos = 25;
         public static final double coralLvl2Pos = 19.4;
         public static final double coralLvl3Pos = 37.2;
-        public static final double coralLvl4Pos = 74.8;
+        public static final double coralLvl4Pos = 72.8;
 
         public static final double algaeLvl1Pos  = 35;
         public static final double algaeLvl2Pos  = 47;
@@ -79,9 +79,9 @@ public class Constants {
         public static final int currentLimit = 20;
 
         /* PIDs */
-        public static final double kP = 0.06;
+        public static final double kP = 0.04;
         public static final double kI = 0;
-        public static final double kD = 2.8;
+        public static final double kD = 2.7;
 
         /* Encoder Error */
         public static final double encoderSetPointError = 0.5;
@@ -89,9 +89,9 @@ public class Constants {
         /* Positions */
         public static final double homePos = -0.5;
         public static final double algaeHomePos = 24;
-        public static final double safeTravelPos = 10;
+        public static final double safeTravelPos = 6.5;
 
-        public static final double coralLvl1Pos = 3;
+        public static final double coralLvl1Pos = 45;
         public static final double coralLvl2Pos = 7.4;
         public static final double coralLvl3Pos = 7.1;
         public static final double coralLvl4Pos = 12;
@@ -109,18 +109,19 @@ public class Constants {
         public static final int tofId = 57;
 
         /* Motor Current Limit */
-        public static final double currentLimit = 20;
+        public static final double currentLimit = 25;
 
         /* Sensor Range Values */
         public static final double tofCoralRange = 75;
 
         /* Default Speeds (Percentage Outputs) */
-        public static final double acquireCoralSpeed = 0.145;
-        public static final double indexCoralSpeed = 0.09;
+        public static final double acquireCoralSpeed = 0.165;
+        public static final double indexCoralSpeed = 0.105;
+        public static final double backUpIntakeSpeed = -0.15;
 
         public static final double intakeAlgaeSpeed = -0.3;
-        public static final double holdAlgaeOutput = -0.3;
-        public static final double outTakeSpeed = 0.3;
+        public static final double holdAlgaeOutput = -0.32;
+        public static final double outTakeSpeed = 0.25;
     }
 
     public class VisionProfile {
@@ -133,15 +134,15 @@ public class Constants {
 
         /* Calibrated elevator limelight pipelines */
         public static int reefPipeline_Test = 0;
-        public static int blueReefCenterPipeline = 2;
+        public static int blueReefCenterPipeline = 1;
         public static int blueReefLeftPipeline = 1;
         public static int blueReefRightPipeline = 3;
         public static int redReefCenterPipeline = 4;
-        public static int redReefLeftPipeline = 5;
-        public static int redReedRightPipeline = 6;
+        public static int redReefLeftPipeline = 4;
+        public static int redReedRightPipeline = 5;
 
         /* Proportional limits for front limelight */
-        public static double reefProportionalTx = 30;
+        public static double reefProportionalTx = 28;
         public static double algaeProportionalTx = 7.5;
     }
 }

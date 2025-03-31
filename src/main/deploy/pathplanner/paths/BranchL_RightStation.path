@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7113441780821916,
-        "y": 4.873951198630137
+        "x": 3.591138698630137,
+        "y": 4.9941566780821915
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.262959008365304,
-        "y": 5.650577093940181
+        "x": 3.142753528913249,
+        "y": 5.7707825733922355
       },
       "isLocked": false,
       "linkedName": "BranchL"
@@ -32,12 +32,12 @@
     },
     {
       "anchor": {
-        "x": 1.6453125,
-        "y": 0.6958881578947365
+        "x": 1.5626712328767125,
+        "y": 0.7719392123287673
       },
       "prevControl": {
-        "x": 2.1453124999999993,
-        "y": 1.5619135616791753
+        "x": 2.0626712328767116,
+        "y": 1.6379646161132064
       },
       "nextControl": null,
       "isLocked": false,
@@ -49,8 +49,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.8,
-    "maxAcceleration": 2.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.5,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
@@ -58,7 +58,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 51.70983680775693
+    "rotation": 57.528807709151494
   },
   "reversed": false,
   "folder": "Branch to RightStation",
