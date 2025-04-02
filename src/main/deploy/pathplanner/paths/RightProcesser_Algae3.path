@@ -9,23 +9,23 @@
       "prevControl": null,
       "nextControl": {
         "x": 5.85,
-        "y": 2.706167763157892
+        "y": 2.4045865440030676
       },
       "isLocked": false,
       "linkedName": "RightProcesser"
     },
     {
       "anchor": {
-        "x": 3.2,
-        "y": 3.9
+        "x": 5.2,
+        "y": 2.9
       },
       "prevControl": {
-        "x": 2.7000000000000006,
-        "y": 3.0339745962155624
+        "x": 5.563897136577116,
+        "y": 2.269711670719604
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchB"
+      "linkedName": "Algae3"
     }
   ],
   "rotationTargets": [],
@@ -42,10 +42,10 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 119.99999999999999
   },
   "reversed": false,
-  "folder": "RightProcesser to Branches",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
     "rotation": -90.0

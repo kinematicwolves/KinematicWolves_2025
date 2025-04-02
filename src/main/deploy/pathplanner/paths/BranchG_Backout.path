@@ -8,20 +8,20 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.7,
-        "y": 3.9
+        "x": 6.109786184210526,
+        "y": 3.832565789473684
       },
       "isLocked": false,
       "linkedName": "BranchG"
     },
     {
       "anchor": {
-        "x": 6.206003289473683,
+        "x": 6.46578947368421,
         "y": 4.025
       },
       "prevControl": {
-        "x": 6.703949892707535,
-        "y": 3.9797321269787407
+        "x": 6.985361842105262,
+        "y": 4.044243421052631
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,8 +33,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 2.0,
-    "maxAcceleration": 1.5,
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,

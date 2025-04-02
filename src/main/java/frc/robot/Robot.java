@@ -24,7 +24,6 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         CommandScheduler.getInstance().run();
-
         /*
         * This example of adding Limelight is very simple and may not be sufficient for on-field use.
         * Users typically need to provide a standard deviation that scales with the distance to target
@@ -42,7 +41,6 @@ public class Robot extends TimedRobot {
             // var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.VisionProfile.frontLimelight);
             var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.VisionProfile.frontLimelight);
             if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
-                System.out.println(llMeasurement);
                 // We were previously converting the time stamp to a CTRE time stamp here, and in the Command swerve drive train.
                 // This meant the time stamp was being converted twice, which was probably problematic.
                 m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
