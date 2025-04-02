@@ -13,7 +13,6 @@ import com.ctre.phoenix6.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 
-import edu.wpi.first.vision.VisionPipeline;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -22,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.DriverProfile;
 import frc.robot.Constants.ElevatorProfile;
@@ -30,12 +28,13 @@ import frc.robot.Constants.GripperProfile;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.Constants.WristProfile;
 import frc.robot.commands.AcquireCoral;
-import frc.robot.commands.HomeSystemAlgae; 
+import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
 import frc.robot.commands.IntakeAlgae;
 import frc.robot.commands.MoveToLevel;
 import frc.robot.commands.MoveToLevelAlgae;
+import frc.robot.commands.RunClimberOpenLoop;
 import frc.robot.commands.RunElevatorOpenLoop;
 import frc.robot.commands.SetElevatorPosition;
 import frc.robot.commands.SetElevatorSpeed;
@@ -43,6 +42,7 @@ import frc.robot.commands.SetRollerSpeed;
 import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.SetWristSpeed;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
@@ -77,6 +77,7 @@ public class RobotContainer {
     private final Elevator elevatorSubsystem = new Elevator();
     private final Gripper gripperSubsystem = new Gripper();
     private final Wrist wristSubsystem = new Wrist();
+    private final Climber climber = new Climber();
     private final Vision vision = new Vision();
 
     /* Commands */
@@ -341,6 +342,8 @@ public class RobotContainer {
         techController.leftBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.3)); // Intake
         techController.rightBumper().whileTrue(new SetRollerSpeed(gripperSubsystem, 0.1)); // Hold
         techController.b().whileTrue(new SetRollerSpeed(gripperSubsystem, -0.3)); // Outtake
+
+        techController.rightTrigger().onTrue(new RunClimberOpenLoop(climber, techController));
     }    
 
     public Command getAutonomousCommand() {

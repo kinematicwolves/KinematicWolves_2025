@@ -283,9 +283,10 @@ public class CommandSwerveDrivetrain extends TunerSwerveDrivetrain implements Su
         }
         field2d.setRobotPose(this.getState().Pose);
         SmartDashboard.putData(field2d);
-        SmartDashboard.putNumber("RobotX", getState().Pose.getX());
-        SmartDashboard.putNumber("RobotY", getState().Pose.getY());
-        SmartDashboard.putNumber("RobotR", getState().Pose.getRotation().getDegrees());
+        /* Un-Comment for robot 3d field positioning debugging */
+        // SmartDashboard.putNumber("RobotX", getState().Pose.getX());
+        // SmartDashboard.putNumber("RobotY", getState().Pose.getY());
+        // SmartDashboard.putNumber("RobotR", getState().Pose.getRotation().getDegrees());
 
     }
 

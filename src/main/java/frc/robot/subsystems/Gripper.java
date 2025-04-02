@@ -72,8 +72,8 @@ public class Gripper extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         //SmartDashboard.putNumber("Gripper speed", this.rollerSpeed);
-        SmartDashboard.putNumber("Gripper current", m_gripper.getStatorCurrent().getValueAsDouble());
+        // SmartDashboard.putNumber("Gripper current", m_gripper.getStatorCurrent().getValueAsDouble());
         //SmartDashboard.putNumber("Tof distance", m_TOF.getRange());
-        //SmartDashboard.putBoolean("GripperHasCorral", this.coralStowed());
+        SmartDashboard.putBoolean("GripperHasCorral", this.coralStowed());
     }
 }

@@ -145,4 +145,19 @@ public class Constants {
         public static double reefProportionalTx = 28;
         public static double algaeProportionalTx = 7.5;
     }
+
+    public class ClimberProfile {
+        public static final int motorID = 45;
+
+        public static final int currentLimit = 60;
+
+        public static final double kP = 0;
+        public static final double kI = 0;
+        public static final double kD = 0;
+
+        public static final double encoderSetPointError = 5;
+
+        public static final double fwdSoftLimit = 30000;
+        public static final double rvsSoftLimit = 0;
+    }
 }
