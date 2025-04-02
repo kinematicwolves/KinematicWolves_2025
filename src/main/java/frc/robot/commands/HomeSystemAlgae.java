@@ -20,7 +20,7 @@ public class HomeSystemAlgae extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetWristPosition(wristSubsystem, WristProfile.algaeHomePos),
+            new SetWristPosition(wristSubsystem, WristProfile.algaeHomePos, 0),
             new SetElevatorPosition(elevatorSubsystem, ElevatorProfile.homePos)
         );
     }

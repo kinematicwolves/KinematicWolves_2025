@@ -18,9 +18,9 @@ public class MoveToLevel extends SequentialCommandGroup {
         // Add your commands in the addCommands() call, e.g.
         // addCommands(new FooCommand(), new BarCommand());
         addCommands(
-            new SetWristPosition(wristSubsystem, WristProfile.safeTravelPos),
+            new SetWristPosition(wristSubsystem, WristProfile.safeTravelPos, 1),
             new SetElevatorPosition(elevatorSubsystem, elevatorScoringPose),
-            new SetWristPosition(wristSubsystem, wristScoringPose)
+            new SetWristPosition(wristSubsystem, wristScoringPose, 1)
         );
     }
 }

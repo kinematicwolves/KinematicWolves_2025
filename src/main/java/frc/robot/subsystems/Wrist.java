@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import com.revrobotics.spark.SparkBase.ControlType;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.ClosedLoopSlot;
 import com.revrobotics.spark.SparkClosedLoopController;
 import com.revrobotics.spark.SparkLowLevel;
 import com.revrobotics.spark.SparkMax;
@@ -31,7 +32,14 @@ public class Wrist extends SubsystemBase {
     wristConfig.smartCurrentLimit(WristProfile.currentLimit);
     wristConfig.inverted(false); // we may need to change this one later
     wristConfig.idleMode(IdleMode.kBrake);
-    wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(WristProfile.kP, WristProfile.kI, WristProfile.kD);
+    // wristConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(WristProfile.kP, WristProfile.kI, WristProfile.kD);
+    wristConfig.closedLoop
+    .p(WristProfile.kP, ClosedLoopSlot.kSlot0)
+    .i(WristProfile.kI, ClosedLoopSlot.kSlot0)
+    .d(WristProfile.kD, ClosedLoopSlot.kSlot0)
+    .p(0.1, ClosedLoopSlot.kSlot1)
+    .i(0, ClosedLoopSlot.kSlot1)
+    .i(0, ClosedLoopSlot.kSlot1);
     m_wrist.configure(wristConfig, null, PersistMode.kPersistParameters);
   }
 
@@ -56,9 +64,12 @@ public class Wrist extends SubsystemBase {
    * Sets motor pid controller to commanded position.
    * @param commandedPos double, wrist encoder revolutions
    */
-  public void setWristPos(double commandedPos) {
+  public void setWristPos(double commandedPos, int slot) {
     setPoint = commandedPos;
-    wristController.setReference(commandedPos, ControlType.kPosition);
+    if (slot == 0)
+      wristController.setReference(commandedPos, ControlType.kPosition, ClosedLoopSlot.kSlot0);
+    if (slot == 1)
+      wristController.setReference(commandedPos, ControlType.kPosition, ClosedLoopSlot.kSlot1);
   }
 
   public boolean atPosition() {

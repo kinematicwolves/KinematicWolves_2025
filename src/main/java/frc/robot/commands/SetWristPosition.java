@@ -11,23 +11,26 @@ import frc.robot.subsystems.Wrist;
 public class SetWristPosition extends Command {
   private Wrist wrist;
   private double setPoint;
+  private int slot;
 
   /**
   * Moves the wrist to the set point. Finished when at commanded set point.
   * @param wrist subsystem, wrist subsystem
   * @param setPoint double, falcon motor encoder revolutions
+  * @param slot pid slot config to use
   */
-  public SetWristPosition(Wrist wrist, double setPoint) {
+  public SetWristPosition(Wrist wrist, double setPoint, int slot) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.wrist = wrist;
     this.setPoint = setPoint;
+    this.slot = slot;
     addRequirements(wrist);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    wrist.setWristPos(setPoint);
+    wrist.setWristPos(setPoint, slot);
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -47,8 +47,8 @@ public class Constants {
         public static final IdleMode defaultIdleMode = IdleMode.kBrake;
 
         /* PIDs */
-        public static final double kP = 0.06;
-        public static final double kI = 0.00001;
+        public static final double kP = 0.08;
+        public static final double kI = 0.0000;
         public static final double kD = 0.5;
 
         /* Encoder Error */
