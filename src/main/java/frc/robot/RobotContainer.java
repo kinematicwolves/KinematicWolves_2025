@@ -41,11 +41,15 @@ import frc.robot.commands.SetElevatorSpeed;
 import frc.robot.commands.SetRollerSpeed;
 import frc.robot.commands.SetWristPosition;
 import frc.robot.commands.SetWristSpeed;
+import frc.robot.commands.LightingCommands.ReefAlignmentLIghtshow;
+import frc.robot.commands.LightingCommands.SetDisableLightShow;
+import frc.robot.commands.LightingCommands.SetTeleOpLightShow;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.CommandSwerveDrivetrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Gripper;
+import frc.robot.subsystems.Lighting;
 import frc.robot.subsystems.Vision;
 import frc.robot.subsystems.Wrist;
 
@@ -77,6 +81,7 @@ public class RobotContainer {
     private final Elevator elevatorSubsystem = new Elevator();
     private final Gripper gripperSubsystem = new Gripper();
     private final Wrist wristSubsystem = new Wrist();
+    private final Lighting lighting = new Lighting();
     private final Climber climber = new Climber();
     private final Vision vision = new Vision();
 
@@ -195,25 +200,32 @@ public class RobotContainer {
     
         /* Reef Auto-Alignment */
         // Right bumper aligns to the right reef using vision
-        driveController.rightBumper().debounce(0.2).whileTrue(
+        driveController.rightBumper().debounce(0.1).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
                 .withRotationalRate(0)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / 22)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / 18)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
         );
+
+        driveController.rightBumper().onTrue(new ReefAlignmentLIghtshow(vision, lighting)).onFalse(new SetTeleOpLightShow(lighting, elevatorSubsystem, wristSubsystem, gripperSubsystem));
+        //driveController.rightBumper().onFalse(new SetTeleOpLightShow(lighting, elevatorSubsystem, wristSubsystem, gripperSubsystem));
+        
     
         // Left bumper aligns to the left reef using vision
-        driveController.leftBumper().debounce(0.2).whileTrue(
+        driveController.leftBumper().debounce(0.1).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
             .withRotationalRate(0)
             .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / 30)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / 23)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
         )
         );
+
+        driveController.leftBumper().onTrue(new ReefAlignmentLIghtshow(vision, lighting)).onFalse(new SetTeleOpLightShow(lighting, elevatorSubsystem, wristSubsystem, gripperSubsystem));
+        //driveController.leftBumper().onFalse(new SetTeleOpLightShow(lighting, elevatorSubsystem, wristSubsystem, gripperSubsystem));
     
         // Both bumpers align to the center reef using vision
-        driveController.rightBumper().and(driveController.leftBumper()).debounce(0.3).whileTrue(
+        driveController.rightBumper().and(driveController.leftBumper()).debounce(0.2).whileTrue(
             drivetrain.applyRequest(() -> robotCentric
                 .withRotationalRate(vision.getCenterReefTx(VisionProfile.frontLimelight) / VisionProfile.reefProportionalTx)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
@@ -346,8 +358,16 @@ public class RobotContainer {
         techController.rightTrigger().onTrue(new RunClimberOpenLoop(climber, techController));
     }    
 
+    public Command getDisableInitCommand() {
+        return new SetDisableLightShow(lighting);
+    }
+
     public Command getAutonomousCommand() {
         /* Run the path selected from the auto chooser */
-        return autoChooser.getSelected();
+        return autoChooser.getSelected().alongWith(new InstantCommand(() -> lighting.setLvl0LightShow()));
+    }
+
+    public Command getTeleOpCommand() {
+        return new SetTeleOpLightShow(lighting, elevatorSubsystem, wristSubsystem, gripperSubsystem);
     }
 }

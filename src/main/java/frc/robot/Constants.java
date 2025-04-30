@@ -58,9 +58,9 @@ public class Constants {
         public static final double homePos = -1;
 
         public static final double coralLvl1Pos = 25;
-        public static final double coralLvl2Pos = 19.4;
-        public static final double coralLvl3Pos = 37.2;
-        public static final double coralLvl4Pos = 72.8;
+        public static final double coralLvl2Pos = 17.1;
+        public static final double coralLvl3Pos = 38.2;
+        public static final double coralLvl4Pos = 77.2;
 
         public static final double algaeLvl1Pos  = 35;
         public static final double algaeLvl2Pos  = 47;
@@ -92,9 +92,9 @@ public class Constants {
         public static final double safeTravelPos = 6.5;
 
         public static final double coralLvl1Pos = 45;
-        public static final double coralLvl2Pos = 7.4;
-        public static final double coralLvl3Pos = 7.1;
-        public static final double coralLvl4Pos = 12;
+        public static final double coralLvl2Pos = 7.88;
+        public static final double coralLvl3Pos = 8;
+        public static final double coralLvl4Pos = 13.4;
 
         public static final double algaeLvl1Pos = 47;
         public static final double algaeLvl2Pos = 43;
@@ -121,7 +121,7 @@ public class Constants {
 
         public static final double intakeAlgaeSpeed = -0.3;
         public static final double holdAlgaeOutput = -0.32;
-        public static final double outTakeSpeed = 0.25;
+        public static final double outTakeSpeed = 0.21;
     }
 
     public class VisionProfile {
@@ -159,5 +159,13 @@ public class Constants {
 
         public static final double fwdSoftLimit = 30000;
         public static final double rvsSoftLimit = 0;
+    }
+
+    public class LightingProfile {
+        public static final int canID = 46;
+
+        public static final double brightnessScalar = 1;
+
+        public static final int ledNum = 94;
     }
 }

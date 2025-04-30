@@ -4,12 +4,15 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.math.filter.Debouncer;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.LimelightHelpers;
 
 public class Vision extends SubsystemBase {
+  private Debouncer alignmentDebouncer = new Debouncer(0.2);
   
   /* Creates a new Vision. */
   public Vision() {
@@ -79,7 +82,18 @@ public class Vision extends SubsystemBase {
     }
   }
 
+  public boolean limelightAlignedTx() {
+    if ((LimelightHelpers.getTX(VisionProfile.elevatorLimelight) <= 0.8) && (LimelightHelpers.getTX(VisionProfile.elevatorLimelight) >= -0.8)) {
+      return alignmentDebouncer.calculate(true);
+    }
+    else {
+      return false;
+    }
+  }
+
   @Override
   // This method will be called once per scheduler run
-  public void periodic() {}
+  public void periodic() {
+    SmartDashboard.putBoolean("AlignedWithReef", limelightAlignedTx());
+  }
 }

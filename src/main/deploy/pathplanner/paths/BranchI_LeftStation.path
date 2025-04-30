@@ -8,8 +8,8 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.76,
-        "y": 5.956025403784438
+        "x": 5.657565789473683,
+        "y": 5.949342105263157
       },
       "isLocked": false,
       "linkedName": "BranchI"
@@ -20,22 +20,22 @@
         "y": 7.172880993150685
       },
       "prevControl": {
-        "x": 1.950022198727635,
-        "y": 6.4068365500317075
+        "x": 1.8088815789473682,
+        "y": 6.507401315789473
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftStation"
+      "linkedName": "RLeftstat"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8974358974358988,
+      "minWaypointRelativePos": 0.7666068222621186,
       "maxWaypointRelativePos": 0.987854251012146,
       "constraints": {
-        "maxVelocity": 2.4,
+        "maxVelocity": 2.35,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,

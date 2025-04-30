@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Center_BranchG"
+                  "pathName": "1"
                 }
               },
               {
@@ -30,6 +30,63 @@
           }
         },
         {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "2"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "homeSystemCoral"
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "deadline",
+          "data": {
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeCoral"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
+          }
+        },
+        {
+          "type": "parallel",
+          "data": {
+            "commands": [
+              {
+                "type": "path",
+                "data": {
+                  "pathName": "3"
+                }
+              },
+              {
+                "type": "named",
+                "data": {
+                  "name": "moveCoralLevel4"
+                }
+              }
+            ]
+          }
+        },
+        {
           "type": "named",
           "data": {
             "name": "outTakeCoral"
@@ -42,13 +99,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BranchG_Backout"
+                  "pathName": "4"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "algaeLevel1"
+                  "name": "homeSystemCoral"
                 }
               }
             ]
@@ -59,21 +116,15 @@
           "data": {
             "commands": [
               {
-                "type": "wait",
-                "data": {
-                  "waitTime": 2.0
-                }
-              },
-              {
-                "type": "path",
-                "data": {
-                  "pathName": "BackOut_Algae4"
-                }
-              },
-              {
                 "type": "named",
                 "data": {
-                  "name": "intakeAlgae"
+                  "name": "intakeCoral"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
                 }
               }
             ]
@@ -86,13 +137,13 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Algae4_Net"
+                  "pathName": "5"
                 }
               },
               {
                 "type": "named",
                 "data": {
-                  "name": "homeSystemAlgae"
+                  "name": "moveCoralLevel4"
                 }
               }
             ]
@@ -102,6 +153,6 @@
     }
   },
   "resetOdom": true,
-  "folder": null,
+  "folder": "3Auto",
   "choreoAuto": false
 }

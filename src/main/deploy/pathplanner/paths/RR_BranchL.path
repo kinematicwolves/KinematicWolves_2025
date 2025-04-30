@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.2621575342465754,
-        "y": 0.907170376712329
+        "x": 10.314473684210524,
+        "y": 6.468914473684211
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.904945143933114,
-        "y": 1.6732148198313068
+        "x": 11.314473684210526,
+        "y": 6.468914473684211
       },
       "isLocked": false,
-      "linkedName": "RightStation"
+      "linkedName": "redLeftStart"
     },
     {
       "anchor": {
-        "x": 2.5791385135135134,
-        "y": 2.7502533783783782
+        "x": 12.267680921052632,
+        "y": 5.064144736842105
       },
       "prevControl": {
-        "x": 2.6400806382933175,
-        "y": 2.3062464692683746
-      },
-      "nextControl": {
-        "x": 2.5099662162162164,
-        "y": 3.2542229729729724
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.15,
-        "y": 4.03
-      },
-      "prevControl": {
-        "x": 2.1500000000000012,
-        "y": 4.03
+        "x": 11.8828125,
+        "y": 5.997450657894737
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Algae1"
+      "linkedName": "RedBranchL"
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "RightStation to Algae",
+  "folder": "Random",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": -40.0
   },
   "useDefaultConstraints": true
 }

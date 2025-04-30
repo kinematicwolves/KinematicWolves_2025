@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9500221987276356,
+        "x": 1.9500221987276358,
         "y": 6.4068365500317075
       },
       "isLocked": false,
@@ -16,16 +16,16 @@
     },
     {
       "anchor": {
-        "x": 3.921703767123288,
-        "y": 5.114362157534247
+        "x": 3.973766447368421,
+        "y": 5.21
       },
       "prevControl": {
-        "x": 3.4217037671232884,
-        "y": 5.980387561318684
+        "x": 3.4737664473684213,
+        "y": 6.0760254037844375
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchK"
+      "linkedName": "redBranchK"
     }
   ],
   "rotationTargets": [],

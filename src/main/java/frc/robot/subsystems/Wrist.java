@@ -56,7 +56,7 @@ public class Wrist extends SubsystemBase {
   * 
   * @return double, through bore position
   */
-  private double getWristPos() {
+  public double getWristPos() {
     return m_wrist.getEncoder().getPosition();
   }
 

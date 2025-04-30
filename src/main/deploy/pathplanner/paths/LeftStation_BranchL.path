@@ -8,7 +8,7 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9500221987276356,
+        "x": 1.9500221987276358,
         "y": 6.4068365500317075
       },
       "isLocked": false,
@@ -16,26 +16,26 @@
     },
     {
       "anchor": {
-        "x": 3.591138698630137,
-        "y": 4.9941566780821915
+        "x": 3.685115131578947,
+        "y": 4.977549342105263
       },
       "prevControl": {
-        "x": 3.4548694349315068,
-        "y": 5.214419450261178
+        "x": 3.3002467105263156,
+        "y": 5.583717105263157
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchL"
+      "linkedName": "RedBranchL."
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.6,
+      "minWaypointRelativePos": 0.6409335727109511,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.4,
+        "maxVelocity": 2.3,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,

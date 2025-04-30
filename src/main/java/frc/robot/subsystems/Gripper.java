@@ -67,6 +67,10 @@ public class Gripper extends SubsystemBase {
         m_gripper.set(speed);
     }
 
+    public double getRollerCurrent() {
+        return m_gripper.getSupplyCurrent().getValueAsDouble();
+    }
+
 
     @Override
     public void periodic() {

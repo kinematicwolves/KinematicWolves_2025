@@ -45,7 +45,7 @@ public class Climber extends SubsystemBase {
 
     motorConfig.smartCurrentLimit(ClimberProfile.currentLimit);
     motorConfig.inverted(false); // we may need to change one later
-    motorConfig.idleMode(IdleMode.kCoast);
+    motorConfig.idleMode(IdleMode.kBrake);
     
     /**Software Limits */
     softLimitConfig.apply(motorConfig.softLimit);
