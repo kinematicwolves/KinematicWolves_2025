@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ElevatorProfile;
 
@@ -129,6 +130,11 @@ public class Elevator extends SubsystemBase {
         else {
             return false;
         }
+    }
+
+    public void resetElevatorZero() {
+        liftEncoderB.setPosition(0);
+        LiftEncoderA.setPosition(0);
     }
 
     @Override

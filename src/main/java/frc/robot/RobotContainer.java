@@ -339,6 +339,10 @@ public class RobotContainer {
         
         opController.leftTrigger().and(coralModeTrigger.negate())
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+
+        // button to reset the elevator zero. to be used when the elevator skips on the sprocket, so its at the bottom of travel, 
+        // but the wrist doesn't move back home. Run this command, then run the elevator to a position.
+        opController.povUpLeft().onTrue(new InstantCommand(() -> elevatorSubsystem.resetElevatorZero()));
     
     /* Technician Controls */
         // Manual elevator control
