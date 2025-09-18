@@ -28,6 +28,8 @@ import frc.robot.Constants.GripperProfile;
 import frc.robot.Constants.VisionProfile;
 import frc.robot.Constants.WristProfile;
 import frc.robot.commands.AcquireCoral;
+import frc.robot.commands.CloseFunnel;
+import frc.robot.commands.DropFunnel;
 import frc.robot.commands.HomeSystemAlgae;
 import frc.robot.commands.HomeSystemCoral;
 import frc.robot.commands.IndexCoral;
@@ -100,6 +102,9 @@ public class RobotContainer {
     private final MoveToLevelAlgae moveAlgaeLevel1 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl1Pos, WristProfile.algaeLvl1Pos);
     private final MoveToLevelAlgae moveAlgaeLevel2 = new MoveToLevelAlgae(wristSubsystem, elevatorSubsystem, ElevatorProfile.algaeLvl2Pos, WristProfile.algaeLvl2Pos);
 
+    // climber 
+    private final DropFunnel dropFunnel = new DropFunnel(climber);
+    private final CloseFunnel closeFunnel = new CloseFunnel(climber);
     // private final MoveToLevel elevatorShallowCage = new MoveToLevel(wristSubsystem, elevatorSubsystem, ElevatorProfile.shallowCagePos, WristProfile.shallowCagePos);
 
     // Gripper
@@ -339,6 +344,10 @@ public class RobotContainer {
         
         opController.leftTrigger().and(coralModeTrigger.negate())
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
+        
+        // Climbing
+        opController.y().whileTrue(dropFunnel);
+        opController.a().whileTrue(closeFunnel);
     
     /* Technician Controls */
         // Manual elevator control

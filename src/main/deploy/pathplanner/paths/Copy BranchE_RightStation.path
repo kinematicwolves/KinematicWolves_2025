@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9934056901978785,
-        "y": 2.815120373460161
+        "x": 5.138784246575342,
+        "y": 2.815432363013698
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4895851317690894,
-        "y": 1.9424775683637732
+        "x": 5.638784246575342,
+        "y": 1.9494069592292598
       },
       "isLocked": false,
-      "linkedName": "BranchD"
+      "linkedName": "BranchE.copy"
     },
     {
       "anchor": {
@@ -20,8 +20,8 @@
         "y": 1.1865953947368417
       },
       "prevControl": {
-        "x": 1.6658382654655333,
-        "y": 1.980953227714038
+        "x": 1.6319645942457823,
+        "y": 2.005747439025833
       },
       "nextControl": null,
       "isLocked": false,
@@ -32,10 +32,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8337349397590358,
+      "minWaypointRelativePos": 0.7525423728813572,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,
@@ -62,7 +62,7 @@
   "folder": "Branch to RightStation",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 122.1522951412823
   },
   "useDefaultConstraints": true
 }

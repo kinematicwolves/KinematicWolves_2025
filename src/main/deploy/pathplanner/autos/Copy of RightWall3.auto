@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "1"
+                  "pathName": "Copy of RightWall_BranchE"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "2"
+                  "pathName": "Copy BranchE_RightStation"
                 }
               },
               {
@@ -49,22 +49,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeCoral"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              }
-            ]
+            "name": "intakeCoral"
           }
         },
         {
@@ -74,7 +61,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "3"
+                  "pathName": "Copy RightStation_BranchD"
                 }
               },
               {
@@ -99,7 +86,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "4"
+                  "pathName": "Copy of BranchD_RightStation"
                 }
               },
               {
@@ -112,22 +99,9 @@
           }
         },
         {
-          "type": "deadline",
+          "type": "named",
           "data": {
-            "commands": [
-              {
-                "type": "named",
-                "data": {
-                  "name": "intakeCoral"
-                }
-              },
-              {
-                "type": "wait",
-                "data": {
-                  "waitTime": 1.5
-                }
-              }
-            ]
+            "name": "intakeCoral"
           }
         },
         {
@@ -137,7 +111,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "5"
+                  "pathName": "Copy of RightStation_BranchC"
                 }
               },
               {
@@ -147,6 +121,18 @@
                 }
               }
             ]
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "outTakeCoral"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "homeSystemCoral"
           }
         }
       ]

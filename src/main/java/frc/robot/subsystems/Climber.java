@@ -16,6 +16,7 @@ import com.revrobotics.spark.config.SoftLimitConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 import com.revrobotics.spark.config.SparkMaxConfig;
 
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.ClimberProfile;
@@ -39,6 +40,15 @@ public class Climber extends SubsystemBase {
   /** Internal Variables */
   private double setPoint = 0;
 
+  private Servo ServoA = new Servo(0);
+  private Servo ServoB = new Servo(1);
+  // private  Servo ServoA = new Servo(1);
+  // private  Servo ServoB = new Servo(2);
+  private  double close = 0.2;
+  private  double open = 0.7;
+  private  boolean funnelDropped = false;
+  
+
   /** Creates a new Climber. */
   public Climber() {
     motor.configure(motorConfig, ResetMode.kResetSafeParameters,null);
@@ -53,7 +63,7 @@ public class Climber extends SubsystemBase {
     motorConfig.softLimit.forwardSoftLimitEnabled(false);
     motorConfig.softLimit.reverseSoftLimit(0);
     motorConfig.softLimit.forwardSoftLimit(ClimberProfile.fwdSoftLimit);
-    motorConfig.softLimit.forwardSoftLimit(ClimberProfile.rvsSoftLimit);
+    // motorConfig.softLimit.forwardSoftLimit(ClimberProfile.rvsSoftLimit);
 
     motorConfig.closedLoop.feedbackSensor(FeedbackSensor.kPrimaryEncoder).pid(ClimberProfile.kP, ClimberProfile.kI, ClimberProfile.kD);
 
@@ -101,11 +111,34 @@ public class Climber extends SubsystemBase {
     }
   }
 
+
+  public void dropFunnel(){
+    // ServoA.set(0.12);
+    // ServoB.set(0.12);
+    ServoA.setPosition(close);
+    ServoB.setPosition(close);
+     funnelDropped = true;
+  }
+
+  public void closefunnel(){
+    ServoA.setPosition(open);
+    ServoB.setPosition(open);
+    //ServoB.set(0.50);
+    funnelDropped = false;
+  } 
+
+  public boolean isFunnelDropped() {
+    return funnelDropped;
+  }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Climber encoder position", getPosition());
     SmartDashboard.putNumber("Climber set point", setPoint);
     SmartDashboard.putBoolean("Climber At Pose", atPosition());
+    SmartDashboard.putBoolean("Funnel Dropped", isFunnelDropped());
+    SmartDashboard.putNumber("ServoAPose", ServoA.getPosition());
+    SmartDashboard.putNumber("ServoBPose", ServoB.getPosition());
   }
 }

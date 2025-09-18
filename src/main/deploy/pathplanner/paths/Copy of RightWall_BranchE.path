@@ -3,39 +3,39 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9934056901978785,
-        "y": 2.815120373460161
+        "x": 7.120065789473683,
+        "y": 1.8793585526315792
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4895851317690894,
-        "y": 1.9424775683637732
+        "x": 6.254111842105263,
+        "y": 2.1680098684210525
       },
       "isLocked": false,
-      "linkedName": "BranchD"
+      "linkedName": "RightWall.copy"
     },
     {
       "anchor": {
-        "x": 1.0583881578947367,
-        "y": 1.1865953947368417
+        "x": 5.138784246575342,
+        "y": 2.815432363013698
       },
       "prevControl": {
-        "x": 1.6658382654655333,
-        "y": 1.980953227714038
+        "x": 5.7815718562618805,
+        "y": 2.0493879198947202
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RightStation"
+      "linkedName": "BranchE.copy"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8337349397590358,
+      "minWaypointRelativePos": 0.5050847457627126,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.5,
+        "maxVelocity": 1.0,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 55.069062698889425
+    "rotation": 122.1522951412823
   },
   "reversed": false,
-  "folder": "Branch to RightStation",
+  "folder": "RightWall to Branch",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.99999999999999
+    "rotation": 151.29404745659906
   },
   "useDefaultConstraints": true
 }

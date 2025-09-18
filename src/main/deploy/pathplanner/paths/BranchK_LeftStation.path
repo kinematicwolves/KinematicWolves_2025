@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.973766447368421,
-        "y": 5.21
+        "x": 3.9517551369863013,
+        "y": 5.159439212328767
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4737664473684213,
-        "y": 6.076025403784438
+        "x": 3.4517551369863018,
+        "y": 6.025464616113205
       },
       "isLocked": false,
       "linkedName": "redBranchK"
@@ -47,8 +47,8 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.0,
-    "maxAcceleration": 4.0,
+    "maxVelocity": 2.2,
+    "maxAcceleration": 2.2,
     "maxAngularVelocity": 180.0,
     "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
