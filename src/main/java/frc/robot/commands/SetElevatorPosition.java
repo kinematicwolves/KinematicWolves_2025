@@ -11,12 +11,16 @@ import frc.robot.subsystems.Elevator;
 public class SetElevatorPosition extends Command {
     /* Declare all the things this command needs */
     private Elevator elevatorSubsystem;
-    private double setpoint;
+    private double setPoint;
 
-    /** Creates a new SetElevatorPosition. */
+    /**
+     * Runs elevator to commanded set point. Finished when at commanded set point.
+     * @param elevatorSub subsystem, elevator subsystem
+     * @param commandedSetPoint double, neo motor encoder revolutions
+     */
     public SetElevatorPosition(Elevator elevatorSub, double commandedSetPoint) {
       elevatorSubsystem = elevatorSub;
-      setpoint = commandedSetPoint;
+      setPoint = commandedSetPoint;
       
       // Use addRequirements() here to declare subsystem dependencies.
       addRequirements(elevatorSubsystem);
@@ -25,7 +29,7 @@ public class SetElevatorPosition extends Command {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
-      elevatorSubsystem.setPosition(setpoint);
+      elevatorSubsystem.setPosition(setPoint);
     }
 
     // Called every time the scheduler runs while the command is scheduled.

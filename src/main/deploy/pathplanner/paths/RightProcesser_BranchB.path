@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.0,
-        "y": 2.0
+        "x": 5.85,
+        "y": 1.7061677631578949
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.0,
-        "y": 2.0
+        "x": 5.85,
+        "y": 2.706167763157892
       },
       "isLocked": false,
-      "linkedName": "meow "
+      "linkedName": "RightProcesser"
     },
     {
       "anchor": {
-        "x": 7.0,
-        "y": 2.0
+        "x": 3.2,
+        "y": 3.9
       },
       "prevControl": {
-        "x": 6.0,
-        "y": 2.0
+        "x": 2.7000000000000006,
+        "y": 3.0339745962155624
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "end 1"
+      "linkedName": "BranchB"
     }
   ],
   "rotationTargets": [],
@@ -34,21 +34,21 @@
   "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 3.0,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 180.0
+    "rotation": 0.0
   },
   "reversed": false,
-  "folder": null,
+  "folder": "RightProcesser to Branches",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }

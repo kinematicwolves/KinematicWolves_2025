@@ -1,0 +1,54 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 5.85,
+        "y": 1.7061677631578949
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 5.85,
+        "y": 2.706167763157892
+      },
+      "isLocked": false,
+      "linkedName": "RightProcesser"
+    },
+    {
+      "anchor": {
+        "x": 3.9934056901978785,
+        "y": 2.815120373460161
+      },
+      "prevControl": {
+        "x": 3.493405690197879,
+        "y": 1.9490949696757234
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BranchD"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 59.99999999999999
+  },
+  "reversed": false,
+  "folder": "RightProcesser to Branches",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -90.0
+  },
+  "useDefaultConstraints": true
+}

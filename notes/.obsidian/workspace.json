@@ -8,20 +8,25 @@
         "type": "tabs",
         "children": [
           {
-            "id": "e4a0746a1ec2e913",
+            "id": "7de2a99a12a5684f",
             "type": "leaf",
             "state": {
-              "type": "canvas",
+              "type": "markdown",
               "state": {
-                "file": "Robot Wire Map.canvas",
+                "file": "Command Map.canvas",
                 "viewState": {
-                  "x": 103.5,
-                  "y": 219.5,
-                  "zoom": -1.3008167123323608
+                  "x": -455,
+                  "y": -160,
+                  "zoom": -1.1221122163679946
                 }
+                "file": "Limelight Web URL & IP.md",
+                "mode": "source",
+                "source": false
               },
               "icon": "lucide-layout-dashboard",
-              "title": "Robot Wire Map"
+              "title": "Command Map"
+              "icon": "lucide-file",
+              "title": "Limelight Web URL & IP"
             }
           }
         ]
@@ -43,7 +48,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -80,7 +86,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "a61a8f0970ff85bd",
@@ -165,10 +172,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e4a0746a1ec2e913",
+  "active": "7de2a99a12a5684f",
   "lastOpenFiles": [
-    "Robot Wire Map.png",
+    "Command Map.png",
+    "Pipeline_Name 3.vpr",
+    "Pipeline_Name 2.vpr",
+    "Pipeline_Name 1.vpr",
     "Robot Wire Map.canvas",
+    "Robot Wire Map.png",
+    "Robot Wire Map.png",
+    "Pipeline_Name.vpr",
+    "Untitled.canvas",
+    "Untitled.md",
+    "Untitled 1.md",
+    "Untitled",
+    "Limelight Web URL & IP.md",
     "Welcome.md"
   ]
 }

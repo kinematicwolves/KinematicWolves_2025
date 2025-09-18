@@ -1,0 +1,70 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 1.3072345890410957,
+        "y": 7.172880993150685
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 1.9500221987276356,
+        "y": 6.4068365500317075
+      },
+      "isLocked": false,
+      "linkedName": "LeftStation"
+    },
+    {
+      "anchor": {
+        "x": 5.8,
+        "y": 5.902533783783784
+      },
+      "prevControl": {
+        "x": 5.365202702702702,
+        "y": 6.604138513513512
+      },
+      "nextControl": {
+        "x": 6.3267667025836385,
+        "y": 5.052523877342005
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 5.7,
+        "y": 3.9
+      },
+      "prevControl": {
+        "x": 6.7,
+        "y": 3.9
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "BranchG"
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [],
+  "globalConstraints": {
+    "maxVelocity": 3.0,
+    "maxAcceleration": 4.0,
+    "maxAngularVelocity": 180.0,
+    "maxAngularAcceleration": 180.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "reversed": false,
+  "folder": "LeftStation to Branch",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -52.843745762788316
+  },
+  "useDefaultConstraints": true
+}

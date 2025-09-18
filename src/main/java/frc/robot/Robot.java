@@ -4,92 +4,123 @@
 
 package frc.robot;
 
-import com.ctre.phoenix6.Utils;
-
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 
 public class Robot extends TimedRobot {
-  private Command m_autonomousCommand;
+    private Command m_autonomousCommand;
+    private Command m_teleOpCommandInitialization;
+    private Command m_disableCommandInitialization;
 
-  private final RobotContainer m_robotContainer;
+    private final RobotContainer m_robotContainer;
 
-  private final boolean kUseLimelight = false;
+    private final boolean kUseLimelight = true;
 
-  public Robot() {
-    m_robotContainer = new RobotContainer();
-    System.out.println("Elevator Testing");
-  }
-
-  @Override
-  public void robotPeriodic() {
-    CommandScheduler.getInstance().run();
-
-    /*
-     * This example of adding Limelight is very simple and may not be sufficient for on-field use.
-     * Users typically need to provide a standard deviation that scales with the distance to target
-     * and changes with number of tags available.
-     *
-     * This example is sufficient to show that vision integration is possible, though exact implementation
-     * of how to use vision should be tuned per-robot and to the team's specification.
-     */
-    // if (kUseLimelight) {
-    //   var driveState = m_robotContainer.drivetrain.getState();
-    //   double headingDeg = driveState.Pose.getRotation().getDegrees();
-    //   double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
-    // }
-  }
-
-  @Override
-  public void disabledInit() {}
-
-  @Override
-  public void disabledPeriodic() {}
-
-  @Override
-  public void disabledExit() {}
-
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+    public Robot() {
+        m_robotContainer = new RobotContainer();
     }
-  }
 
-  @Override
-  public void autonomousPeriodic() {}
+    @Override
+    public void robotPeriodic() {
+        CommandScheduler.getInstance().run();
+        /*
+        * This example of adding Limelight is very simple and may not be sufficient for on-field use.
+        * Users typically need to provide a standard deviation that scales with the distance to target
+        * and changes with number of tags available.
+        *
+        * This example is sufficient to show that vision integration is possible, though exact implementation
+        * of how to use vision should be tuned per-robot and to the team's specification.
+        */
+        if (kUseLimelight) {
+            var driveState = m_robotContainer.drivetrain.getState();
+            double headingDeg = driveState.Pose.getRotation().getDegrees();
+            double omegaRps = Units.radiansToRotations(driveState.Speeds.omegaRadiansPerSecond);
 
-  @Override
-  public void autonomousExit() {}
+            LimelightHelpers.SetRobotOrientation(Constants.VisionProfile.frontLimelight, headingDeg, 0, 0, 0, 0, 0);
+            // var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.VisionProfile.frontLimelight);
+            var llMeasurement = LimelightHelpers.getBotPoseEstimate_wpiBlue(Constants.VisionProfile.frontLimelight);
+            if (llMeasurement != null && llMeasurement.tagCount > 0 && Math.abs(omegaRps) < 2.0) {
+                // We were previously converting the time stamp to a CTRE time stamp here, and in the Command swerve drive train.
+                // This meant the time stamp was being converted twice, which was probably problematic.
+                m_robotContainer.drivetrain.addVisionMeasurement(llMeasurement.pose, llMeasurement.timestampSeconds);
+            }
+        }
 
-  @Override
-  public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+        SmartDashboard.putBoolean("CoralMode", m_robotContainer.coralMode);
+        SmartDashboard.putNumber("ScoringLevel", m_robotContainer.scoringLevel);
     }
-  }
 
-  @Override
-  public void teleopPeriodic() {}
+    @Override
+    public void disabledInit() {
+        if (m_teleOpCommandInitialization != null) {
+            m_teleOpCommandInitialization.cancel();
+            m_teleOpCommandInitialization = null;
+        }
 
-  @Override
-  public void teleopExit() {}
+        m_disableCommandInitialization = m_robotContainer.getDisableInitCommand();
+        if (m_disableCommandInitialization != null) {
+            m_disableCommandInitialization.schedule();
+        }
+    }
 
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
+    @Override
+    public void disabledPeriodic() {}
 
-  @Override
-  public void testPeriodic() {}
+    @Override
+    public void disabledExit() {}
 
-  @Override
-  public void testExit() {}
+    @Override
+    public void autonomousInit() {
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-  @Override
-  public void simulationPeriodic() {}
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
+    }
+
+    @Override
+    public void autonomousPeriodic() {}
+
+    @Override
+    public void autonomousExit() {}
+
+    @Override
+    public void teleopInit() {
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
+
+        if (m_disableCommandInitialization != null) {
+            m_disableCommandInitialization.cancel();
+            m_disableCommandInitialization = null;
+        }
+
+        m_teleOpCommandInitialization = m_robotContainer.getTeleOpCommand();
+        if (m_teleOpCommandInitialization != null) {
+            m_teleOpCommandInitialization.schedule();
+        }
+    }
+
+    @Override
+    public void teleopPeriodic() {}
+
+    @Override
+    public void teleopExit() {}
+
+    @Override
+    public void testInit() {
+        CommandScheduler.getInstance().cancelAll();
+    }
+
+    @Override
+    public void testPeriodic() {}
+
+    @Override
+    public void testExit() {}
+
+    @Override
+    public void simulationPeriodic() {}
 }
