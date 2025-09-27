@@ -3,40 +3,40 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.26,
-        "y": 5.09
+        "x": 7.071,
+        "y": 5.92
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.657565789473683,
-        "y": 5.949342105263157
+        "x": 5.878865131578947,
+        "y": 6.026315789473683
       },
       "isLocked": false,
-      "linkedName": "BranchI"
+      "linkedName": "LeftWall"
     },
     {
       "anchor": {
-        "x": 1.4574914383561646,
-        "y": 7.037649828767123
+        "x": 5.334118150684932,
+        "y": 5.069285102739726
       },
       "prevControl": {
-        "x": 1.959138428262437,
-        "y": 6.372170151405911
+        "x": 5.750927361211248,
+        "y": 5.947870629055515
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "LeftStation"
+      "linkedName": "R.BranchI"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.7666068222621186,
-      "maxWaypointRelativePos": 0.987854251012146,
+      "minWaypointRelativePos": 0.6474576271186451,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.35,
-        "maxAcceleration": 2.0,
+        "maxVelocity": 1.06,
+        "maxAcceleration": 1.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,
         "nominalVoltage": 12.0,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.0
+    "rotation": -119.99999999999999
   },
   "reversed": false,
-  "folder": "Branch to LeftStation",
+  "folder": "LeftWall to Branch",
   "idealStartingState": {
-    "velocity": 0,
-    "rotation": -119.99999999999999
+    "velocity": 0.0,
+    "rotation": -136.72190348558937
   },
   "useDefaultConstraints": true
 }

@@ -3,53 +3,37 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.591138698630137,
-        "y": 4.9941566780821915
+        "x": 3.4709332191780824,
+        "y": 5.189490582191781
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.0911386986301372,
-        "y": 5.86018208186663
+        "x": 2.970933219178083,
+        "y": 6.0555159859762195
       },
       "isLocked": false,
-      "linkedName": "BranchL"
+      "linkedName": "R.BranchL"
     },
     {
       "anchor": {
-        "x": 1.3072345890410957,
-        "y": 7.172880993150685
+        "x": 1.4574914383561646,
+        "y": 7.037649828767123
       },
       "prevControl": {
-        "x": 1.9500221987276356,
-        "y": 6.4068365500317075
-      },
-      "nextControl": {
-        "x": 0.6644469793545559,
-        "y": 7.938925436269663
-      },
-      "isLocked": false,
-      "linkedName": "LeftStation"
-    },
-    {
-      "anchor": {
-        "x": 1.3823630136986302,
-        "y": 7.157855308219178
-      },
-      "prevControl": {
-        "x": 1.023404996526593,
-        "y": 7.555903214710174
+        "x": 1.9383133561643837,
+        "y": 6.556827910958904
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "LeftStation"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.7,
-      "maxWaypointRelativePos": 2.0,
+      "minWaypointRelativePos": 0.35,
+      "maxWaypointRelativePos": 1.0,
       "constraints": {
         "maxVelocity": 3.0,
         "maxAcceleration": 2.0,
@@ -72,7 +56,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -52.843745762788316
+    "rotation": -52.0
   },
   "reversed": false,
   "folder": "Branch to LeftStation",

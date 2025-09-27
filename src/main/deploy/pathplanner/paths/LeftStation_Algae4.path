@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.3072345890410957,
-        "y": 7.172880993150685
+        "x": 1.4574914383561646,
+        "y": 7.037649828767123
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.9500221987276365,
-        "y": 6.406836550031707
+        "x": 2.1002790480427054,
+        "y": 6.271605385648145
       },
       "isLocked": false,
       "linkedName": "LeftStation"
@@ -64,7 +64,7 @@
   "folder": "Leftstation to Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -52.843745762788316
+    "rotation": -52.0
   },
   "useDefaultConstraints": true
 }

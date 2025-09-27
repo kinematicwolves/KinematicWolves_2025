@@ -14,12 +14,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.GripperProfile;
 
+import edu.wpi.first.math.filter.Debouncer;
+
 public class Gripper extends SubsystemBase {
     private TalonFX m_gripper = new TalonFX(GripperProfile.motorId);
     public TalonFXConfiguration gripperConfig = new TalonFXConfiguration();
     private TimeOfFlight m_TOF = new TimeOfFlight(GripperProfile.tofId);
 
     private double rollerSpeed = 0;
+
+    private Debouncer debouncer = new Debouncer(0.25);
             
     /** Creates a new Gripper. */
     public Gripper() {
@@ -45,7 +49,7 @@ public class Gripper extends SubsystemBase {
      * @return true if coral is in gripper, else its false
      */
     public boolean hasCoral() {
-        if (m_TOF.getRange() <= 200)
+        if (debouncer.calculate(m_TOF.getRange() <= 200))
             return true;
         else 
             return false;

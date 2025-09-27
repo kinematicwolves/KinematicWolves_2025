@@ -33,11 +33,11 @@
     {
       "anchor": {
         "x": 1.2621575342465754,
-        "y": 0.907170376712329
+        "y": 0.937221746575342
       },
       "prevControl": {
         "x": 1.7621575342465745,
-        "y": 1.7731957804967682
+        "y": 1.8032471503597811
       },
       "nextControl": null,
       "isLocked": false,
@@ -58,7 +58,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 59.99999999999999
   },
   "reversed": false,
   "folder": "Branch to RightStation",

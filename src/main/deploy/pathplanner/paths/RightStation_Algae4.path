@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 1.2621575342465754,
-        "y": 0.907170376712329
+        "y": 0.937221746575342
       },
       "prevControl": null,
       "nextControl": {
         "x": 1.7621575342465745,
-        "y": 1.7731957804967673
+        "y": 1.8032471503597802
       },
       "isLocked": false,
       "linkedName": "RightStation"
@@ -64,7 +64,7 @@
   "folder": "RightStation to Algae",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -125.00000000000001
+    "rotation": 59.99999999999999
   },
   "useDefaultConstraints": true
 }

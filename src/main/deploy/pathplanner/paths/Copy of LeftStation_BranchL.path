@@ -8,28 +8,42 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.1002790480427054,
-        "y": 6.271605385648145
+        "x": 2.1002790480427045,
+        "y": 6.2716053856481455
       },
       "isLocked": false,
       "linkedName": "LeftStation"
     },
     {
       "anchor": {
-        "x": 5.3,
-        "y": 5.1
+        "x": 3.4709332191780824,
+        "y": 5.189490582191781
       },
       "prevControl": {
-        "x": 5.799999999999998,
-        "y": 5.966025403784436
+        "x": 3.086064798125451,
+        "y": 5.7956583453496755
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Algae5"
+      "linkedName": "R.BranchL"
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.752542372881356,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 1.5,
+        "maxAcceleration": 1.5,
+        "maxAngularVelocity": 180.0,
+        "maxAngularAcceleration": 180.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
@@ -42,12 +56,12 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -59.99999999999999
   },
   "reversed": false,
-  "folder": "Leftstation to Algae",
+  "folder": "LeftStation to Branch",
   "idealStartingState": {
-    "velocity": 0,
+    "velocity": 0.0,
     "rotation": -52.0
   },
   "useDefaultConstraints": true

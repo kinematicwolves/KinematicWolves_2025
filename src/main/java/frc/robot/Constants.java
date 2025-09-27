@@ -147,7 +147,7 @@ public class Constants {
     }
 
     public class ClimberProfile {
-        public static final int motorID = 45;
+        public static final int motorID = 25;
 
         public static final int currentLimit = 60;
 
