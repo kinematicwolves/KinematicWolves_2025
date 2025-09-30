@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9517551369863013,
-        "y": 5.159439212328767
+        "x": 3.9833881578947365,
+        "y": 5.256578947368421
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.4517551369863018,
-        "y": 6.025464616113205
+        "x": 3.483388157894737,
+        "y": 6.12260435115286
       },
       "isLocked": false,
       "linkedName": "redBranchK"
@@ -32,10 +32,10 @@
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0.8096947935368043,
+      "minWaypointRelativePos": 0.897666068222621,
       "maxWaypointRelativePos": 1.0,
       "constraints": {
-        "maxVelocity": 2.4,
+        "maxVelocity": 1.4,
         "maxAcceleration": 2.0,
         "maxAngularVelocity": 180.0,
         "maxAngularAcceleration": 180.0,
