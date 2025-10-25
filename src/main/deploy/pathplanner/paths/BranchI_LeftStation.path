@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.330427631578947,
-        "y": 5.054523026315789
+        "x": 5.274015410958904,
+        "y": 5.1293878424657535
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.72799342105263,
-        "y": 5.913865131578946
+        "x": 5.671581200432587,
+        "y": 5.988729947728911
       },
       "isLocked": false,
       "linkedName": "BranchI"
@@ -25,7 +25,7 @@
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "RLeftstat"
+      "linkedName": "LeftStation"
     }
   ],
   "rotationTargets": [],

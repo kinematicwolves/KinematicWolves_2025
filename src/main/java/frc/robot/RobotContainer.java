@@ -346,8 +346,10 @@ public class RobotContainer {
             .onFalse(new HomeSystemAlgae(wristSubsystem, elevatorSubsystem));
         
         // Climbing
-        opController.y().whileTrue(dropFunnel);
-        opController.a().whileTrue(closeFunnel);
+        // opController.y().whileTrue(dropFunnel);
+        // opController.a().whileTrue(closeFunnel);
+        opController.y().whileTrue(new SetWristSpeed(wristSubsystem, -0.2)); // Move down
+        opController.a().whileTrue(new SetWristSpeed(wristSubsystem, 0.2)); // Move up
     
     /* Technician Controls */
         // Manual elevator control
