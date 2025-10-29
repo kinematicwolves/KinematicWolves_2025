@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.138784246575342,
-        "y": 2.815432363013698
+        "x": 5.089884868421052,
+        "y": 2.8319078947368417
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.638784246575342,
-        "y": 1.9494069592292598
+        "x": 5.589884868421052,
+        "y": 1.9658824909524033
       },
       "isLocked": false,
       "linkedName": "BranchE.copy"
     },
     {
       "anchor": {
-        "x": 1.048766447368421,
-        "y": 1.1673519736842104
+        "x": 1.4047697368421053,
+        "y": 0.8787006578947364
       },
       "prevControl": {
-        "x": 1.6223428837194667,
-        "y": 1.9865040179732016
+        "x": 1.9783461731931506,
+        "y": 1.6978527021837275
       },
       "nextControl": null,
       "isLocked": false,
@@ -56,13 +56,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 55.069062698889425
+    "rotation": 55.0
   },
   "reversed": false,
   "folder": "Branch to RightStation",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 122.1522951412823
+    "rotation": 119.99999999999999
   },
   "useDefaultConstraints": true
 }

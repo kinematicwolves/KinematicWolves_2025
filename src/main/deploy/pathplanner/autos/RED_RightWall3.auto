@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftWall_BranchI"
+                  "pathName": "Copy of RightWall_BranchE"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BranchI_LeftStation"
+                  "pathName": "Copy BranchE_RightStation"
                 }
               },
               {
@@ -74,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftStation_BranchK"
+                  "pathName": "Copy RightStation_BranchD"
                 }
               },
               {
@@ -99,7 +99,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "BranchK_LeftStation"
+                  "pathName": "Copy of BranchD_RightStation"
                 }
               },
               {
@@ -137,7 +137,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "LeftStation_BranchL"
+                  "pathName": "Copy of RightStation_BranchC"
                 }
               },
               {

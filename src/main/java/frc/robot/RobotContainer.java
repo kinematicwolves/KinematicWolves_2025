@@ -209,7 +209,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> robotCentric
                 .withRotationalRate(0)
                 .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) / 18)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+                .withVelocityY(vision.getRightReefTx(VisionProfile.elevatorLimelight) *0.02)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
             )
         );
 
@@ -222,7 +222,7 @@ public class RobotContainer {
             drivetrain.applyRequest(() -> robotCentric
             .withRotationalRate(0)
             .withVelocityX(-driveController.getLeftY() * DriverProfile.y_AlignmentMultiplier) // Reduced speed for fine adjustments
-            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) / 23)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
+            .withVelocityY(vision.getLeftReefTx(VisionProfile.elevatorLimelight) * 0.02)//driveController.getLeftX() * DriverProfile.x_AlignmentMultiplier)
         )
         );
 

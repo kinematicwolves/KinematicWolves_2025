@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.253,
-        "y": 5.06
+        "x": 5.243832236842105,
+        "y": 5.150740131578948
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.570516447368422,
-        "y": 5.56032894736842
+        "x": 5.561348684210527,
+        "y": 5.651069078947368
       },
       "isLocked": false,
       "linkedName": "RedBranchI"
@@ -62,7 +62,7 @@
   "folder": "Random",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.99999999999999
+    "rotation": -117.71855964599456
   },
   "useDefaultConstraints": true
 }

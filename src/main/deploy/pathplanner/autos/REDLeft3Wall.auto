@@ -11,7 +11,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy of RightWall_BranchE"
+                  "pathName": "Copy of LeftWall_BranchI"
                 }
               },
               {
@@ -36,7 +36,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy BranchE_RightStation"
+                  "pathName": "Copy of BranchI_LeftStation"
                 }
               },
               {
@@ -49,9 +49,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "intakeCoral"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeCoral"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
           }
         },
         {
@@ -61,7 +74,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy RightStation_BranchD"
+                  "pathName": "Copy of LeftStation_BranchK"
                 }
               },
               {
@@ -86,7 +99,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy of BranchD_RightStation"
+                  "pathName": "Copy of BranchK_LeftStation"
                 }
               },
               {
@@ -99,9 +112,22 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "intakeCoral"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "intakeCoral"
+                }
+              },
+              {
+                "type": "wait",
+                "data": {
+                  "waitTime": 1.5
+                }
+              }
+            ]
           }
         },
         {
@@ -111,7 +137,7 @@
               {
                 "type": "path",
                 "data": {
-                  "pathName": "Copy of RightStation_BranchC"
+                  "pathName": "LeftStation_BranchL"
                 }
               },
               {

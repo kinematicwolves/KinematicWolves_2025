@@ -3,45 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.016994863013698,
-        "y": 6.511750856164383
+        "x": 5.85,
+        "y": 1.7061677631578949
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.016994863013698,
-        "y": 6.511750856164383
+        "x": 5.493996710526315,
+        "y": 3.005098684210526
       },
       "isLocked": false,
-      "linkedName": "LeftWall"
+      "linkedName": "RightProcesser"
     },
     {
       "anchor": {
-        "x": 3.1553938356164384,
-        "y": 6.369006849315068
+        "x": 1.4047697368421053,
+        "y": 0.8787006578947364
       },
       "prevControl": {
-        "x": 3.862500616802988,
-        "y": 7.076113630501617
-      },
-      "nextControl": {
-        "x": 2.4482870544298914,
-        "y": 5.66190006812852
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 3.2,
-        "y": 3.9
-      },
-      "prevControl": {
-        "x": 2.2,
-        "y": 3.9
+        "x": 2.107154605263158,
+        "y": 1.4848684210526313
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "BranchB"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
@@ -58,13 +42,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 55.0
   },
   "reversed": false,
-  "folder": "LeftWall to Branch",
+  "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -136.72190348558937
+    "rotation": -90.0
   },
   "useDefaultConstraints": true
 }
